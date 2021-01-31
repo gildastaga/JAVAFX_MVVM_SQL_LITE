@@ -1,21 +1,13 @@
 package view;
 
-import javafx.application.Application;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import mvvm.ViewModel;
@@ -35,7 +27,7 @@ public class ViewCard extends VBox {
     private final ImageView Imright = new ImageView();
     private int weight = 200;
     private int heigth = 150;
-
+    private static final double SPACING = 10;
     public ViewCard(Stage primaryStage, ViewModel viewModel, StringProperty nom) throws Exception {
         this.viewModel = viewModel;
         lbCarte1.textProperty().bind(nom);
@@ -47,13 +39,16 @@ public class ViewCard extends VBox {
 
     private void configComponents() throws Exception {
         configVboxZone();
-        componentsDecoration();
         configImages();
+        componentsDecoration();
     }
 
     private void configVboxZone() {
+        this.setSpacing(SPACING);
+        this.setPadding(new Insets(SPACING));
+        this.setMaxWidth(180);
         this.getChildren().addAll(up, left_right, down);
-        this.setStyle("-fx-background-color: skyblue; -fx-border-radius: 25%;");
+        this.setStyle("-fx-background-color: skyblue; -fx-border-radius: 10%;");
     }
 
     private void configImages() throws Exception{
@@ -73,11 +68,11 @@ public class ViewCard extends VBox {
     }
 
     private void componentsDecoration() {
-        up.setTranslateX(85);
-        lbCarte1.setTranslateX(55);
-        Imright.setTranslateX(140);
-        down.setTranslateX(85);
-        down.setTranslateY(40);
-        left_right.setTranslateY(20);
+        up.setTranslateX(55);
+        lbCarte1.setTranslateX(25);
+        Imright.setTranslateX(60);
+        down.setTranslateX(55);
+        //down.setTranslateY(20);
+        left_right.setTranslateY(5);
     }
 }

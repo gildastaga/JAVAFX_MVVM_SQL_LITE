@@ -17,9 +17,11 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         Tableau tableau = new Tableau();
         ViewModel viewModel = new ViewModel(tableau);
-        //ViewCard viewcard = new ViewCard(stage, viewModel);
-        ViewColumn viewcolumn = new ViewColumn(stage, viewModel);
-        //ViewBoard viewboard = new ViewBoard(stage, viewModel);
+        ViewBoard viewboard = new ViewBoard(stage, viewModel);
+       // ViewColumn viewcolumn = new ViewColumn(stage, viewModel);
+       // ViewCard viewcard = new ViewCard(stage, viewModel);
+
+
         stage.show();
     }
 

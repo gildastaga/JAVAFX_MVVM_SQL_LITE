@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -25,42 +26,53 @@ public class ViewBoard extends VBox {
     private final ViewModel viewModel;
     private Stage primaryStage;
 
-    private static ListView<ViewColumn> lvlistColumn;
-    private final TextField tfBoardName = new TextField();
+    private  ListView<ViewColumn> lvlistColumn;
+    private VBox vBox=new VBox();
+    private  TextField tfBoardName = new TextField();
     private int weight = 1000;
     private int heigth = 700;
+    private static final double SPACING = 10;
+    private String name ="tableau";
 
     public ViewBoard(Stage primaryStage, ViewModel viewModel) throws Exception {
-        lvlistColumn = new ListView<>();
+
         this.viewModel = viewModel;
+        lvlistColumn = new ListView<>();
         this.primaryStage = primaryStage;
 
         configComponents();
-        Scene scene = new Scene(this, weight, heigth);
+        Scene scene = new Scene(this,weight,heigth);
         primaryStage.setScene(scene);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
     }
 
-    private void configComponents() throws Exception {
-        //configVboxZone();
+   private void configComponents() throws Exception {
+        configVboxZone();
     }
 
-    /*private void configVboxZone() throws Exception {
+    private void configVboxZone() throws Exception {
+        this.setSpacing(SPACING);
+        this.setPadding(new Insets(SPACING));
+        tfBoardName.setMaxWidth(300);
         this.getChildren().addAll(tfBoardName,lvlistColumn);
-        lvlistColumn.itemsProperty().bind(getLsViewColum());
-        this.setSpacing(20);
-    }*/
+        tfBoardName.setText(name+" ");
+       lvlistColumn.itemsProperty().bind(getLsViewColum());
+        this.setSpacing(SPACING);
+    }
 
-    /*private SimpleListProperty<ViewColumn> getLsViewColum() throws Exception {
+    private SimpleListProperty<ViewColumn> getLsViewColum() throws Exception {
         SimpleListProperty<ViewColumn> list = new SimpleListProperty<>();
 
         String v = "Colonne 1";
         StringProperty var = new SimpleStringProperty(v);
-        ViewColumn vc = new ViewColumn(primaryStage, viewModel, var);
+        ViewColumn vc = new ViewColumn(primaryStage, viewModel);
         ObservableList<ViewColumn> columns = FXCollections.observableArrayList();
         columns.add(vc);
         list.setValue(columns);
 
         return list;
-    }*/
+    }
+
+
+
 }
