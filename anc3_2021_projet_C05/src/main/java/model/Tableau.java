@@ -1,17 +1,35 @@
 package model;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableSet;
 
 import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class Tableau {
-    private final Set<Colonnes> colonnes = new TreeSet<>();
+    private final String name;
+    private ObservableSet<Colonnes> CartePerColumn;
+    private final IntegerProperty size = new SimpleIntegerProperty();
 
-    public Tableau() {
+    private final ObservableSet<Colonnes> colonnes = FXCollections.observableSet( new TreeSet<>());
+    public Tableau(String name){
+        this.name = name;
         initData();
+        CartePerColumn = FXCollections.observableSet(new TreeSet<>());
+        //this.size.bind(new SimpleIntegerProperty<>(CartePerColumn).sizeProperty());
+    }
+
+   /* public Tableau(String name) {
+        this.name = name;
+        initData();
+    }*/
+
+    public final String getName() {
+        return name;
     }
 
     public Set<Colonnes> getColonne() {
@@ -47,4 +65,5 @@ public class Tableau {
         en_cours.addCarte(Carte_6);
 
     }
+
 }

@@ -5,23 +5,20 @@ import javafx.stage.Stage;
 import model.Tableau;
 import mvvm.ViewModel;
 //import view.View;
-import view.ViewBoard;
-import view.ViewCard;
-import view.ViewCard;
-import view.ViewColumn;
+import view.*;
 
 
 public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Tableau tableau = new Tableau();
+        String name ="tableau";
+        Tableau tableau = new Tableau(name);
         ViewModel viewModel = new ViewModel(tableau);
-        ViewBoard viewboard = new ViewBoard(stage, viewModel);
+        View view = new View(stage,viewModel);
+       // ViewBoard viewboard = new ViewBoard(stage, viewModel);
        // ViewColumn viewcolumn = new ViewColumn(stage, viewModel);
        // ViewCard viewcard = new ViewCard(stage, viewModel);
-
-
         stage.show();
     }
 

@@ -46,6 +46,7 @@ public class Colonnes implements Comparable<Colonnes>{
     }
 
     boolean addCarte(Cartes cartes) {
+
         return CartePerColumn.add(cartes);
     }
 
