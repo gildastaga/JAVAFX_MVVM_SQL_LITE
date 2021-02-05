@@ -16,8 +16,8 @@ public class Main extends Application {
         Tableau tableau = new Tableau(name);
         ViewModel viewModel = new ViewModel(tableau);
         View view = new View(stage,viewModel);
-       // ViewBoard viewboard = new ViewBoard(stage, viewModel);
-       // ViewColumn viewcolumn = new ViewColumn(stage, viewModel);
+        //ViewBoard viewboard = new ViewBoard(stage, viewModel);
+       //ViewColumn viewcolumn = new ViewColumn(stage, viewModel);
        // ViewCard viewcard = new ViewCard(stage, viewModel);
         stage.show();
     }

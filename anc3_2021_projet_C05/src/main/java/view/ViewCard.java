@@ -34,7 +34,6 @@ public class ViewCard extends VBox {
         configComponents();
         Scene scene = new Scene(this, weight, heigth);
         primaryStage.setScene(scene);
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
     }
 
     private void configComponents() throws Exception {
@@ -68,10 +67,10 @@ public class ViewCard extends VBox {
     }
 
     private void componentsDecoration() {
-        up.setTranslateX(55);
-        lbCarte1.setTranslateX(25);
-        Imright.setTranslateX(60);
-        down.setTranslateX(55);
+        up.setTranslateX(65);
+        lbCarte1.setTranslateX(35);
+        Imright.setTranslateX(65);
+        down.setTranslateX(65);
         //down.setTranslateY(20);
         left_right.setTranslateY(5);
     }

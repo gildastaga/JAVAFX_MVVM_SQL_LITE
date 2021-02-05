@@ -23,11 +23,6 @@ public class Tableau {
         //this.size.bind(new SimpleIntegerProperty<>(CartePerColumn).sizeProperty());
     }
 
-   /* public Tableau(String name) {
-        this.name = name;
-        initData();
-    }*/
-
     public final String getName() {
         return name;
     }

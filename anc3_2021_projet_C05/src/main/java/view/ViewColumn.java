@@ -28,10 +28,10 @@ public class ViewColumn extends VBox {
     private TextField tfColoName = new TextField();
     private final ImageView Imleft = new ImageView();
     private final ImageView Imright = new ImageView();
-     private final ListView<Cartes> lvCard = new ListView<>();
+    private final ListView<ViewCard> lvCard = new ListView<>();
     private Stage primaryStage;
 
-    private int weight = 250;
+    private int width = 200;
     private int heigth = 600;
 
     public ViewColumn(Stage primaryStage, ViewModel viewModel) throws Exception {
@@ -39,29 +39,28 @@ public class ViewColumn extends VBox {
         this.primaryStage = primaryStage;
 
         configComponents();
-        Scene scene = new Scene(this,weight,heigth);
+        Scene scene = new Scene(this,width,heigth);
         primaryStage.setScene(scene);
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
     }
 
-    ViewColumn(Colonnes c)throws Exception{
+    ViewColumn(Colonnes c)throws Exception {
         this(new ColoneViewModel (c));
-
     }
-    public ViewColumn(ColoneViewModel viewColumn)throws Exception{
+
+    public ViewColumn(ColoneViewModel viewColumn)throws Exception {
         this.viewColumn= viewColumn;
-       // this.setAlignment(Pos.CENTER);
         configComponents();
         configCol();
-        HBox optionCol =new HBox();
+        //HBox optionCol =new HBox();
         TextField tfColoName = new TextField();
         ListView<Cartes> listcol =new ListView<>();
         ImageView Imleft = new ImageView();
         ImageView Imright = new ImageView();
-        optionCol.getChildren().addAll(Imleft,tfColoName,Imright);
+        //o ptionCol.getChildren().addAll(Imleft,tfColoName,Imright);
        // tfColoName.textProperty().bind(viewColumn.colNameProperty());
        // listcol.itemsProperty().bind(viewColumn.colNameProperty());
     }
+
     private void configComponents() throws Exception {
         configVboxZone();
         configImages();
@@ -69,40 +68,43 @@ public class ViewColumn extends VBox {
 
     private void configVboxZone() throws Exception {
         this.setSpacing(SPACING);
-        //this.setPadding(new Insets(SPACING));
-       this.setMaxWidth(200);
+        this.setMaxWidth(200);
         this.getChildren().addAll(hbox,lvCard);
         hbox.getChildren().addAll(Imleft,tfColoName,Imright);
        // tfColoName.setText(viewModel.columnProperty().getName());
-       // lvCard.itemsProperty().bind(getLsViewCard());
+        lvCard.itemsProperty().bind(getLsViewCard());
     }
-    private void configCol(){
-        configDataCol();
+
+    private void configCol() {
+        configDecoration();
     }
-    private void configDataCol(){
+
+    private void configDecoration() {
+        //hbox.setSpacing(60);
+        hbox.setTranslateY(55);
         //lvCard.itemsProperty().bind(viewModel.getListCardByColumn());
-        System.out.println(lvCard.itemsProperty().toString());//test recup
+        //System.out.println(lvCard.itemsProperty().toString());//test recup
     }
-    private SimpleListProperty<Cartes> getLsViewCard() throws Exception {
-        SimpleListProperty<Cartes> list = new SimpleListProperty<>();
+
+    private SimpleListProperty<ViewCard> getLsViewCard() throws Exception {
+        SimpleListProperty<ViewCard> list = new SimpleListProperty<>();
 
         String v = "carte 1";
         StringProperty var = new SimpleStringProperty(v);
-        //Cartes vc = new Cartes(primaryStage, viewModel, var);
-        Cartes vc = new Cartes(v);
-        ObservableList<Cartes> cards = FXCollections.observableArrayList();
+        ViewCard vc = new ViewCard(primaryStage, viewModel, var);
+        ObservableList<ViewCard> cards = FXCollections.observableArrayList();
         cards.add(vc);
         list.setValue(cards);
 
         return list;
     }
-    private void configImages() throws Exception{
+
+    private void configImages() throws Exception {
         FileInputStream LEFT = new FileInputStream("src/images/left.png");
         FileInputStream RIGHT = new FileInputStream("src/images/right.png");
 
         Imleft.setImage(new Image(LEFT));
         Imright.setImage(new Image(RIGHT));
     }
-
 
 }

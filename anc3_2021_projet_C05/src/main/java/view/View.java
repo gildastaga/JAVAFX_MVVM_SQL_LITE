@@ -3,9 +3,11 @@ package view;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Colonnes;
@@ -16,48 +18,40 @@ import view.ViewBoard;
 public class View extends VBox {
 
     private  final ViewModel viewModel;
-    private static final double SPACING = 10;
-    private final VBox vprincipal = new VBox(),option = new VBox(), zone =new VBox() ;
-    private TextField tfBoardName = new TextField();
-    private String name ="tableau";
     private ListView<Colonnes> listColumn = new ListView<>();
-    private int weight = 1025;
+    private final VBox zone = new VBox();
+    private final ViewBoard viewboard;
+    private int width = 1025;
     private int heigth = 725;
-    public View(Stage primaryStage, ViewModel viewModel){
+    public View(Stage primaryStage, ViewModel viewModel) throws Exception {
         this.viewModel=viewModel;
+        this.viewboard = new ViewBoard(primaryStage, viewModel);
         configVboxZone();
-        updateLvcColon();
-        configBoard();
-        Scene scene = new Scene(vprincipal,weight,heigth);
+        Scene scene = new Scene(this,width,heigth);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Trello");
     }
 
     private void configVboxZone()  {
-        vprincipal.getChildren().addAll(option,zone);
-        option.getChildren().add(tfBoardName);
-        tfBoardName.setText(name);
-        zone.getChildren().add(listColumn);
-        //listColumn.itemsProperty().bind(getLsViewColum());
-        compornentsDecoration();
+        zone.getChildren().add(viewboard);
+         this.getChildren().add(zone);
     }
     private void configBoard(){
-        configDataBoard();
+        //configDataBoard();
     }
     private void configDataBoard(){
-        listColumn.itemsProperty().bind(viewModel.columnProperty());
-        System.out.println(listColumn.itemsProperty().toString());//test recup
+        //listColumn.itemsProperty().bind(viewModel.columnProperty());
+        //System.out.println(listColumn.itemsProperty().toString());//test recup
     }
-    private void compornentsDecoration (){
+    /*private void compornentsDecoration (){
         this.setSpacing(SPACING);
         this.setSpacing(SPACING);
         this.setPadding(new Insets(SPACING));
-        tfBoardName.setMaxWidth(300);
         listColumn.setOrientation(Orientation.HORIZONTAL);
 
-    }
+    }*/
 
-    private void updateLvcColon(){
+    /*private void updateLvcColon(){
         listColumn.setCellFactory(view -> new ListCell<>(){
             @Override
             protected void updateItem(Colonnes col, boolean b){
@@ -74,5 +68,13 @@ public class View extends VBox {
                 setGraphic(viewColum);
             }
         });
-    }
+    }*/
+
+    /*private void configActions() {
+        tfBoardName.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.getClickCount() == 2 ){
+                viewModel.openSelectedFileRight();
+            }
+        });
+    }*/
 }

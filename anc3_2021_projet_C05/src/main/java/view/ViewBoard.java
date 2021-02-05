@@ -31,14 +31,13 @@ public class ViewBoard extends VBox {
     private Stage primaryStage;
 
     private  ListView<ViewColumn> lvlistColumn= new ListView<>();;
-    private VBox vBox=new VBox();
+    private VBox vBox = new VBox();
     private  TextField tfBoardName = new TextField();
-    private int weight = 1000;
+    private int width = 1000;
     private int heigth = 700;
     private static final double SPACING = 10;
-    private String name ="tableau";
-    private ListView<Colonnes> listColumn= listColumn = new ListView<>();
-
+    private String name = "Tableau";
+    private ListView<Colonnes> listColumn = new ListView<>();
 
 
     public ViewBoard(Stage primaryStage, ViewModel viewModel) throws Exception {
@@ -46,9 +45,8 @@ public class ViewBoard extends VBox {
         this.primaryStage = primaryStage;
         configComponents();
         configBoard();
-        Scene scene = new Scene(this,weight,heigth);
+        Scene scene = new Scene(this,width,heigth);
         primaryStage.setScene(scene);
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
     }
 
    private void configComponents() throws Exception {
@@ -56,18 +54,19 @@ public class ViewBoard extends VBox {
     }
 
     private void configVboxZone() throws Exception {
+        this.getChildren().add(vBox);
         vBox.getChildren().addAll(tfBoardName,lvlistColumn);
         tfBoardName.setText(name);
-       //lvlistColumn.itemsProperty().bind(getLsViewColum());
+         lvlistColumn.itemsProperty().bind(getLsViewColum());
         compornentsDecoration();
     }
+
     private void compornentsDecoration (){
         vBox.setSpacing(SPACING);
         vBox.setSpacing(SPACING);
         vBox.setPadding(new Insets(SPACING));
-        tfBoardName.setMaxWidth(300);
+        tfBoardName.setMaxWidth(1040);
         listColumn.setOrientation(Orientation.HORIZONTAL);
-
     }
 
     private SimpleListProperty<ViewColumn> getLsViewColum() throws Exception {
@@ -84,12 +83,12 @@ public class ViewBoard extends VBox {
         return list;
     }
     private void configBoard(){
-        configDataBoard();
+        //configDataBoard();
     }
-    private void configDataBoard(){
+    /*private void configDataBoard(){
         listColumn.itemsProperty().bind(viewModel.columnProperty());
         System.out.println(listColumn.itemsProperty().toString());//test recup
-    }
+    }*/
 
 
 }
