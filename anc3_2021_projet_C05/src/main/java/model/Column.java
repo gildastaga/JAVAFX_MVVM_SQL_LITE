@@ -9,25 +9,31 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Colonnes implements Comparable<Colonnes>{
-    private final String name;
-    private ObservableSet<Cartes> CartePerColumn;
-    private final IntegerProperty size = new SimpleIntegerProperty();
+public class Column implements Comparable<Column>{
 
-    public Colonnes(String name){
+    private final String name;
+    private ObservableSet<Card> CartePerColumn= FXCollections.observableSet(new TreeSet<> ());;
+    private final IntegerProperty size = new SimpleIntegerProperty ();
+
+    public Column(String name){
         this.name = name;
-        CartePerColumn = FXCollections.observableSet(new TreeSet<>());
+        //CartePerColumn = FXCollections.observableSet(new TreeSet<> ());
+
     }
 
     public final String getName() {
         return name;
     }
 
+    public Set<Card> getCartePerColumn() {
+        return CartePerColumn;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Colonnes)) return false;
-        Colonnes col = (Colonnes) o;
+        if (!(o instanceof Column)) return false;
+        Column col = (Column) o;
         return name != null ? name.equals(col.name): col.name==null ;
     }
 
@@ -37,7 +43,7 @@ public class Colonnes implements Comparable<Colonnes>{
     }
 
     @Override
-    public int compareTo(Colonnes o) {
+    public int compareTo(Column o) {
         return this.name.compareToIgnoreCase(o.name);
     }
     @Override
@@ -45,31 +51,27 @@ public class Colonnes implements Comparable<Colonnes>{
         return name;
     }
 
-    boolean addCarte(Cartes cartes) {
-        return CartePerColumn.add(cartes);
+    boolean addCarte(Card card) {
+        return CartePerColumn.add(card);
     }
 
-    int nbCartes() {
+    int nbCard() {
         return CartePerColumn.size();
     }
 
-    boolean removeCartes(Cartes carte) {
-        return CartePerColumn.remove(carte);
+    boolean removeCard(Card card) {
+        return CartePerColumn.remove(card);
     }
 
-    boolean existsCartes(Cartes carte) {
-        return CartePerColumn.contains(carte);
+    boolean existsCard(Card card) {
+        return CartePerColumn.contains(card);
     }
 
-    public final Set<Cartes> getCartes() {
+    public final Set<Card> getCard() {
         return Collections.unmodifiableSet(CartePerColumn);
     }
 
     public IntegerProperty sizeProperty() {
-        return size;
-    }
-
-    public IntegerProperty isFullProperty() {
         return size;
     }
 }

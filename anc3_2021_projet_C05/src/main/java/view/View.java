@@ -10,32 +10,37 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Colonnes;
-import mvvm.ColoneViewModel;
+import model.Column;
 import mvvm.ViewModel;
 import view.ViewBoard;
 
 public class View extends VBox {
 
     private  final ViewModel viewModel;
-    private ListView<Colonnes> listColumn = new ListView<>();
-    private final VBox zone = new VBox();
+   // private ListView<Column> listColumn = new ListView<>();
+   // private final VBox zone = new VBox();
     private final ViewBoard viewboard;
     private int width = 1025;
     private int heigth = 725;
+
     public View(Stage primaryStage, ViewModel viewModel) throws Exception {
         this.viewModel=viewModel;
         this.viewboard = new ViewBoard(primaryStage, viewModel);
-        configVboxZone();
         Scene scene = new Scene(this,width,heigth);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Trello");
+
+        configVboxZone();
     }
 
     private void configVboxZone()  {
-        zone.getChildren().add(viewboard);
-         this.getChildren().add(zone);
+        this.getChildren().add(viewboard);
+       //  this.getChildren().add(zone);
     }
+
+
+
+
     private void configBoard(){
         //configDataBoard();
     }

@@ -4,43 +4,40 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Cartes;
-import model.Colonnes;
-import model.Tableau;
+import model.Board;
+import model.Card;
+import model.Column;
 
 public class BoardViewModel {
 
-    private final ObservableList<Colonnes> listColumn = FXCollections.observableArrayList();
-    private final ObservableList<Cartes> cartes = FXCollections.observableArrayList();
-    private final Tableau tableau;
-    private final StringProperty tableauName = new SimpleStringProperty();
-    private final StringProperty NameCarte = new SimpleStringProperty();
+    private final ObservableList<Column> listColumn = FXCollections.observableArrayList();
+    private final ObservableList<Card> cartes = FXCollections.observableArrayList();
+    private final Board board;
+    private  StringProperty boardName = new SimpleStringProperty();
+   // private final StringProperty NameCarte = new SimpleStringProperty();
 
-    public BoardViewModel(Tableau tableau) {
-        this.tableau = tableau;
+    public BoardViewModel(Board board) {
+        this.board = board;
         configData();
-        //this.tableauName = new ReadOnlyStringWrapper(tableau.getName());
+        this.boardName = new ReadOnlyStringWrapper (board.getName());
     }
 
-    public SimpleListProperty<Cartes> getListCardByColumn() {
+    public SimpleListProperty<Card> getListCardByColumn() {
 
         return new SimpleListProperty<>(cartes);
     }
 
     private void configData(){
-        listColumn.setAll(tableau.getColonne());
+        listColumn.setAll(board.getColonne());
         cartes.setAll();
     }
 
-    public SimpleListProperty<Colonnes> columnProperty(){
+    public SimpleListProperty<Column> columnProperty(){
         return new SimpleListProperty<>(listColumn);
     }
 
-    public StringProperty editLineProperty() {
-        return NameCarte;
-    }
+ //   public StringProperty editLineProperty() {return NameCarte;}
 
 }

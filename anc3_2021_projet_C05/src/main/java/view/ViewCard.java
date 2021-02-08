@@ -1,15 +1,22 @@
 package view;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import model.Card;
+import model.Column;
+import mvvm.CardViewModel;
+import mvvm.ColumnViewModel;
 import mvvm.ViewModel;
 
 import java.io.FileInputStream;
@@ -19,8 +26,9 @@ public class ViewCard extends VBox {
     private final VBox up = new VBox();
     private final HBox left_right = new HBox();
     private final VBox down = new VBox();
-    private final ViewModel viewModel;
-    private final Label lbCarte1 = new Label();
+    private  ViewModel viewModel;
+    private  CardViewModel  viewCard;
+    private final Label lbCarte = new Label();//
     private final ImageView Imup = new ImageView();
     private final ImageView Imdown = new ImageView();
     private final ImageView Imleft = new ImageView();
@@ -28,13 +36,30 @@ public class ViewCard extends VBox {
     private int weight = 200;
     private int heigth = 150;
     private static final double SPACING = 10;
-    public ViewCard(Stage primaryStage, ViewModel viewModel, StringProperty nom) throws Exception {
+    String s = "carte ";
+
+    ViewCard(Card c)throws Exception {
+        this(new CardViewModel (c));
+    }
+
+    public ViewCard(CardViewModel viewCard)throws Exception {
+        this.viewCard= viewCard;
+        configComponents ();
+    }
+
+    public ViewCard(Stage primaryStage, ViewModel viewModel) throws Exception {
         this.viewModel = viewModel;
-        lbCarte1.textProperty().bind(nom);
-        configComponents();
+        //configComponents();
         Scene scene = new Scene(this, weight, heigth);
         primaryStage.setScene(scene);
     }
+    /*public ViewCard(Stage primaryStage, ViewModel viewModel) throws Exception {
+        this.viewModel = viewModel;
+        //lbCarte1.textProperty().bind(nom);
+        configComponents();
+        Scene scene = new Scene(this, weight, heigth);
+         primaryStage.setScene(scene);
+    }*/
 
     private void configComponents() throws Exception {
         configVboxZone();
@@ -46,6 +71,7 @@ public class ViewCard extends VBox {
         this.setSpacing(SPACING);
         this.setPadding(new Insets(SPACING));
         this.setMaxWidth(180);
+
         this.getChildren().addAll(up, left_right, down);
         this.setStyle("-fx-background-color: skyblue; -fx-border-radius: 10%;");
     }
@@ -60,15 +86,16 @@ public class ViewCard extends VBox {
         Imdown.setImage(new Image(DOWN));
         Imleft.setImage(new Image(LEFT));
         Imright.setImage(new Image(RIGHT));
-
+        System.out.println (lbCarte+"yziyskjcsbjkkjcb");
+        lbCarte.textProperty().bind(viewCard.nameCarteProperty ());//new SimpleStringProperty (s)
         up.getChildren().add(Imup);
-        left_right.getChildren().addAll(Imleft, lbCarte1, Imright);
+        left_right.getChildren().addAll(Imleft, lbCarte, Imright);
         down.getChildren().add(Imdown);
     }
 
     private void componentsDecoration() {
         up.setTranslateX(65);
-        lbCarte1.setTranslateX(35);
+        lbCarte.setTranslateX(35);
         Imright.setTranslateX(65);
         down.setTranslateX(65);
         //down.setTranslateY(20);

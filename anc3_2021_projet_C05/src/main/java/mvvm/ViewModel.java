@@ -6,35 +6,39 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Cartes;
-import model.Colonnes;
-import model.Tableau;
+import model.Board;
+import model.Card;
+import model.Column;
 
 public class ViewModel {
-    private final Tableau tableau;
 
-
-    private final ObservableList<Colonnes> listColumn =FXCollections.observableArrayList();
-    private final ObservableList<Cartes> cartes = FXCollections.observableArrayList();
+    private final Board board;
+    private final ObservableList<Column> listColumn =FXCollections.observableArrayList();
+    private final ObservableList<Card> cartes = FXCollections.observableArrayList();
+    private   StringProperty boardname;
     private final StringProperty NameCarte = new SimpleStringProperty();
 
-    public ViewModel(Tableau tableau){
-        this.tableau = tableau;
+    public ViewModel(Board board){
+        this.board = board;
+        this.boardname = new ReadOnlyStringWrapper (board.getName());
         configData();
     }
 
     private void configData(){
-        listColumn.setAll(tableau.getColonne());
+        listColumn.setAll(board.getColonne());
         cartes.setAll();
     }
 
+    public StringProperty boardNameProperty(){
+        return boardname;
+    }
 
-    public  SimpleListProperty<Colonnes> columnProperty(){
+    public  SimpleListProperty<Column> columnProperty(){
         return new SimpleListProperty<>(listColumn);
     }
 
 
-    public SimpleListProperty<Cartes> getListCardByColumn() {
+    public SimpleListProperty<Card> getListCardByColumn() {
         return new SimpleListProperty<>(cartes);
     }
 }
