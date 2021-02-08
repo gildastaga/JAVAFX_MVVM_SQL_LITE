@@ -1,9 +1,6 @@
 package mvvm;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Card;
@@ -15,6 +12,8 @@ public class ColumnViewModel {
     private final Column column;
     private final StringProperty coloneName;
     private final ObservableList<Card> liscard = FXCollections.observableArrayList();
+
+    private  final IntegerProperty selectedCard = new SimpleIntegerProperty ();
 
     public ColumnViewModel(Column c){
         this.column =c;
@@ -35,5 +34,19 @@ public class ColumnViewModel {
 
     public SimpleListProperty<Card> cardProperty(){
         return new SimpleListProperty<>(liscard);
+    }
+    public  void addCard(){
+        Card c = getCard();
+        if (c == null ){
+            column.addCard(new Card ("Card "+liscard.size ()+1));
+            // a reflechir
+        }else {
+            column.addCard(new Card ("Card "+liscard.size ()+1));
+        }
+        configData();
+    }
+    private Card getCard() {
+        int index= selectedCard.get();
+        return index == -1 || index ==0 ? null : liscard.get(index);
     }
 }

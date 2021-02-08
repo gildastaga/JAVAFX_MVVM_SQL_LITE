@@ -29,6 +29,9 @@ public class Board {
         return Collections.unmodifiableSet(columns);
     }
 
+    public boolean addColumn (Column col) {
+        return   columns.add(col);
+    }
 
     private void initData() {
         Card Carte_1 = new Card("Carte 1"),
@@ -48,14 +51,14 @@ public class Board {
         columns.add(en_cours);
         columns.add(en_attente_de_paiement);
 
-        à_faire.addCarte(Carte_1);
+        à_faire.addCard(Carte_1);
 
-        à_tester.addCarte(Carte_2);
-        à_tester.addCarte(Carte_3);
+        à_tester.addCard(Carte_2);
+        à_tester.addCard(Carte_3);
 
-        en_cours.addCarte(Carte_4);
-        en_cours.addCarte(Carte_5);
-        en_cours.addCarte(Carte_6);
+        en_cours.addCard(Carte_4);
+        en_cours.addCard(Carte_5);
+        en_cours.addCard(Carte_6);
 
     }
 }

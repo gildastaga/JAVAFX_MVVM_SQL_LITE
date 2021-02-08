@@ -42,7 +42,6 @@ public class ViewColumn extends VBox {
         this.primaryStage = primaryStage;
         primaryStage.setScene(scene);
         configComponents();
-       // updateLvCart ();
     }
 
     ViewColumn(Column c)throws Exception {
@@ -58,7 +57,7 @@ public class ViewColumn extends VBox {
         tfColoName.textProperty().bind(viewColumn.colNameProperty());
         listCard.itemsProperty().bind(viewColumn.cardProperty ());
         updateLvCart ();
-
+        configaction();
 
     }
 
@@ -76,25 +75,14 @@ public class ViewColumn extends VBox {
         lvCard.itemsProperty().bind(getLsViewCard());
     }
 
-    private void configCol() {
-        configDecoration();
-    }
-
-    private void configDecoration() {
-        hbox.setSpacing(60);
-        hbox.setTranslateY(55);
-    }
-
     private SimpleListProperty<ViewCard> getLsViewCard() throws Exception {
         SimpleListProperty<ViewCard> list = new SimpleListProperty<>();
-
         String v = "carte 1";
         StringProperty var = new SimpleStringProperty(v);
         ViewCard vc = new ViewCard(primaryStage, viewModel);
         ObservableList<ViewCard> cards = FXCollections.observableArrayList();
         cards.add(vc);
         list.setValue(cards);
-
         return list;
     }
 
@@ -118,12 +106,14 @@ public class ViewColumn extends VBox {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    System.out.println ("gffffffffffff  updateLvCart ");
-                   // viewCard.setMaxHeight(200);
                 }
                 setGraphic(viewCard);
             }
-
         });
+    }
+    private void configaction(){
+        listCard.setOnMouseClicked (e ->{
+            viewColumn.addCard();
+        } );
     }
 }

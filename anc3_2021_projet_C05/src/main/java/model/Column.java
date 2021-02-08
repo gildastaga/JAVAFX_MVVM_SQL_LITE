@@ -12,12 +12,12 @@ import java.util.TreeSet;
 public class Column implements Comparable<Column>{
 
     private final String name;
-    private ObservableSet<Card> CartePerColumn= FXCollections.observableSet(new TreeSet<> ());;
+    private ObservableSet<Card> CartePerColumn;//= FXCollections.observableSet(new TreeSet<> ());;
     private final IntegerProperty size = new SimpleIntegerProperty ();
 
     public Column(String name){
         this.name = name;
-        //CartePerColumn = FXCollections.observableSet(new TreeSet<> ());
+        CartePerColumn = FXCollections.observableSet(new TreeSet<> ());
 
     }
 
@@ -51,8 +51,8 @@ public class Column implements Comparable<Column>{
         return name;
     }
 
-    boolean addCarte(Card card) {
-        return CartePerColumn.add(card);
+    public boolean addCard(Card card) {
+        return  CartePerColumn.add(card);
     }
 
     int nbCard() {

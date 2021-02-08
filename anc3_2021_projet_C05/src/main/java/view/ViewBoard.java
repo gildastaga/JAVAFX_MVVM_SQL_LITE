@@ -47,6 +47,8 @@ public class ViewBoard extends VBox {
         this.getChildren ().addAll (tfBoardName,listColumn);
         tfBoardName.textProperty().bind(viewModel.boardNameProperty());
         listColumn.itemsProperty().bind(viewModel.columnProperty ());
+
+        configaction();
     }
 
 
@@ -59,6 +61,7 @@ public class ViewBoard extends VBox {
         configComponents();
         updateLvcColon();
         configBoard();
+        configaction();
     }
 
    private void configComponents() throws Exception {
@@ -114,14 +117,15 @@ public class ViewBoard extends VBox {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    System.out.println ("cffffffffhgfjuyyyyyyyyyyyyyyyy updatecol");
-
                 }
                 setGraphic(viewColum);
             }
         });
-
     }
 
-
+    private void configaction(){
+        listColumn.setOnMouseClicked (e ->{
+            viewModel.addColumn();
+        } );
+    }
 }
