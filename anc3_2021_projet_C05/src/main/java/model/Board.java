@@ -32,7 +32,7 @@ public class Board {
     }
 
     public ObservableList<Column> getColumns() {
-        Collections.sort(columns, new SortColumnByPosition());
+       // Collections.sort(columns, new SortColumnByPosition());
         return columns;
     }
 
@@ -48,7 +48,7 @@ public class Board {
     }
 
     public Column getColumn(int index) {
-        return this.getColumns().get(index);
+      return   index == -1 ? null :this.getColumns().get(index);
     }
 
     public void swapCardUp(Card card, int index) {
@@ -58,7 +58,12 @@ public class Board {
     public void swapCardDown(Card card, int index) {
         this.getColumn(index).swapCardDown(card);
     }
-
+    public void swapColleft(int index) {
+        Collections.swap(columns, index, index-1);
+    }
+    public void swapColright( int index) {
+        Collections.swap(columns, index, index+1);
+    }
     /**************************************************  configure card **********************************************************/
 
     public Card getCard(int indexColumn, int indexCard) {

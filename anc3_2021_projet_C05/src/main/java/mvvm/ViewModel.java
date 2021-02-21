@@ -23,10 +23,12 @@ public class ViewModel {
 
     public ViewModel(Board board){
         this.board = board;
+       // configColumnSelection();
         configData();
+
     }
 
-    private void configData(){
+    private void configData() {
         columns.setValue(board.getColumns());
         bordName.setValue(board.getName());
     }
@@ -60,7 +62,7 @@ public class ViewModel {
     }
 
     public Column getColumn(int index) {
-        return board.getColumn(index);
+        return index == -1  ? null : board.getColumn(index);
     }
 
     public SimpleListProperty<Card> getlsCardsByColumnProperty(Column column) {
@@ -68,7 +70,6 @@ public class ViewModel {
     }
 
     public void swapCardDown(Card card, Column column, ViewColumn viewColumn) throws Exception{
-        System.out.println("select: " + column.getCards());
         board.swapCardDown(card, column.getPosition());
          getLsViewCard(column, viewColumn);
     }
@@ -89,5 +90,36 @@ public class ViewModel {
         }
 
         return new SimpleListProperty<>(lscolumns);
+    }
+    // column
+
+    public void addColumn()  {
+        Column c = getColumn(numLineSelectedColumn.get ());
+        if (c == null ){
+            board.addColumn(new Column ("Column ",board.getColumns ().size ()+1));
+        }else {
+
+            // board.addColumn(new Column ("Column "+listColumn.size ()));
+        }
+        configData();
+    }
+    public void swapColleft(Column column) throws Exception{
+        board.swapColleft (column.getPosition());
+        getLsViewColum();
+    }
+    public void swapColright(Column column) throws Exception{
+        board.swapColright (column.getPosition());
+        getLsViewColum();
+    }
+    // card
+
+    public  void addCard(Column c){
+        Card car = c.getCard (numLineSelectedCard.get ());
+        if (car == null ){
+            c.addCard(new Card ("Card ",c.getCards ().size ()+1));
+        }else {
+
+        }
+        configData();
     }
 }

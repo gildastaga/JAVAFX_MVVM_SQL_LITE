@@ -1,12 +1,10 @@
 package view;
 
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -36,7 +34,6 @@ public class ViewColumn extends VBox {
     public ViewColumn(ViewModel viewModel, Column column) throws Exception {
         this.viewModel = viewModel;
         this.column = column;
-
         configComponents();
         configColumn();
     }
@@ -69,7 +66,7 @@ public class ViewColumn extends VBox {
 
     public void configDataComumn() throws Exception {
         listViewCards.itemsProperty().bindBidirectional(viewModel.getLsViewCard(column, this));
-        numLineSelectedCard.bind(viewModel.getNumLineSelectedColumnProperty());
+        numLineSelectedCard.bind(viewModel.getNumLineSelectedCardProperty ());
         viewModel.lineSelectedCard(getCardModel().selectedIndexProperty());
         cards.itemsProperty().bind(viewModel.getlsCardsByColumnProperty(column));
         name.textProperty().bind(new SimpleStringProperty(column.getName()));
@@ -77,12 +74,43 @@ public class ViewColumn extends VBox {
     }
 
     private void configaction() {
-        /*listCard.setOnMouseClicked(e -> {
-            viewColumn.addCard();
-        });*/
+        listViewCards.setOnMouseClicked(e -> {
+            viewModel.addCard(column);
+            try {
+                configDataComumn();
+            } catch (Exception exception) {
+                exception.printStackTrace ();
+            }
+        });
+
+        Imleft.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.getClickCount() == 1 ) {
+                try {
+                    this.viewModel.swapColleft ( column);
+                    configDataComumn();
+
+                }catch (Exception ed) {
+                    throw new Error(ed.getMessage());
+                }
+
+            }
+        });
+        Imright.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.getClickCount() == 1 ) {
+                try {
+                    this.viewModel.swapColright ( column);
+                    configDataComumn();
+
+                }catch (Exception ed) {
+                    throw new Error(ed.getMessage());
+                }
+
+            }
+        });
     }
 
-    public SelectionModel<Card> getCardModel() {
-        return cards.getSelectionModel();
+
+    public SelectionModel<ViewCard> getCardModel() {
+        return listViewCards.getSelectionModel();
     }
 }

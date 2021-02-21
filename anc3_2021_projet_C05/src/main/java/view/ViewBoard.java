@@ -74,13 +74,19 @@ public class ViewBoard extends VBox {
         listViewColumn.itemsProperty().bind(viewModel.getLsViewColum());
     }
 
-    public SelectionModel<Column> getColumnModel() {
-        return columns.getSelectionModel();
+    public SelectionModel<ViewColumn> getColumnModel() {
+        return listViewColumn.getSelectionModel();
     }
 
     private void configaction() {
-        /*listColumn.setOnMouseClicked (e ->{
+        listViewColumn.setOnMouseClicked (e ->{
             viewModel.addColumn();
-        } );*/
+            try {
+                configDataBoard();
+            } catch (Exception exception) {
+                exception.printStackTrace ();
+            }
+        } );
+
     }
 }
