@@ -1,131 +1,86 @@
 package view;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.ListCell;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Board;
+import model.Card;
 import model.Column;
-import mvvm.BoardViewModel;
 import mvvm.ViewModel;
 
 
 public class ViewBoard extends VBox {
 
     private  ViewModel viewModel;
-    private BoardViewModel boardViewModel;
     private  ViewColumn viewColumn;
     private Stage primaryStage;
-    private  ListView<ViewColumn> lvlistColumn= new ListView<>();;
+    public  ListView<ViewColumn> listViewColumn= new ListView<>();;
     private VBox vBox = new VBox();
     private  TextField tfBoardName = new TextField();
+    private HBox hBoxLb = new HBox();
+    private HBox hBoxTf = new HBox();
+    private Label lbBoardName = new Label();
     private int width = 1000;
     private int heigth = 700;
     private static final double SPACING = 10;
-    private String name = "Tableau";
-    private ListView<Column> listColumn = new ListView<>();
-
-    ViewBoard(Board b)throws Exception{
-        this( new BoardViewModel (b));
-
-    }
-    public ViewBoard( BoardViewModel viewBoard)throws Exception{
-        this.boardViewModel = viewBoard;
-        this.setAlignment(Pos.CENTER);
-        tfBoardName = new TextField();
-        listColumn =new ListView<>();
-        this.getChildren ().addAll (tfBoardName,listColumn);
-        tfBoardName.textProperty().bind(viewModel.boardNameProperty());
-        listColumn.itemsProperty().bind(viewModel.columnProperty ());
-
-        configaction();
-    }
+    private ListView<Column> columns = new ListView<>();
+    private final IntegerProperty numLineSelectedColumn = new SimpleIntegerProperty(-1);
 
 
     public ViewBoard(Stage primaryStage, ViewModel viewModel) throws Exception {
         this.viewModel = viewModel;
-        this.viewColumn = new ViewColumn(primaryStage,viewModel);
-        Scene scene = new Scene(this,width,heigth);
+        Scene scene = new Scene(this, width, heigth);
         this.primaryStage = primaryStage;
         primaryStage.setScene(scene);
         configComponents();
-        updateLvcColon();
         configBoard();
-        configaction();
     }
 
-   private void configComponents() throws Exception {
-        configVboxZone();
+    private void configComponents() {
+        this.getChildren().addAll(lbBoardName, listViewColumn);
+        tfBoardName.setVisible(false);
+        componentsDecoration();
     }
 
-    private void configVboxZone() throws Exception {
-        this.getChildren().add(vBox);
-        this.getChildren().addAll(tfBoardName,listColumn);
-        tfBoardName.setText(name);
-        lvlistColumn.itemsProperty().bind(getLsViewColum());
-        compornentsDecoration();
-    }
-
-    private void compornentsDecoration (){
+    private void componentsDecoration () {
         this.setSpacing(SPACING);
         this.setSpacing(SPACING);
         this.setPadding(new Insets(SPACING));
         tfBoardName.setMaxWidth(1040);
-        listColumn.setOrientation(Orientation.HORIZONTAL);
+        listViewColumn.setOrientation(Orientation.HORIZONTAL);
     }
 
-    private SimpleListProperty<ViewColumn> getLsViewColum() throws Exception {
-        SimpleListProperty<ViewColumn> list = new SimpleListProperty<>();
-        String v = "Colonne 1";
-        StringProperty var = new SimpleStringProperty(v+" "+lvlistColumn.getFixedCellSize());
-        ViewColumn vc = new ViewColumn(primaryStage, viewModel);
-        ObservableList<ViewColumn> columns = FXCollections.observableArrayList();
-
-        columns.add(vc);
-        list.setValue(columns);
-
-        return list;
-    }
-    private void configBoard(){
+    private void configBoard() throws Exception{
         configDataBoard();
-    }
-    private void configDataBoard(){
-        listColumn.itemsProperty().bind(viewModel.columnProperty());
-        System.out.println(listColumn.itemsProperty().toString()+" test recup Vboard");//test recup
+        configaction();
     }
 
-    private void updateLvcColon(){
-        listColumn.setCellFactory(view -> new ListCell<>(){
-            @Override
-            protected void updateItem(Column col, boolean b){
-                super.updateItem(col, b);
-                ViewColumn  viewColum = null;
-                if(col != null){
-                    try {
-                        viewColum = new ViewColumn(col);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                setGraphic(viewColum);
-            }
-        });
+    private void configDataBoard() throws Exception {
+        numLineSelectedColumn.bind(viewModel.getNumLineSelectedColumnProperty());
+        viewModel.lineSelectedColumn(getColumnModel().selectedIndexProperty());
+        lbBoardName.textProperty().bind(viewModel.getBordNameProperty());
+        columns.itemsProperty().bind(viewModel.getColumnsProperty());
+        listViewColumn.itemsProperty().bind(viewModel.getLsViewColum());
     }
 
-    private void configaction(){
-        listColumn.setOnMouseClicked (e ->{
+    public SelectionModel<Column> getColumnModel() {
+        return columns.getSelectionModel();
+    }
+
+    private void configaction() {
+        /*listColumn.setOnMouseClicked (e ->{
             viewModel.addColumn();
-        } );
+        } );*/
     }
 }

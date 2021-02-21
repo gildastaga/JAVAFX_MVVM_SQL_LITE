@@ -6,67 +6,88 @@ import javafx.collections.ObservableList;
 import model.Board;
 import model.Card;
 import model.Column;
+import view.ViewCard;
+import view.ViewColumn;
 
 public class ViewModel {
 
     private final Board board;
-    private final ObservableList<Column> listColumn =FXCollections.observableArrayList();
-    private final ObservableList<Card> cartes = FXCollections.observableArrayList();
-    private   StringProperty boardname;
-    private final StringProperty NameCarte = new SimpleStringProperty();
 
-    private  final IntegerProperty selectedColumn = new SimpleIntegerProperty ();
+    private final SimpleListProperty columns = new SimpleListProperty<>();
+    private final SimpleListProperty cards = new SimpleListProperty<>();
+
+    private final IntegerProperty numLineSelectedColumn = new SimpleIntegerProperty(-1);
+    private final IntegerProperty numLineSelectedCard = new SimpleIntegerProperty(-1);
+
+    private final StringProperty bordName = new SimpleStringProperty();
 
     public ViewModel(Board board){
         this.board = board;
-        this.boardname = new ReadOnlyStringWrapper (board.getName());
         configData();
     }
 
     private void configData(){
-        listColumn.setAll(board.getColonne());
+        columns.setValue(board.getColumns());
+        bordName.setValue(board.getName());
     }
 
-    public StringProperty boardNameProperty(){
-        return boardname;
+    public SimpleListProperty<Card> getCardsByColumnProperty() {
+        return new SimpleListProperty<Card>(this.board.getColumn(numLineSelectedColumn.intValue()).getCards());
     }
 
-    public  SimpleListProperty<Column> columnProperty(){
-        return new SimpleListProperty<>(listColumn);
+    public SimpleListProperty<Column> getColumnsProperty() {
+        return columns;
     }
 
-
-    public SimpleListProperty<Card> getListCardByColumn() {
-        return new SimpleListProperty<>(cartes);
+    public IntegerProperty getNumLineSelectedColumnProperty() {
+        return numLineSelectedColumn;
     }
 
-   /* private void configCourseSelection() {
-        selectedColumn.addListener((obs, oldval, newval) -> {
-            int index = newval.intValue();
-            if (index == -1) {
-                listColumn.clear();
-            } else {
-                setCourseStudents();
-            }
-           // configActionnableButtons();
-        });
-    }*/
+    public IntegerProperty getNumLineSelectedCardProperty() {
+        return numLineSelectedCard;
+    }
 
+    public void lineSelectedColumn(ReadOnlyIntegerProperty index) {
+        numLineSelectedColumn.bind(index);
+    }
 
-    public void addColumn(){
-        Column c = getColumn();
-        if (c == null ){
-            // a reflechir
-        }else {
-            System.out.println ("addcolumn vm else");
-            board.addColumn(new Column ("Column "+listColumn.size ()));
-            configData();
+    public void lineSelectedCard(ReadOnlyIntegerProperty index) {
+        numLineSelectedCard.bind(index);
+    }
+
+    public StringProperty getBordNameProperty() {
+        return bordName;
+    }
+
+    public Column getColumn(int index) {
+        return board.getColumn(index);
+    }
+
+    public SimpleListProperty<Card> getlsCardsByColumnProperty(Column column) {
+        return new SimpleListProperty<Card>(column.getCards());
+    }
+
+    public void swapCardDown(Card card, Column column, ViewColumn viewColumn) throws Exception{
+        System.out.println("select: " + column.getCards());
+        board.swapCardDown(card, column.getPosition());
+         getLsViewCard(column, viewColumn);
+    }
+
+    public SimpleListProperty<ViewCard> getLsViewCard(Column column, ViewColumn viewColumn) throws Exception {
+        ObservableList<ViewCard> lscards = FXCollections.observableArrayList();
+        for (int i = 0; i < column.getCards().size(); ++i) {
+            lscards.add(new ViewCard(this, column.getCards().get(i), column, viewColumn));
         }
+
+        return new SimpleListProperty<>(lscards);
     }
 
-    private Column getColumn() {
-        int index= selectedColumn.get();
-        return index == -1 ? null : listColumn.get (index);
-    }
+    public SimpleListProperty<ViewColumn> getLsViewColum() throws Exception {
+        ObservableList<ViewColumn> lscolumns = FXCollections.observableArrayList();
+        for (int i = 0; i < getColumnsProperty().size(); ++i) {
+            lscolumns.add(new ViewColumn(this, getColumn(i)));
+        }
 
+        return new SimpleListProperty<>(lscolumns);
+    }
 }

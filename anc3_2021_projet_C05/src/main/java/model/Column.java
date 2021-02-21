@@ -3,75 +3,92 @@ package model;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 
-import java.util.Collections;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
-public class Column implements Comparable<Column>{
+class SortColumnByPosition implements Comparator<Column>, Iterable<Column> {
 
-    private final String name;
-    private ObservableSet<Card> CartePerColumn;//= FXCollections.observableSet(new TreeSet<> ());;
-    private final IntegerProperty size = new SimpleIntegerProperty ();
-
-    public Column(String name){
-        this.name = name;
-        CartePerColumn = FXCollections.observableSet(new TreeSet<> ());
-
+    @Override
+    public int compare(Column o1, Column o2) {
+        return o1.getPosition() - o2.getPosition();
     }
 
+    @Override
+    public Iterator<Column> iterator() {
+        return null;
+    }
+}
+
+public class Column {
+
+    private String name;
+    private  ObservableList<Card> lsCards;
+    private int position ;
+
+    public Column(String name, int position) {
+        this.name = name;
+        this.position = position;
+        lsCards = FXCollections.observableList(new ArrayList<>());
+    }
+
+    /**************************************************  configure column **********************************************************/
+
     public final String getName() {
+
         return name;
     }
 
-    public Set<Card> getCartePerColumn() {
-        return CartePerColumn;
+    public int getPosition() {
+        return position;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Column)) return false;
-        Column col = (Column) o;
-        return name != null ? name.equals(col.name): col.name==null ;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @Override
-    public int hashCode() {
-        return name != null? name.hashCode() : 0 ;
+    public void setPosition(int position) {
+
+        this.position = position;
     }
 
-    @Override
-    public int compareTo(Column o) {
-        return this.name.compareToIgnoreCase(o.name);
-    }
     @Override
     public String toString() {
         return name;
     }
 
+    /**************************************************  configure card **********************************************************/
+
     public boolean addCard(Card card) {
-        return  CartePerColumn.add(card);
+        return  lsCards.add(card);
     }
 
-    int nbCard() {
-        return CartePerColumn.size();
+    public boolean removeCard(Card card) {
+        return lsCards.remove(card);
     }
 
-    boolean removeCard(Card card) {
-        return CartePerColumn.remove(card);
+    public Card getCard(int index) {
+        return this.lsCards.get(index);
     }
 
-    boolean existsCard(Card card) {
-        return CartePerColumn.contains(card);
+    public ObservableList<Card> getCards() {
+        Collections.sort(lsCards, new SortByPosition());
+        return lsCards;
     }
 
-    public final Set<Card> getCard() {
-        return Collections.unmodifiableSet(CartePerColumn);
+    /**************************************************  configure swapCard up down **********************************************************/
+    public void swapCardDown(Card card) {
+        int pos = card.getPosition();
+        Card that = this.lsCards.get(card.getPosition() + 1);
+        card.setPosition(card.getPosition() + 1);
+        that.setPosition(pos);
     }
 
-    public IntegerProperty sizeProperty() {
-        return size;
+    public void swapCardUp(Card card) {
+        int pos = card.getPosition();
+        Card that = this.lsCards.get(card.getPosition() - 1);
+        card.setPosition(card.getPosition() - 1);
+        that.setPosition(pos);
     }
 }
