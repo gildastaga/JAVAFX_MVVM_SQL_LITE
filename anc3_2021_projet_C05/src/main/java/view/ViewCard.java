@@ -41,7 +41,6 @@ public class ViewCard extends VBox {
         this.column = column;
         this.viewColumn = viewColumn;
         Scene scene = new Scene(this, weight, heigth);
-        //primaryStage.setScene(scene);
         configComponents();
     }
 
@@ -81,7 +80,6 @@ public class ViewCard extends VBox {
         lbCarte.setTranslateX(35);
         Imright.setTranslateX(65);
         down.setTranslateX(65);
-        //down.setTranslateY(20);
         left_right.setTranslateY(5);
     }
 
@@ -94,7 +92,27 @@ public class ViewCard extends VBox {
         lbCarte.textProperty().bind(new SimpleStringProperty(card.getName()));
     }
 
-    private void configActions() throws Exception{
+    private void configActions() throws Exception {
+        configActionUp();
+        configActionDown();
+    }
+
+    private void configActionUp() throws Exception {
+        Imup.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.getClickCount() == 1 ) {
+                try {
+                    this.viewModel.swapCardUp(card, column, viewColumn);
+                    viewColumn.configDataComumn();
+
+                }catch (Exception ed) {
+                    System.out.println(ed.getMessage());
+                }
+
+            }
+        });
+    }
+
+    private void configActionDown() throws Exception {
         Imdown.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1 ) {
                 try {
@@ -102,10 +120,11 @@ public class ViewCard extends VBox {
                     viewColumn.configDataComumn();
 
                 }catch (Exception ed) {
-                    throw new Error(ed.getMessage());
+                    System.out.println(ed.getMessage());
                 }
 
             }
         });
     }
+
 }
