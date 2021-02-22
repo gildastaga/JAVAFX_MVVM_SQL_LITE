@@ -59,6 +59,7 @@ public class Column {
     /**************************************************  configure card **********************************************************/
 
     public boolean addCard(Card card) {
+        System.out.println (card+"colum");
         return  lsCards.add(card);
     }
 
@@ -67,7 +68,7 @@ public class Column {
     }
 
     public Card getCard(int index) {
-        return this.lsCards.get(index);
+        return index ==-1 ? null : this.lsCards.get(index);
     }
 
     public ObservableList<Card> getCards() {
