@@ -73,6 +73,12 @@ public class ViewModel {
          getLsViewCard(column, viewColumn);
     }
 
+    public void swapCardUp(Card card, Column column, ViewColumn viewColumn) throws Exception{
+        System.out.println("select: " + column.getCards());
+        board.swapCardUp(card, column.getPosition());
+        getLsViewCard(column, viewColumn);
+    }
+
     public SimpleListProperty<ViewCard> getLsViewCard(Column column, ViewColumn viewColumn) throws Exception {
         ObservableList<ViewCard> lscards = FXCollections.observableArrayList();
         for (int i = 0; i < column.getCards().size(); ++i) {

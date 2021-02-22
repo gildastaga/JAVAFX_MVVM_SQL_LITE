@@ -15,7 +15,7 @@ public class Card {
     private String name;
     private int position ;
 
-    public Card( String name, int position){
+    public Card( String name, int position) {
         this.name=name;
         this.position = position;
     }

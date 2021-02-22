@@ -36,7 +36,6 @@ public class Column {
     /**************************************************  configure column **********************************************************/
 
     public final String getName() {
-
         return name;
     }
 
@@ -49,7 +48,6 @@ public class Column {
     }
 
     public void setPosition(int position) {
-
         this.position = position;
     }
 
@@ -81,14 +79,22 @@ public class Column {
     public void swapCardDown(Card card) {
         int pos = card.getPosition();
         Card that = this.lsCards.get(card.getPosition() + 1);
-        card.setPosition(card.getPosition() + 1);
-        that.setPosition(pos);
+        if(this.lsCards.get(card.getPosition() + 1).getPosition() < lsCards.size()) {
+            card.setPosition(card.getPosition() + 1);
+            that.setPosition(pos);
+        }
+
     }
 
     public void swapCardUp(Card card) {
         int pos = card.getPosition();
         Card that = this.lsCards.get(card.getPosition() - 1);
-        card.setPosition(card.getPosition() - 1);
-        that.setPosition(pos);
+        if(this.lsCards.get(card.getPosition() - 1).getPosition() >= this.getCard(0).getPosition()) {
+            card.setPosition(card.getPosition() - 1);
+            that.setPosition(pos);
+        }
     }
+
+    /**************************************************  configure swapCard letf right **********************************************************/
+
 }

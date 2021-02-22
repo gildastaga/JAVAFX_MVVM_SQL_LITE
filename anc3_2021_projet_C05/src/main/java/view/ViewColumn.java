@@ -60,8 +60,6 @@ public class ViewColumn extends VBox {
         Imright.setImage(new Image(RIGHT));
     }
 
-
-
     private void configColumn() throws Exception{
         configDataComumn();
         configaction();
@@ -75,6 +73,8 @@ public class ViewColumn extends VBox {
         name.textProperty().bind(new SimpleStringProperty(column.getName()));
         tfColoName.textProperty().bind(new SimpleStringProperty(column.getName()));
     }
+
+
 
     private void configaction() {
         /*listCard.setOnMouseClicked(e -> {
