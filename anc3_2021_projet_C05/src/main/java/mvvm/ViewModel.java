@@ -21,9 +21,12 @@ public class ViewModel {
 
     private final StringProperty bordName = new SimpleStringProperty();
 
+    private final BooleanProperty imleftColumDisabled = new SimpleBooleanProperty(true),
+            ImrightColumDisabled = new SimpleBooleanProperty(true);
+
     public ViewModel(Board board){
         this.board = board;
-       // configColumnSelection();
+       // configColumSelection();
         configData();
 
     }
@@ -88,7 +91,7 @@ public class ViewModel {
         for (int i = 0; i < getColumnsProperty().size(); ++i) {
             lscolumns.add(new ViewColumn(this, getColumn(i)));
         }
-
+        configActionnableButtons();
         return new SimpleListProperty<>(lscolumns);
     }
     // column
@@ -104,12 +107,24 @@ public class ViewModel {
         configData();
     }
     public void swapColleft(Column column) throws Exception{
+        System.out.println (numLineSelectedColumn.get ());
         board.swapColleft (column.getPosition());
         getLsViewColum();
     }
     public void swapColright(Column column) throws Exception{
         board.swapColright (column.getPosition());
         getLsViewColum();
+    }
+    private void configColumSelection() {
+        numLineSelectedColumn.addListener((obs, oldval, newval) ->
+                configActionnableButtons());
+    }
+    private void configActionnableButtons() {
+        imleftColumDisabled.setValue ( numLineSelectedColumn.get ()==-1);
+    }
+
+    public BooleanProperty imleftColumDisabledProperty() {
+        return imleftColumDisabled;
     }
     // card
 

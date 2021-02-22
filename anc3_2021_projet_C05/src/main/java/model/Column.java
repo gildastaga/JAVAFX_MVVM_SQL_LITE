@@ -60,7 +60,6 @@ public class Column {
     /**************************************************  configure card **********************************************************/
 
     public boolean addCard(Card card) {
-        System.out.println (card+"colum");
         return  lsCards.add(card);
     }
 
