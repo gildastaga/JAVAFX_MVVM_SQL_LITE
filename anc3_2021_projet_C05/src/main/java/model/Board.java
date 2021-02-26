@@ -27,17 +27,24 @@ public class Board {
         return name;
     }
 
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
     public ObservableList<Column> getColumns() {
-       // Collections.sort(columns, new SortColumnByPosition());
+        Collections.sort(columns, new SortColumnByPosition());
         return columns;
     }
 
     /**************************************************  configure column **********************************************************/
-
 
     public boolean addColumn (Column col) {
         return columns.add(col);
@@ -51,23 +58,56 @@ public class Board {
       return   index == -1 ? null :this.getColumns().get(index);
     }
 
-    public void swapCardUp(Card card, int index) {
-        this.getColumn(index).swapCardUp(card);
+    public void swapColumnRight(int index) {
+        Column c = this.columns.get(index);
+        int pos = c.getPosition();
+        Column that = this.columns.get(pos + 1);
+        if(this.columns.get(pos + 1).getPosition() < columns.size() ) {
+            c.setPosition(pos + 1);
+            that.setPosition(pos);
+        }
     }
 
-    public void swapCardDown(Card card, int index) {
-        this.getColumn(index).swapCardDown(card);
+    public void swapColumnLeft(int index) {
+        Column c = this.columns.get(index);
+        int pos = c.getPosition();
+        Column that = this.columns.get(pos - 1);
+        if(this.columns.get(pos - 1).getPosition() >= this.getColumn(0).getPosition()) {
+            c.setPosition(pos - 1);
+            that.setPosition(pos);
+        }
     }
-    public void swapColleft(int index) {
-        Collections.swap(columns, index, index-1);
-    }
-    public void swapColright( int index) {
-        Collections.swap(columns, index, index+1);
-    }
+
     /**************************************************  configure card **********************************************************/
 
     public Card getCard(int indexColumn, int indexCard) {
         return this.getColumn(indexColumn).getCard(indexCard);
+    }
+
+    public void swapCardUp(int indexCard, int index) {
+        this.getColumn(index).swapCardUp(indexCard);
+    }
+
+    public void swapCardDown(int indexCard, int index) {
+        this.getColumn(index).swapCardDown(indexCard);
+    }
+
+    public void swapCardRight(int indexCard, int index) {
+        Column that = this.getColumn(index + 1);
+        Column column = this.getColumn(index);
+        Card card = column.getCard(indexCard);
+        card.setPosition(that.getCards().size());
+        that.addCard(card);
+        column.removeCard(card);
+    }
+
+    public void swapCardLeft(int indexCard, int index) {
+        Column that = this.getColumn(index - 1);
+        Column column = this.getColumn(index);
+        Card card = column.getCard(indexCard);
+        card.setPosition(that.getCards().size());
+        that.addCard(card);
+        column.removeCard(card);
     }
 
     /**************************************************  init data **********************************************************/

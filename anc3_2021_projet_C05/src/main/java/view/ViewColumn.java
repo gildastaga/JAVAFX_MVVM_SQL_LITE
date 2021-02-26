@@ -26,14 +26,16 @@ public class ViewColumn extends VBox {
     private final Label name = new Label();
     private Stage primaryStage;
     private Column column;
+    private ViewBoard viewBoard;
     private final IntegerProperty numLineSelectedCard = new SimpleIntegerProperty(-1);
 
     private int width = 200;
     private int heigth = 100;
 
-    public ViewColumn(ViewModel viewModel, Column column) throws Exception {
+    public ViewColumn(ViewModel viewModel, Column column, ViewBoard viewBoard) throws Exception {
         this.viewModel = viewModel;
         this.column = column;
+        this.viewBoard = viewBoard;
         configComponents();
         configColumn();
     }
@@ -63,15 +65,13 @@ public class ViewColumn extends VBox {
     }
 
     public void configDataComumn() throws Exception {
-        listViewCards.itemsProperty().bindBidirectional(viewModel.getLsViewCard(column, this));
+        listViewCards.itemsProperty().bindBidirectional(viewModel.getLsViewCard(column, this, viewBoard));
+        cards.itemsProperty().bind(viewModel.getlsCardsByColumnProperty(column));
         numLineSelectedCard.bind(viewModel.getNumLineSelectedCardProperty ());
         viewModel.lineSelectedCard(getCardModel().selectedIndexProperty());
-        cards.itemsProperty().bind(viewModel.getlsCardsByColumnProperty(column));
         name.textProperty().bind(new SimpleStringProperty(column.getName()));
         tfColoName.textProperty().bind(new SimpleStringProperty(column.getName()));
     }
-
-
 
     private void configaction() {
         listViewCards.setOnMouseClicked(e -> {
@@ -87,28 +87,24 @@ public class ViewColumn extends VBox {
             if (e.getClickCount() == 1 ) {
                 try {
                     this.viewModel.swapColleft ( column);
-                    configDataComumn();
 
                 }catch (Exception ed) {
-                    throw new Error(ed.getMessage());
+                    System.out.println(ed.getMessage());
                 }
 
             }
         });
+
         Imright.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1 ) {
                 try {
-                    this.viewModel.swapColright ( column);
-                    configDataComumn();
-
+                    this.viewModel.swapColright();
                 }catch (Exception ed) {
-                    throw new Error(ed.getMessage());
+                    System.out.println(ed.getMessage());
                 }
-
             }
         });
     }
-
 
     public SelectionModel<ViewCard> getCardModel() {
         return listViewCards.getSelectionModel();

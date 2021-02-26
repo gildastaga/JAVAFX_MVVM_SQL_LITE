@@ -33,13 +33,15 @@ public class ViewCard extends VBox {
     private Card card;
     private Column column;
     private ViewColumn viewColumn;
+    private ViewBoard viewBoard;
 
 
-    public ViewCard(ViewModel viewModel, Card card, Column column, ViewColumn viewColumn) throws Exception {
+    public ViewCard(ViewModel viewModel, Card card, Column column, ViewColumn viewColumn, ViewBoard viewBoard) throws Exception {
         this.viewModel = viewModel;
         this.card = card;
         this.column = column;
         this.viewColumn = viewColumn;
+        this.viewBoard = viewBoard;
         Scene scene = new Scene(this, weight, heigth);
         configComponents();
     }
@@ -95,36 +97,62 @@ public class ViewCard extends VBox {
     private void configActions() throws Exception {
         configActionUp();
         configActionDown();
+        configActionRight();
     }
 
-    private void configActionUp() throws Exception {
+    private void configActionUp() {
         Imup.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
-            if (e.getClickCount() == 1 ) {
+            if (e.getClickCount() == 1) {
                 try {
-                    this.viewModel.swapCardUp(card, column, viewColumn);
+                    viewModel.lineSelectedCard(viewColumn.getCardModel().selectedIndexProperty());
+                    this.viewModel.swapCardUp(column);
                     viewColumn.configDataComumn();
-
                 }catch (Exception ed) {
                     System.out.println(ed.getMessage());
                 }
-
             }
         });
     }
 
-    private void configActionDown() throws Exception {
+    private void configActionDown() {
         Imdown.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
-            if (e.getClickCount() == 1 ) {
+            if (e.getClickCount() == 1) {
                 try {
-                    this.viewModel.swapCardDown(card, column, viewColumn);
+                    viewModel.lineSelectedCard(viewColumn.getCardModel().selectedIndexProperty());
+                    this.viewModel.swapCardDown(column);
                     viewColumn.configDataComumn();
-
-                }catch (Exception ed) {
+                } catch (Exception ed) {
                     System.out.println(ed.getMessage());
                 }
-
             }
         });
     }
 
+    private void configActionRight() {
+        Imright.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.getClickCount() == 1) {
+                try {
+                    viewModel.lineSelectedCard(viewColumn.getCardModel().selectedIndexProperty());
+                    this.viewModel.swapCardRight(column);
+                    viewColumn.configDataComumn();
+                    viewBoard.configDataBoard();
+                } catch (Exception ed) {
+                    System.out.println(ed.getMessage());
+                }
+            }
+        });
+
+        Imleft.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.getClickCount() == 1) {
+                try {
+                    viewModel.lineSelectedCard(viewColumn.getCardModel().selectedIndexProperty());
+                    this.viewModel.swapCardLeft(column);
+                    viewColumn.configDataComumn();
+                    viewBoard.configDataBoard();
+                } catch (Exception ed) {
+                    System.out.println(ed.getMessage());
+                }
+            }
+        });
+    }
 }
