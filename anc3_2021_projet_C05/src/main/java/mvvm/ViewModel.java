@@ -21,7 +21,7 @@ public class ViewModel {
 
     private final StringProperty bordName = new SimpleStringProperty();
 
-    private final BooleanProperty imleftColumDisabled = new SimpleBooleanProperty(true),
+    private final BooleanProperty imleftColumDisabled = new SimpleBooleanProperty(false),
             ImrightColumDisabled = new SimpleBooleanProperty(true);
 
     public ViewModel(Board board){
@@ -132,7 +132,9 @@ public class ViewModel {
     public BooleanProperty imleftColumDisabledProperty() {
         return imleftColumDisabled;
     }
+
     // card
+
 
     public  void addCard(Column c){
         Card car = c.getCard (numLineSelectedCard.get ());
@@ -142,5 +144,13 @@ public class ViewModel {
 
         }
         configData();
+    }
+
+    public void deleteCard(Card card, Column column) {
+        System.out.println (numLineSelectedCard.getValue ());
+
+        //getColumn (column.getPosition ()).removeCard (board.getCard (numLineSelectedColumn.intValue (),numLineSelectedCard.getValue ()));
+        System.out.println (numLineSelectedColumn.intValue ()+"ici");
+         column.removeCard (card);
     }
 }

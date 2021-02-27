@@ -19,8 +19,8 @@ public class ViewColumn extends VBox {
     private ViewModel viewModel;
     private HBox hbox =new HBox();
     private TextField tfColoName = new TextField();
-    private final ImageView Imleft = new ImageView();
-    private final ImageView Imright = new ImageView();
+    private final ImageView ImleftCol = new ImageView();
+    private final ImageView ImrightCol = new ImageView();
     public final ListView<ViewCard> listViewCards = new ListView<>();
     private final ListView<Card> cards = new ListView<>();
     private final Label name = new Label();
@@ -37,6 +37,7 @@ public class ViewColumn extends VBox {
         configComponents();
         configDisabledBindings();
         configColumn();
+        configaction();
     }
 
     private void configComponents() throws Exception {
@@ -48,23 +49,22 @@ public class ViewColumn extends VBox {
         this.setSpacing(SPACING);
         this.setMaxWidth(200);
         this.getChildren().addAll(hbox,listViewCards);
-        hbox.getChildren().addAll(Imleft,tfColoName,Imright);
+        hbox.getChildren().addAll(ImleftCol,tfColoName, ImrightCol);
     }
 
     private void configImages() throws Exception {
         FileInputStream LEFT = new FileInputStream("src/images/left.png");
         FileInputStream RIGHT = new FileInputStream("src/images/right.png");
-        Imleft.setImage(new Image(LEFT));
-        Imright.setImage(new Image(RIGHT));
+        ImleftCol.setImage(new Image(LEFT));
+        ImrightCol.setImage(new Image(RIGHT));
     }
     private void configDisabledBindings() {
-        Imleft.disableProperty().bind(viewModel.imleftColumDisabledProperty());
+        ImleftCol.disableProperty().bind(viewModel.imleftColumDisabledProperty());
     }
 
 
     private void configColumn() throws Exception{
         configDataComumn();
-        configaction();
     }
 
     public void configDataComumn() throws Exception {
@@ -86,7 +86,7 @@ public class ViewColumn extends VBox {
             }
         });
 
-        Imleft.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+        ImleftCol.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1 ) {
                 try {
                     this.viewModel.swapColleft ( column);
@@ -98,7 +98,7 @@ public class ViewColumn extends VBox {
 
             }
         });
-        Imright.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+        ImrightCol.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1 ) {
                 try {
                     this.viewModel.swapColright ( column);

@@ -3,6 +3,8 @@ package view;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,6 +17,7 @@ import model.Column;
 import mvvm.ViewModel;
 
 import java.io.FileInputStream;
+import java.util.Optional;
 
 public class ViewCard extends VBox {
 
@@ -93,8 +96,10 @@ public class ViewCard extends VBox {
     }
 
     private void configActions() throws Exception {
+
         configActionUp();
         configActionDown();
+        deleteAntion();
     }
 
     private void configActionUp() throws Exception {
@@ -110,6 +115,7 @@ public class ViewCard extends VBox {
 
             }
         });
+
     }
 
     private void configActionDown() throws Exception {
@@ -127,4 +133,19 @@ public class ViewCard extends VBox {
         });
     }
 
+    private void deleteAntion(){
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.isPopupTrigger()){
+                Alert dialogC= new Alert (Alert.AlertType.CONFIRMATION);
+                dialogC.setTitle("confirmation d'action ");
+                dialogC.setHeaderText(null);
+                dialogC.setContentText("can you delete this :"+card.getName () );
+                Optional<ButtonType> answer= dialogC.showAndWait();
+                if(answer.get() == ButtonType.OK){
+                    this.viewModel.deleteCard(card,column);
+                }
+            }
+        });
+
+    }
 }

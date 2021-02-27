@@ -80,8 +80,8 @@ public class ViewBoard extends VBox {
 
     private void configaction() {
         listViewColumn.setOnMouseClicked (e ->{
-            viewModel.addColumn();
             try {
+                viewModel.addColumn();
                 configDataBoard();
             } catch (Exception exception) {
                 exception.printStackTrace ();
