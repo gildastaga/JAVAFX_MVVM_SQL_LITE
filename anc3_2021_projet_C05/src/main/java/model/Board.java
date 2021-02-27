@@ -81,6 +81,7 @@ public class Board {
     /**************************************************  configure card **********************************************************/
 
     public Card getCard(int indexColumn, int indexCard) {
+
         return this.getColumn(indexColumn).getCard(indexCard);
     }
 

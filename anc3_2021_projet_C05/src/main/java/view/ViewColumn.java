@@ -60,7 +60,7 @@ public class ViewColumn extends VBox {
         Imright.setImage(new Image(RIGHT));
     }
     private void configDisabledBindings() {
-        Imleft.disableProperty().bind(viewModel.imleftColumDisabledProperty());
+       // Imleft.disableProperty().bind(viewModel.imleftColumDisabledProperty());
     }
 
 
