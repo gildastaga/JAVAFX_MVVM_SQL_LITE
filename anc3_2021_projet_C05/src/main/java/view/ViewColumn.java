@@ -37,6 +37,7 @@ public class ViewColumn extends VBox {
         this.column = column;
         this.viewBoard = viewBoard;
         configComponents();
+        configDisabledBindings();
         configColumn();
     }
 
@@ -58,6 +59,10 @@ public class ViewColumn extends VBox {
         Imleft.setImage(new Image(LEFT));
         Imright.setImage(new Image(RIGHT));
     }
+    private void configDisabledBindings() {
+        Imleft.disableProperty().bind(viewModel.imleftColumDisabledProperty());
+    }
+
 
     private void configColumn() throws Exception{
         configDataComumn();
