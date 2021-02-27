@@ -19,25 +19,26 @@ public class ViewColumn extends VBox {
     private ViewModel viewModel;
     private HBox hbox =new HBox();
     private TextField tfColoName = new TextField();
-    private final ImageView ImleftCol = new ImageView();
-    private final ImageView ImrightCol = new ImageView();
+    private final ImageView Imleft = new ImageView();
+    private final ImageView Imright = new ImageView();
     public final ListView<ViewCard> listViewCards = new ListView<>();
     private final ListView<Card> cards = new ListView<>();
     private final Label name = new Label();
     private Stage primaryStage;
     private Column column;
+    private ViewBoard viewBoard;
     private final IntegerProperty numLineSelectedCard = new SimpleIntegerProperty(-1);
 
     private int width = 200;
     private int heigth = 100;
 
-    public ViewColumn(ViewModel viewModel, Column column) throws Exception {
+    public ViewColumn(ViewModel viewModel, Column column, ViewBoard viewBoard) throws Exception {
         this.viewModel = viewModel;
         this.column = column;
+        this.viewBoard = viewBoard;
         configComponents();
         configDisabledBindings();
         configColumn();
-        configaction();
     }
 
     private void configComponents() throws Exception {
@@ -49,29 +50,30 @@ public class ViewColumn extends VBox {
         this.setSpacing(SPACING);
         this.setMaxWidth(200);
         this.getChildren().addAll(hbox,listViewCards);
-        hbox.getChildren().addAll(ImleftCol,tfColoName, ImrightCol);
+        hbox.getChildren().addAll(Imleft,tfColoName,Imright);
     }
 
     private void configImages() throws Exception {
         FileInputStream LEFT = new FileInputStream("src/images/left.png");
         FileInputStream RIGHT = new FileInputStream("src/images/right.png");
-        ImleftCol.setImage(new Image(LEFT));
-        ImrightCol.setImage(new Image(RIGHT));
+        Imleft.setImage(new Image(LEFT));
+        Imright.setImage(new Image(RIGHT));
     }
     private void configDisabledBindings() {
-        ImleftCol.disableProperty().bind(viewModel.imleftColumDisabledProperty());
+        Imleft.disableProperty().bind(viewModel.imleftColumDisabledProperty());
     }
 
 
     private void configColumn() throws Exception{
         configDataComumn();
+        configaction();
     }
 
     public void configDataComumn() throws Exception {
-        listViewCards.itemsProperty().bindBidirectional(viewModel.getLsViewCard(column, this));
+        listViewCards.itemsProperty().bindBidirectional(viewModel.getLsViewCard(column, this, viewBoard));
+        cards.itemsProperty().bind(viewModel.getlsCardsByColumnProperty(column));
         numLineSelectedCard.bind(viewModel.getNumLineSelectedCardProperty ());
         viewModel.lineSelectedCard(getCardModel().selectedIndexProperty());
-        cards.itemsProperty().bind(viewModel.getlsCardsByColumnProperty(column));
         name.textProperty().bind(new SimpleStringProperty(column.getName()));
         tfColoName.textProperty().bind(new SimpleStringProperty(column.getName()));
     }
@@ -86,32 +88,28 @@ public class ViewColumn extends VBox {
             }
         });
 
-        ImleftCol.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+        Imleft.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1 ) {
                 try {
                     this.viewModel.swapColleft ( column);
-                    configDataComumn();
 
                 }catch (Exception ed) {
-                    throw new Error(ed.getMessage());
+                    System.out.println(ed.getMessage());
                 }
 
             }
         });
-        ImrightCol.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+
+        Imright.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1 ) {
                 try {
-                    this.viewModel.swapColright ( column);
-                    configDataComumn();
-
+                    this.viewModel.swapColright();
                 }catch (Exception ed) {
-                    throw new Error(ed.getMessage());
+                    System.out.println(ed.getMessage());
                 }
-
             }
         });
     }
-
 
     public SelectionModel<ViewCard> getCardModel() {
         return listViewCards.getSelectionModel();

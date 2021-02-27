@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import model.Board;
 import model.Card;
 import model.Column;
+import view.ViewBoard;
 import view.ViewCard;
 import view.ViewColumn;
 
@@ -21,17 +22,14 @@ public class ViewModel {
 
     private final StringProperty bordName = new SimpleStringProperty();
 
-    private final BooleanProperty imleftColumDisabled = new SimpleBooleanProperty(false),
-            ImrightColumDisabled = new SimpleBooleanProperty(true);
-
     public ViewModel(Board board){
         this.board = board;
-       // configColumSelection();
+       // configColumnSelection();
         configData();
 
     }
 
-    private void configData() {
+    public void configData() {
         columns.setValue(board.getColumns());
         bordName.setValue(board.getName());
     }
@@ -72,71 +70,64 @@ public class ViewModel {
         return new SimpleListProperty<Card>(column.getCards());
     }
 
-    public void swapCardDown(Card card, Column column, ViewColumn viewColumn) throws Exception{
-        board.swapCardDown(card, column.getPosition());
-         getLsViewCard(column, viewColumn);
+    /**************************************************  configure card **********************************************************/
+
+    public void swapCardDown(Column column) {
+        board.swapCardDown(numLineSelectedCard.intValue(), column.getPosition());
     }
 
-    public void swapCardUp(Card card, Column column, ViewColumn viewColumn) throws Exception{
-        System.out.println("select: " + column.getCards());
-        board.swapCardUp(card, column.getPosition());
-        getLsViewCard(column, viewColumn);
+    public void swapCardUp(Column column) {
+        board.swapCardUp(numLineSelectedCard.intValue(), column.getPosition());
     }
 
-    public SimpleListProperty<ViewCard> getLsViewCard(Column column, ViewColumn viewColumn) throws Exception {
+    public void swapCardRight(Column column) {
+        board.swapCardRight(numLineSelectedCard.intValue(), column.getPosition());
+    }
+
+    public void swapCardLeft(Column column) {
+        board.swapCardLeft(numLineSelectedCard.intValue(), column.getPosition());
+    }
+
+    public SimpleListProperty<ViewCard> getLsViewCard(Column column, ViewColumn viewColumn, ViewBoard viewBoard) throws Exception {
         ObservableList<ViewCard> lscards = FXCollections.observableArrayList();
         for (int i = 0; i < column.getCards().size(); ++i) {
-            lscards.add(new ViewCard(this, column.getCards().get(i), column, viewColumn));
+            lscards.add(new ViewCard(this, column.getCards().get(i), column, viewColumn, viewBoard));
         }
 
         return new SimpleListProperty<>(lscards);
     }
 
-    public SimpleListProperty<ViewColumn> getLsViewColum() throws Exception {
+    /**************************************************  configure column **********************************************************/
+
+    public void swapColleft(Column column) throws Exception {
+        board.swapColumnLeft (numLineSelectedColumn.intValue());
+    }
+
+    public void swapColright() throws Exception {
+        board.swapColumnRight (numLineSelectedColumn.intValue());
+    }
+
+    public SimpleListProperty<ViewColumn> getLsViewColum(ViewBoard viewBoard) throws Exception {
         ObservableList<ViewColumn> lscolumns = FXCollections.observableArrayList();
         for (int i = 0; i < getColumnsProperty().size(); ++i) {
-            lscolumns.add(new ViewColumn(this, getColumn(i)));
+            lscolumns.add(new ViewColumn(this, getColumn(i), viewBoard));
         }
-        configActionnableButtons();
+
         return new SimpleListProperty<>(lscolumns);
     }
-    // column
 
-    public void addColumn()  {
+    public void addColumn() {
         Column c = getColumn(numLineSelectedColumn.get ());
         if (c == null ){
             board.addColumn(new Column ("Column ",board.getColumns ().size ()+1));
-        }else {
+        } else {
 
             // board.addColumn(new Column ("Column "+listColumn.size ()));
         }
         configData();
     }
-    public void swapColleft(Column column) throws Exception{
-        System.out.println (numLineSelectedColumn.get ());
-        board.swapColleft (column.getPosition());
-        getLsViewColum();
-    }
-    public void swapColright(Column column) throws Exception{
-        board.swapColright (column.getPosition());
-        getLsViewColum();
-    }
-    private void configColumSelection() {
-        numLineSelectedColumn.addListener((obs, oldval, newval) ->
-                configActionnableButtons());
-    }
-    private void configActionnableButtons() {
-        imleftColumDisabled.setValue ( numLineSelectedColumn.get ()==-1);
-    }
 
-    public BooleanProperty imleftColumDisabledProperty() {
-        return imleftColumDisabled;
-    }
-
-    // card
-
-
-    public  void addCard(Column c){
+    public  void addCard(Column c) {
         Card car = c.getCard (numLineSelectedCard.get ());
         if (car == null ){
             c.addCard(new Card ("Card ",c.getCards ().size ()+1));
@@ -144,13 +135,5 @@ public class ViewModel {
 
         }
         configData();
-    }
-
-    public void deleteCard(Card card, Column column) {
-        System.out.println (numLineSelectedCard.getValue ());
-
-        //getColumn (column.getPosition ()).removeCard (board.getCard (numLineSelectedColumn.intValue (),numLineSelectedCard.getValue ()));
-        System.out.println (numLineSelectedColumn.intValue ()+"ici");
-         column.removeCard (card);
     }
 }

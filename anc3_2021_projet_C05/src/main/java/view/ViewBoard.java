@@ -66,12 +66,12 @@ public class ViewBoard extends VBox {
         configaction();
     }
 
-    private void configDataBoard() throws Exception {
+    public void configDataBoard() throws Exception {
         numLineSelectedColumn.bind(viewModel.getNumLineSelectedColumnProperty());
         viewModel.lineSelectedColumn(getColumnModel().selectedIndexProperty());
         lbBoardName.textProperty().bind(viewModel.getBordNameProperty());
         columns.itemsProperty().bind(viewModel.getColumnsProperty());
-        listViewColumn.itemsProperty().bind(viewModel.getLsViewColum());
+        listViewColumn.itemsProperty().bind(viewModel.getLsViewColum(this));
     }
 
     public SelectionModel<ViewColumn> getColumnModel() {

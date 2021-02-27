@@ -3,8 +3,6 @@ package view;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,7 +15,6 @@ import model.Column;
 import mvvm.ViewModel;
 
 import java.io.FileInputStream;
-import java.util.Optional;
 
 public class ViewCard extends VBox {
 
@@ -36,13 +33,15 @@ public class ViewCard extends VBox {
     private Card card;
     private Column column;
     private ViewColumn viewColumn;
+    private ViewBoard viewBoard;
 
 
-    public ViewCard(ViewModel viewModel, Card card, Column column, ViewColumn viewColumn) throws Exception {
+    public ViewCard(ViewModel viewModel, Card card, Column column, ViewColumn viewColumn, ViewBoard viewBoard) throws Exception {
         this.viewModel = viewModel;
         this.card = card;
         this.column = column;
         this.viewColumn = viewColumn;
+        this.viewBoard = viewBoard;
         Scene scene = new Scene(this, weight, heigth);
         configComponents();
     }
@@ -96,56 +95,64 @@ public class ViewCard extends VBox {
     }
 
     private void configActions() throws Exception {
-
         configActionUp();
         configActionDown();
-        deleteAntion();
+        configActionRight();
     }
 
-    private void configActionUp() throws Exception {
+    private void configActionUp() {
         Imup.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
-            if (e.getClickCount() == 1 ) {
+            if (e.getClickCount() == 1) {
                 try {
-                    this.viewModel.swapCardUp(card, column, viewColumn);
+                    viewModel.lineSelectedCard(viewColumn.getCardModel().selectedIndexProperty());
+                    this.viewModel.swapCardUp(column);
                     viewColumn.configDataComumn();
-
                 }catch (Exception ed) {
                     System.out.println(ed.getMessage());
                 }
-
             }
         });
-
     }
 
-    private void configActionDown() throws Exception {
+    private void configActionDown() {
         Imdown.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
-            if (e.getClickCount() == 1 ) {
+            if (e.getClickCount() == 1) {
                 try {
-                    this.viewModel.swapCardDown(card, column, viewColumn);
+                    viewModel.lineSelectedCard(viewColumn.getCardModel().selectedIndexProperty());
+                    this.viewModel.swapCardDown(column);
                     viewColumn.configDataComumn();
-
-                }catch (Exception ed) {
+                } catch (Exception ed) {
                     System.out.println(ed.getMessage());
                 }
-
             }
         });
     }
 
-    private void deleteAntion(){
-        this.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
-            if (e.isPopupTrigger()){
-                Alert dialogC= new Alert (Alert.AlertType.CONFIRMATION);
-                dialogC.setTitle("confirmation d'action ");
-                dialogC.setHeaderText(null);
-                dialogC.setContentText("can you delete this :"+card.getName () );
-                Optional<ButtonType> answer= dialogC.showAndWait();
-                if(answer.get() == ButtonType.OK){
-                    this.viewModel.deleteCard(card,column);
+    private void configActionRight() {
+        Imright.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.getClickCount() == 1) {
+                try {
+                    viewModel.lineSelectedCard(viewColumn.getCardModel().selectedIndexProperty());
+                    this.viewModel.swapCardRight(column);
+                    viewColumn.configDataComumn();
+                    viewBoard.configDataBoard();
+                } catch (Exception ed) {
+                    System.out.println(ed.getMessage());
                 }
             }
         });
 
+        Imleft.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.getClickCount() == 1) {
+                try {
+                    viewModel.lineSelectedCard(viewColumn.getCardModel().selectedIndexProperty());
+                    this.viewModel.swapCardLeft(column);
+                    viewColumn.configDataComumn();
+                    viewBoard.configDataBoard();
+                } catch (Exception ed) {
+                    System.out.println(ed.getMessage());
+                }
+            }
+        });
     }
 }
