@@ -73,6 +73,7 @@ public class Board {
         int pos = c.getPosition();
         Column that = this.columns.get(pos - 1);
         if(this.columns.get(pos - 1).getPosition() >= this.getColumn(0).getPosition()) {
+
             c.setPosition(pos - 1);
             that.setPosition(pos);
         }
@@ -81,7 +82,6 @@ public class Board {
     /**************************************************  configure card **********************************************************/
 
     public Card getCard(int indexColumn, int indexCard) {
-
         return this.getColumn(indexColumn).getCard(indexCard);
     }
 

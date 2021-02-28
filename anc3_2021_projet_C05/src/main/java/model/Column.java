@@ -75,7 +75,7 @@ public class Column {
     }
 
     public Card getCard(int index) {
-        return position == -1 ? null : this.lsCards.get(index);
+        return index == -1 ?  null : this.lsCards.get(index);
     }
 
     public ObservableList<Card> getCards() {

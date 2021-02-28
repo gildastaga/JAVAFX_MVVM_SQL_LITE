@@ -3,18 +3,20 @@ package view;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import model.Card;
 import model.Column;
 import mvvm.ViewModel;
 
 import java.io.FileInputStream;
+import java.util.Optional;
 
 public class ViewCard extends VBox {
 
@@ -25,8 +27,8 @@ public class ViewCard extends VBox {
     private final Label lbCarte = new Label();
     private final ImageView Imup = new ImageView();
     private final ImageView Imdown = new ImageView();
-    private final ImageView Imleft = new ImageView();
-    private final ImageView Imright = new ImageView();
+    private final ImageView ImleftCard = new ImageView();
+    private final ImageView ImrightCard = new ImageView();
     private int weight = 200;
     private int heigth = 150;
     private static final double SPACING = 10;
@@ -70,17 +72,17 @@ public class ViewCard extends VBox {
 
         Imup.setImage(new Image(UP));
         Imdown.setImage(new Image(DOWN));
-        Imleft.setImage(new Image(LEFT));
-        Imright.setImage(new Image(RIGHT));
+        ImleftCard.setImage(new Image(LEFT));
+        ImrightCard.setImage(new Image(RIGHT));
         up.getChildren().add(Imup);
-        left_right.getChildren().addAll(Imleft, lbCarte, Imright);
+        left_right.getChildren().addAll(ImleftCard, lbCarte, ImrightCard);
         down.getChildren().add(Imdown);
     }
 
     private void componentsDecoration() {
         up.setTranslateX(65);
         lbCarte.setTranslateX(35);
-        Imright.setTranslateX(65);
+        ImrightCard.setTranslateX(65);
         down.setTranslateX(65);
         left_right.setTranslateY(5);
     }
@@ -98,6 +100,8 @@ public class ViewCard extends VBox {
         configActionUp();
         configActionDown();
         configActionRight();
+        configActionLeft();
+        actionDeleteCard();
     }
 
     private void configActionUp() {
@@ -129,10 +133,10 @@ public class ViewCard extends VBox {
     }
 
     private void configActionRight() {
-        Imright.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+        ImrightCard.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1) {
                 try {
-                    viewModel.lineSelectedCard(viewColumn.getCardModel().selectedIndexProperty());
+                    //viewModel.lineSelectedCard(viewColumn.getCardModel().selectedIndexProperty());
                     this.viewModel.swapCardRight(column);
                     viewColumn.configDataComumn();
                     viewBoard.configDataBoard();
@@ -141,16 +145,31 @@ public class ViewCard extends VBox {
                 }
             }
         });
-
-        Imleft.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+    }
+    private void configActionLeft() {
+        ImleftCard.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1) {
                 try {
-                    viewModel.lineSelectedCard(viewColumn.getCardModel().selectedIndexProperty());
+                   /// viewModel.lineSelectedCard(viewColumn.getCardModel().selectedIndexProperty());
                     this.viewModel.swapCardLeft(column);
                     viewColumn.configDataComumn();
                     viewBoard.configDataBoard();
                 } catch (Exception ed) {
                     System.out.println(ed.getMessage());
+                }
+            }
+        });
+    }
+    private void actionDeleteCard(){
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.isPopupTrigger()){
+                Alert dialogC= new Alert (Alert.AlertType.CONFIRMATION);
+                dialogC.setTitle("confirmation d'action ");
+                dialogC.setHeaderText(null);
+                dialogC.setContentText("can you delete this :"+card.getName () );
+                Optional<ButtonType> answer= dialogC.showAndWait();
+                if(answer.get() == ButtonType.OK) {
+                    this.viewModel.deleteCard (card, column);
                 }
             }
         });

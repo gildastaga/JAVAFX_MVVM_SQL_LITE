@@ -81,7 +81,10 @@ public class ViewModel {
     }
 
     public void swapCardRight(Column column) {
-        board.swapCardRight(numLineSelectedCard.intValue(), column.getPosition());
+        board.swapCardRight(numLineSelectedCard.intValue(),column.getPosition());
+      /* int indexCol= getColumn (numLineSelectedColumn.getValue ()).getPosition (); // pb de bind
+       int indexCard= numLineSelectedCard.getValue ();
+        board.swapCardRight(indexCard, indexCol);*/
     }
 
     public void swapCardLeft(Column column) {
@@ -95,6 +98,22 @@ public class ViewModel {
         }
 
         return new SimpleListProperty<>(lscards);
+    }
+
+    public  void addCard(Column c) {
+        Column col = getColumn (numLineSelectedColumn.getValue ());//le bind ne fonction pas
+        System.out.println (col);
+        Card car = c.getCard (numLineSelectedCard.get ());
+        if (car == null ){
+            c.addCard(new Card ("Card ",c.getCards ().size ()+1));
+        }else {
+
+        }
+        configData();
+    }
+    public void deleteCard(Card card, Column column) {
+        //getColumn (column.getPosition ()).removeCard (board.getCard (numLineSelectedColumn.intValue (),numLineSelectedCard.getValue ()));
+        column.removeCard (card);
     }
 
     /**************************************************  configure column **********************************************************/
@@ -120,20 +139,9 @@ public class ViewModel {
         Column c = getColumn(numLineSelectedColumn.get ());
         if (c == null ){
             board.addColumn(new Column ("Column ",board.getColumns ().size ()+1));
-        } else {
-
-            // board.addColumn(new Column ("Column "+listColumn.size ()));
         }
         configData();
     }
 
-    public  void addCard(Column c) {
-        Card car = c.getCard (numLineSelectedCard.get ());
-        if (car == null ){
-            c.addCard(new Card ("Card ",c.getCards ().size ()+1));
-        }else {
 
-        }
-        configData();
-    }
 }

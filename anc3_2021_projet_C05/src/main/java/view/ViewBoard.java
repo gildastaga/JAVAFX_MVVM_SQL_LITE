@@ -63,12 +63,13 @@ public class ViewBoard extends VBox {
 
     private void configBoard() throws Exception{
         configDataBoard();
-        configaction();
+        configactionAddCol();
     }
 
     public void configDataBoard() throws Exception {
         numLineSelectedColumn.bind(viewModel.getNumLineSelectedColumnProperty());
         viewModel.lineSelectedColumn(getColumnModel().selectedIndexProperty());
+        //viewModel.lineSelectedColumn ().bind (columns.getSelectionModel().selectedIndexProperty());
         lbBoardName.textProperty().bind(viewModel.getBordNameProperty());
         columns.itemsProperty().bind(viewModel.getColumnsProperty());
         listViewColumn.itemsProperty().bind(viewModel.getLsViewColum(this));
@@ -78,7 +79,7 @@ public class ViewBoard extends VBox {
         return listViewColumn.getSelectionModel();
     }
 
-    private void configaction() {
+    private void configactionAddCol() {
         listViewColumn.setOnMouseClicked (e ->{
             try {
                 viewModel.addColumn();
