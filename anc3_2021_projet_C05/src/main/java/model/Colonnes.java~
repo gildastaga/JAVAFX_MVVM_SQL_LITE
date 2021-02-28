@@ -1,0 +1,76 @@
+package model;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableSet;
+
+import java.util.Collections;
+import java.util.Set;
+import java.util.TreeSet;
+
+public class Colonnes implements Comparable<Colonnes>{
+    private final String name;
+    private ObservableSet<Cartes> CartePerColumn;
+    private final IntegerProperty size = new SimpleIntegerProperty();
+
+    public Colonnes(String name){
+        this.name = name;
+        CartePerColumn = FXCollections.observableSet(new TreeSet<>());
+    }
+
+    public final String getName() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Colonnes)) return false;
+        Colonnes col = (Colonnes) o;
+        return name != null ? name.equals(col.name): col.name==null ;
+    }
+
+    @Override
+    public int hashCode() {
+        return name != null? name.hashCode() : 0 ;
+    }
+
+    @Override
+    public int compareTo(Colonnes o) {
+        return this.name.compareToIgnoreCase(o.name);
+    }
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    boolean addCarte(Cartes cartes) {
+
+        return CartePerColumn.add(cartes);
+    }
+
+    int nbCartes() {
+        return CartePerColumn.size();
+    }
+
+    boolean removeCartes(Cartes carte) {
+        return CartePerColumn.remove(carte);
+    }
+
+    boolean existsCartes(Cartes carte) {
+        return CartePerColumn.contains(carte);
+    }
+
+    public final Set<Cartes> getCartes() {
+        return Collections.unmodifiableSet(CartePerColumn);
+    }
+
+    public IntegerProperty sizeProperty() {
+        return size;
+    }
+
+    public IntegerProperty isFullProperty() {
+        return size;
+    }
+}
