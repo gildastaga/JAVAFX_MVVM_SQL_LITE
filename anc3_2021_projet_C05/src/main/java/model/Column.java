@@ -76,6 +76,7 @@ public class Column {
 
     public Card getCard(int index) {
         return position == -1 ? null : this.lsCards.get(index);
+
     }
 
     public ObservableList<Card> getCards() {
@@ -84,6 +85,7 @@ public class Column {
     }
 
     /**************************************************  configure swapCard up down **********************************************************/
+
     public void swapCardDown(int index) {
         Card card = getCard(index);
         Card that = this.getCard(index + 1);
@@ -102,33 +104,4 @@ public class Column {
         }
     }
 
-    /**************************************************  configure swapCard letf right **********************************************************/
-
-    /*public void swapCardRight(int index) {
-        Card pos = this.getCard(index);
-        Column that = this;
-        int c = this.getPosition() + 1;
-        that.removeCard(pos);
-        that.addCard(pos);
-
-
-        //if(this.lsCards.get(card.getPosition() + 1).getPosition() < lsCards.size()) {
-        //card.setPosition(pos + 1);
-        //that.setPosition(pos);
-        //}
-    }*/
-
-    /*public void swapCardLeft(int index) {
-        Card pos = this.getCard(index);
-        Column that = this;
-        that.removeCard(pos);
-        that.addCard(pos);
-
-
-        Card that = board.getColumn(index - 1) .getCard(card.getPosition());
-        // if(this.lsCards.get(card.getPosition() - 1).getPosition() >= this.getCard(0).getPosition()) {
-        card.setPosition(pos - 1);
-        that.setPosition(pos);
-        // }
-    }*/
 }

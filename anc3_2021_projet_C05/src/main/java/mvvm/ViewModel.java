@@ -122,8 +122,8 @@ public class ViewModel {
             board.addColumn(new Column ("Column ",board.getColumns ().size ()+1));
         } else {
 
-            // board.addColumn(new Column ("Column "+listColumn.size ()));
-        }
+            //TODO
+         }
         configData();
     }
 
@@ -133,7 +133,17 @@ public class ViewModel {
             c.addCard(new Card ("Card ",c.getCards ().size ()+1));
         }else {
 
+            //TODO
+
         }
         configData();
+    }
+
+    public void deleteCard(Card card, Column column) {
+        column.removeCard (card);
+    }
+
+    public void deleteColumn(Column column) {
+        board.removeColumn (column);
     }
 }

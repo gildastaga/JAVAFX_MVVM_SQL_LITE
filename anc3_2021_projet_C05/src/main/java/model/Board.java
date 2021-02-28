@@ -92,6 +92,8 @@ public class Board {
         this.getColumn(index).swapCardDown(indexCard);
     }
 
+    /**************************************************  configure swapCard letf right **********************************************************/
+
     public void swapCardRight(int indexCard, int index) {
         Column that = this.getColumn(index + 1);
         Column column = this.getColumn(index);
@@ -110,7 +112,7 @@ public class Board {
         column.removeCard(card);
     }
 
-    /**************************************************  init data **********************************************************/
+    /**************************************************  init data *******************************************************************************/
     private void initData() {
         Card Carte_1 = new Card("Carte 1", 0),
                 Carte_2 = new Card("Carte 2", 0),

@@ -13,6 +13,7 @@ import model.Column;
 import mvvm.ViewModel;
 
 import java.io.FileInputStream;
+import java.util.Optional;
 
 public class ViewColumn extends VBox {
     private static final double SPACING = 10;
@@ -27,6 +28,7 @@ public class ViewColumn extends VBox {
     private Stage primaryStage;
     private Column column;
     private ViewBoard viewBoard;
+    private ViewColumn viewColumn;
     private final IntegerProperty numLineSelectedCard = new SimpleIntegerProperty(-1);
 
     private int width = 200;
@@ -59,14 +61,15 @@ public class ViewColumn extends VBox {
         Imleft.setImage(new Image(LEFT));
         Imright.setImage(new Image(RIGHT));
     }
+
     private void configDisabledBindings() {
-        Imleft.disableProperty().bind(viewModel.imleftColumDisabledProperty());
+        //Imleft.disableProperty().bind(viewModel.imleftColumDisabledProperty());
     }
 
-
-    private void configColumn() throws Exception{
+    private void configColumn() throws Exception {
         configDataComumn();
         configaction();
+        deleteAction();
     }
 
     public void configDataComumn() throws Exception {
@@ -79,19 +82,19 @@ public class ViewColumn extends VBox {
     }
 
     private void configaction() {
-        listViewCards.setOnMouseClicked(e -> {
+        /*listViewCards.setOnMouseClicked(e -> {
             viewModel.addCard(column);
             try {
                 configDataComumn();
             } catch (Exception exception) {
                 exception.printStackTrace ();
             }
-        });
+        });*/
 
         Imleft.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1 ) {
                 try {
-                    this.viewModel.swapColleft ( column);
+                    this.viewModel.swapColleft (column);
 
                 }catch (Exception ed) {
                     System.out.println(ed.getMessage());
@@ -113,5 +116,20 @@ public class ViewColumn extends VBox {
 
     public SelectionModel<ViewCard> getCardModel() {
         return listViewCards.getSelectionModel();
+    }
+
+    private void deleteAction() {
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.isPopupTrigger()) {
+                Alert dialogC = new Alert(Alert.AlertType.CONFIRMATION);
+                dialogC.setTitle("confirmation d'action ");
+                dialogC.setHeaderText(null);
+                dialogC.setContentText("can you delete this column :" + column.getName());
+                Optional<ButtonType> answer = dialogC.showAndWait();
+                if (answer.get() == ButtonType.OK) {
+                    this.viewModel.deleteColumn(column);
+                }
+            }
+        });
     }
 }
