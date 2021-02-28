@@ -127,14 +127,11 @@ public class ViewModel {
         configData();
     }
 
-    public  void addCard(Column c) {
-        Card car = c.getCard (numLineSelectedCard.get ());
-        if (car == null ){
+    public  void addCard(Card card, Column c) {
+        if (card == null ){
             c.addCard(new Card ("Card ",c.getCards ().size ()+1));
         }else {
-
-            //TODO
-
+            c.addCard(card);
         }
         configData();
     }

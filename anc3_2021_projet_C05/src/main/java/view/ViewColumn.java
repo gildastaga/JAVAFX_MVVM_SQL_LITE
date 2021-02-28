@@ -82,8 +82,8 @@ public class ViewColumn extends VBox {
     }
 
     private void configaction() {
-        /*listViewCards.setOnMouseClicked(e -> {
-            viewModel.addCard(column);
+        /*cards.setOnMouseClicked(e -> {
+            viewModel.addCard(column.getCard(numLineSelectedCard.intValue()), column);
             try {
                 configDataComumn();
             } catch (Exception exception) {
