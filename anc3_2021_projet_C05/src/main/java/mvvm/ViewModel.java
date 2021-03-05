@@ -1,6 +1,7 @@
 package mvvm;
 
 import javafx.beans.property.*;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Board;
@@ -22,16 +23,20 @@ public class ViewModel {
 
     private final StringProperty bordName = new SimpleStringProperty();
 
+    private BooleanProperty imleftColumDisabled= new SimpleBooleanProperty(false),
+            imRightColumDisabled = new SimpleBooleanProperty(false),
+            newNameColumnDisabled= new SimpleBooleanProperty (true);
+
     public ViewModel(Board board){
         this.board = board;
        // configColumnSelection();
-        configData();
-
+        //configData();
+        //configActionnableImages ();
     }
 
     public void configData() {
-        columns.setValue(board.getColumns());
-        bordName.setValue(board.getName());
+       // columns.setValue(board.getColumns());
+      //  bordName.setValue(board.getName());
     }
 
     public SimpleListProperty<Card> getCardsByColumnProperty() {
@@ -46,23 +51,23 @@ public class ViewModel {
         return numLineSelectedColumn;
     }
 
-    public IntegerProperty getNumLineSelectedCardProperty() {
-        return numLineSelectedCard;
-    }
 
     public void lineSelectedColumn(ReadOnlyIntegerProperty index) {
         numLineSelectedColumn.bind(index);
     }
-
-    public void lineSelectedCard(ReadOnlyIntegerProperty index) {
-        numLineSelectedCard.bind(index);
+    public IntegerProperty getNumLineSelectedCardProperty() {
+        return numLineSelectedCard;
     }
+
+    //public void lineSelectedCard(ReadOnlyIntegerProperty index) {
+     //   numLineSelectedCard.bind(index);
+  //  }
 
     public StringProperty getBordNameProperty() {
         return bordName;
     }
 
-    public Column getColumn(int index) {
+    private Column getColumn(int index) {
         return index == -1  ? null : board.getColumn(index);
     }
 
@@ -88,14 +93,14 @@ public class ViewModel {
         board.swapCardLeft(numLineSelectedCard.intValue(), column.getPosition());
     }
 
-    public SimpleListProperty<ViewCard> getLsViewCard(Column column, ViewColumn viewColumn, ViewBoard viewBoard) throws Exception {
+   /* public SimpleListProperty<ViewCard> getLsViewCard(Column column, ViewColumn viewColumn, ViewBoard viewBoard) throws Exception {
         ObservableList<ViewCard> lscards = FXCollections.observableArrayList();
         for (int i = 0; i < column.getCards().size(); ++i) {
-            lscards.add(new ViewCard(this, column.getCards().get(i), column, viewColumn, viewBoard));
+         //   lscards.add(new ViewCard(this, column.getCards().get(i), column, viewColumn, viewBoard));
         }
 
         return new SimpleListProperty<>(lscards);
-    }
+    }*/
 
     /**************************************************  configure column **********************************************************/
 
@@ -107,19 +112,19 @@ public class ViewModel {
         board.swapColumnRight (numLineSelectedColumn.intValue());
     }
 
-    public SimpleListProperty<ViewColumn> getLsViewColum(ViewBoard viewBoard) throws Exception {
+    /*public SimpleListProperty<ViewColumn> getLsViewColum(ViewBoard viewBoard) throws Exception {
         ObservableList<ViewColumn> lscolumns = FXCollections.observableArrayList();
         for (int i = 0; i < getColumnsProperty().size(); ++i) {
             lscolumns.add(new ViewColumn(this, getColumn(i), viewBoard));
         }
-
+        imRightColumDisabledProperty ();
         return new SimpleListProperty<>(lscolumns);
-    }
+    }*/
 
     public void addColumn() {
         Column c = getColumn(numLineSelectedColumn.get ());
         if (c == null ){
-            board.addColumn(new Column ("Column ",board.getColumns ().size ()+1));
+            board.addColumn(new Column ("Column "+board.getColumns ().size (),board.getColumns ().size ()+1,board));
         } else {
 
             //TODO
@@ -127,12 +132,13 @@ public class ViewModel {
         configData();
     }
 
-    public  void addCard(Card card, Column c) {
-        if (card == null ){
-            c.addCard(new Card ("Card ",c.getCards ().size ()+1));
+    public  void addCard( Column c) {
+      //  c.addCard(new Card ("Card "+c.getCards ().size ()+1,c.getCards ().size ()));
+     /*   if (card == null ){
+
         }else {
             c.addCard(card);
-        }
+        }*/
         configData();
     }
 
@@ -142,5 +148,27 @@ public class ViewModel {
 
     public void deleteColumn(Column column) {
         board.removeColumn (column);
+    }
+
+    /////////////////////////////////configdisable////////////////////
+    private void configColumnSelection() {
+        numLineSelectedColumn.addListener((obs, oldval, newval) ->
+               configActionnableImages ());
+    }
+    private void configActionnableImages() {
+        imleftColumDisabled.setValue(board.getposition ()==0);
+       // imRightColumDisabled.setValue( board.getColumn (numLineSelectedColumn.getValue ()).getPosition ()>=(board.getColumns ().size ()-1));
+
+    }
+
+    public BooleanProperty imleftColumDisabledProperty() {
+        return imleftColumDisabled;
+    }
+    public  BooleanProperty imRightColumDisabledProperty(){
+        return imRightColumDisabled;
+    }
+
+    public BooleanProperty newNameColumnDisabledProperty() {
+        return newNameColumnDisabled;
     }
 }

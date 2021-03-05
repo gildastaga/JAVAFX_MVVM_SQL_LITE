@@ -2,10 +2,8 @@ package model;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 
 import java.util.*;
 
@@ -40,7 +38,7 @@ public class Board {
     }
 
     public ObservableList<Column> getColumns() {
-        Collections.sort(columns, new SortColumnByPosition());
+        //Collections.sort(columns, new SortColumnByPosition());
         return columns;
     }
 
@@ -57,26 +55,30 @@ public class Board {
     public Column getColumn(int index) {
       return   index == -1 ? null :this.getColumns().get(index);
     }
+    public int getposition(){
+        return  this.columns.indexOf (this);
+    }
 
     public void swapColumnRight(int index) {
-        Column c = this.columns.get(index);
+        Column c = this.getColumn (index);
         int pos = c.getPosition();
-        Column that = this.columns.get(pos + 1);
-        if(this.columns.get(pos + 1).getPosition() < columns.size() ) {
+        Column that = this.getColumn (pos + 1);
+        if(that.getPosition() < this.columns.size ()) {
             c.setPosition(pos + 1);
             that.setPosition(pos);
         }
+        Collections.swap (columns, index, index + 1);
     }
 
     public void swapColumnLeft(int index) {
-        Column c = this.columns.get(index);
+        Column c = this.getColumn (index);
         int pos = c.getPosition();
-        Column that = this.columns.get(pos - 1);
-        if(this.columns.get(pos - 1).getPosition() >= this.getColumn(0).getPosition()) {
-
+        Column that = this.getColumn (pos - 1);
+        if(that.getPosition() >= this.getColumn(0).getPosition()) {
             c.setPosition(pos - 1);
             that.setPosition(pos);
         }
+        Collections.swap (columns, index, index - 1);
     }
 
     /**************************************************  configure card **********************************************************/
@@ -115,17 +117,18 @@ public class Board {
 
     /**************************************************  init data *******************************************************************************/
     private void initData() {
-        Card Carte_1 = new Card("Carte 1", 0),
-                Carte_2 = new Card("Carte 2", 0),
-                Carte_3 = new Card("Carte 3", 1),
-                Carte_4 = new Card("Carte 4", 0),
-                Carte_5 = new Card("Carte 5", 1),
-                Carte_6 = new Card("Carte 6", 2);
 
-        Column à_faire = new Column("à faire", 0),
-                à_tester = new Column("à tester", 1),
-                en_cours = new Column("en cours", 2),
-                en_attente_de_paiement = new Column("en attente de paiement", 3);
+
+        Column à_faire = new Column("à faire", 0,this),
+                à_tester = new Column("à tester", 1,this),
+                en_cours = new Column("en cours", 2,this),
+                en_attente_de_paiement = new Column("en attente de paiement", 3,this);
+        Card Carte_1 = new Card("Carte 1", 0,à_faire),
+                Carte_2 = new Card("Carte 2", 0,à_tester),
+                Carte_3 = new Card("Carte 3", 1,à_tester),
+                Carte_4 = new Card("Carte 4", 0,en_cours),
+                Carte_5 = new Card("Carte 5", 1,en_cours),
+                Carte_6 = new Card("Carte 6", 2,en_cours);
 
         columns.add(à_faire);
         columns.add(à_tester);
