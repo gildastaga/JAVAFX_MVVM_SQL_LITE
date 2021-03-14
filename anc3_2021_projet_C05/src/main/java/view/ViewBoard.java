@@ -25,8 +25,6 @@ public class ViewBoard extends ListView<Column> {
     public List<ViewColumn> listViewColumn= new ArrayList ();
     private final IntegerProperty numLineSelectedColumn = new SimpleIntegerProperty(-1);
 
-
-
     ViewBoard(BoardViewModel boardViewModel)  {
         this.boardViewModel= boardViewModel;
         this.setOrientation(Orientation.HORIZONTAL);
@@ -39,12 +37,12 @@ public class ViewBoard extends ListView<Column> {
         configactionAddCol();
     }
 
-    public void configDataBoard()  {
+    public void configDataBoard() {
         numLineSelectedColumn.bind(boardViewModel.getNumLineSelectedColumnProperty());
         this.itemsProperty().bind(boardViewModel.getColumnsProperty());
     }
 
-    private void updateLvcColon(){
+    private void updateLvcColon() {
         this.setCellFactory(view -> new ListCell<>(){
             @Override
             protected void updateItem(Column col, boolean b){

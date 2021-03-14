@@ -13,7 +13,7 @@ public class Main extends Application {
 
 @Override
     public void start(Stage stage) throws Exception {
-        String name ="Mon Tableau";
+        String name = "Tableau";
         Board board = new Board (name);
         ViewModel viewModel = new ViewModel(board);
         TrelloView view = new TrelloView(stage,viewModel,board);

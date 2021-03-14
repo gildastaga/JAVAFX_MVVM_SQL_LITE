@@ -150,11 +150,13 @@ public class ViewModel {
         board.removeColumn (column);
     }
 
-    /////////////////////////////////configdisable////////////////////
+    /************************************************************** configdisable ********************************************************/
+
     private void configColumnSelection() {
         numLineSelectedColumn.addListener((obs, oldval, newval) ->
                configActionnableImages ());
     }
+
     private void configActionnableImages() {
         imleftColumDisabled.setValue(board.getposition ()==0);
        // imRightColumDisabled.setValue( board.getColumn (numLineSelectedColumn.getValue ()).getPosition ()>=(board.getColumns ().size ()-1));
@@ -164,11 +166,16 @@ public class ViewModel {
     public BooleanProperty imleftColumDisabledProperty() {
         return imleftColumDisabled;
     }
+    
     public  BooleanProperty imRightColumDisabledProperty(){
         return imRightColumDisabled;
     }
 
     public BooleanProperty newNameColumnDisabledProperty() {
         return newNameColumnDisabled;
+    }
+
+    public void updateBordName(String name) {
+        this.board.setName(name);
     }
 }

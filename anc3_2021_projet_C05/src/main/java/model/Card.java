@@ -32,6 +32,10 @@ public class Card {
         return name;
     }
 
+    public void setNameCard(String name) {
+        this.name = name;
+    }
+
     public int getPosition() {
         return position;
     }

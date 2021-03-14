@@ -41,6 +41,11 @@ public class Column {
     public final String getName() {
         return name;
     }
+
+    public void setNameColumn(String name) {
+        this.name = name;
+    }
+
     public Board getBoard() {
         return board;
     }

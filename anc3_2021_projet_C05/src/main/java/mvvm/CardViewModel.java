@@ -42,4 +42,8 @@ public class CardViewModel {
        // column.removeCard (card);
     }
 
+    public void updateCardName(String name) {
+        this.card.setNameCard(name);
+    }
+
 }

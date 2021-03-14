@@ -9,7 +9,7 @@ import java.util.*;
 
 public class Board {
 
-    private String name;
+    private String name ;
     private final IntegerProperty size = new SimpleIntegerProperty();
     private final ObservableList<Column> columns = FXCollections.observableList( new ArrayList<>());
     private int position = 0;
@@ -55,7 +55,8 @@ public class Board {
     public Column getColumn(int index) {
       return   index == -1 ? null :this.getColumns().get(index);
     }
-    public int getposition(){
+
+    public int getposition() {
         return  this.columns.indexOf (this);
     }
 
@@ -122,7 +123,7 @@ public class Board {
         Column à_faire = new Column("à faire", 0,this),
                 à_tester = new Column("à tester", 1,this),
                 en_cours = new Column("en cours", 2,this),
-                en_attente_de_paiement = new Column("en attente de paiement", 3,this);
+                en_attente_de_paiement = new Column("en attente", 3,this);
         Card Carte_1 = new Card("Carte 1", 0,à_faire),
                 Carte_2 = new Card("Carte 2", 0,à_tester),
                 Carte_3 = new Card("Carte 3", 1,à_tester),

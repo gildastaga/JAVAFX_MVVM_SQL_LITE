@@ -5,12 +5,14 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Card;
 import model.Column;
+import model.Type;
 import mvvm.ColumnViewModel;
 import mvvm.ViewModel;
 
@@ -33,7 +35,7 @@ public class ViewColumn extends VBox {
 
     ViewColumn(Column column) {
         this.columnViewModel = new ColumnViewModel (column);
-        this.nameColumn = new EditableLabel (column.getName (),false);
+        this.nameColumn = new EditableLabel (column.getName (),false, Type.COLUMN);
         try {
             configBindings();
             configComponents();
@@ -43,34 +45,36 @@ public class ViewColumn extends VBox {
         configActionColumn ();
     }
 
-/////////////////////config data//////////////////////
+/******************************************************config data ******************************************************************/
+
     private void configBindings() throws Exception {
         configDataComumn();
         configDisabledBindings();
+        configEditableLabel();
     }
+
     public void configDataComumn() throws Exception {
         listCards.itemsProperty().bind(columnViewModel.getCardsProperty ());
         numLineSelectedCard.bind(columnViewModel.getNumLineSelectedCardProperty ());
-
     }
 
     private void configDisabledBindings() {
         Imleft.disableProperty().bind(columnViewModel.imleftColumDisabledProperty());
         Imright.disableProperty().bind(columnViewModel.imRightColumDisabledProperty ());
     }
-            //////////////////////// congif disable //////////////////
+    /************************************************************ congif disable ********************************************/
+
     private void configComponents() throws Exception {
         configImages();
         configVboxZone();
         updateLvCart ();
-
     }
 
     private void configVboxZone() throws Exception {
-        hboxUp.getChildren().addAll(Imleft,nameColumn.getName (),Imright);
+        hboxUp.getChildren().addAll(Imleft,nameColumn.getTextField (),Imright);
         hBoxDown.getChildren ().add (listCards);
         this.getChildren().addAll(hboxUp,hBoxDown);
-        this.setPrefWidth (200);
+        this.setPrefWidth (220);
     }
 
     private void configImages() throws Exception {
@@ -78,8 +82,8 @@ public class ViewColumn extends VBox {
         FileInputStream RIGHT = new FileInputStream("src/images/right.png");
         Imleft.setImage(new Image(LEFT));
         Imright.setImage(new Image(RIGHT));
-
     }
+
     public void updateLvCart (){
         listCards.setCellFactory(view -> new ListCell<> (){
             @Override
@@ -94,12 +98,14 @@ public class ViewColumn extends VBox {
         });
     }
 /////////////action column //////////////////
+
     private void configActionColumn() {
         configactionColumunRight();
         configactionColumnLeft();
         addcard();
         deleteAction();
     }
+
     private void configactionColumnLeft() {
         Imleft.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1 ) {
@@ -107,6 +113,7 @@ public class ViewColumn extends VBox {
             }
         });
     }
+
     private void configactionColumunRight(){
         Imright.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             System.out.println ("je suis entre ");
@@ -115,6 +122,22 @@ public class ViewColumn extends VBox {
             }
         });
     }
+
+    private void configEditableLabel() {
+        nameColumn.getTextField().setOnMouseClicked((e) -> {
+            if (e.getClickCount() == 2 ) {
+                this.nameColumn.setEditable(true, Type.BOARD);
+            }
+        });
+
+        nameColumn.getTextField().setOnKeyPressed((e) -> {
+            if (e.getCode().equals(KeyCode.ENTER)) {
+                this.columnViewModel.updateColumnName(nameColumn.getTextField().getText());
+                nameColumn.setTextField(false, nameColumn.getTextField().getText(), Type.BOARD);
+            }
+        });
+    }
+
     private void addcard(){
         listCards.setOnMouseClicked(e -> {
             if( e.getClickCount () == 2) {
@@ -129,7 +152,7 @@ public class ViewColumn extends VBox {
                 Alert dialogC = new Alert(Alert.AlertType.CONFIRMATION);
                 dialogC.setTitle(" action confirmation ");
                 dialogC.setHeaderText(null);
-                dialogC.setContentText("can you delete this column :"+nameColumn.getName () );
+                dialogC.setContentText("can you delete this column :"+nameColumn.getTextField () );
                 Optional<ButtonType> answer = dialogC.showAndWait();
                 if (answer.get() == ButtonType.OK) {
                     this.columnViewModel.deleteColumn();

@@ -53,7 +53,7 @@ public class ColumnViewModel {
     }
 
 
-    /////////////////////////////////configdisable////////////////////
+    /**************************************************************** configdisable ************************************************/
 
 
     private void configColumnSelection() {
@@ -74,7 +74,7 @@ public class ColumnViewModel {
     }
 
 
-    ///////////deplacement //////
+    /****************************************************************  deplacement ***************************************************/
 
     public void swapColleft()  {
          column.getBoard ().swapColumnLeft (this.column.getPosition ());
@@ -84,8 +84,12 @@ public class ColumnViewModel {
         column.getBoard ().swapColumnRight (this.column.getPosition ());
     }
 
+    public void updateColumnName(String name) {
+        this.column.setName(name);
+    }
+
     public  boolean  addCard( ) {
-       return column.addCard(new Card ("Card "+cards.size (),(cards.size ()+1),column));
+       return column.addCard(new Card ("Card "+ cards.size (),(cards.size ()+1),column));
     }
 
     public void deleteColumn() {

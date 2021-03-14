@@ -77,4 +77,9 @@ public class BoardViewModel {
         configData();
     }
 
+    public void updateBordName(String name) {
+        this.board.setName(name);
+        this.boardName.setValue(this.board.getName());
+    }
+
 }
