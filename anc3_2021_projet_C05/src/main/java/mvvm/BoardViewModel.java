@@ -1,12 +1,8 @@
 package mvvm;
 
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import model.Board;
 import model.Column;
-import view.ViewBoard;
-import view.ViewColumn;
 
 public class BoardViewModel {
 
@@ -19,12 +15,8 @@ public class BoardViewModel {
         this.board = board;
         boardName = new ReadOnlyStringWrapper (board.getName());
         configData();
-        //configColumnSelection();
     }
 
-    public StringProperty getBoardNameProperty(){
-        return boardName;
-    }
 
     public void configData() {
         columnList.setValue(board.getColumns());
@@ -38,48 +30,17 @@ public class BoardViewModel {
         return numSelectedColumn;
     }
 
-    public void lineSelectedColumn(ReadOnlyIntegerProperty index) {
-        numSelectedColumn.bind(index);
-    }
-
-    public StringProperty getBordNameProperty() {
-        return boardName;
-    }
-
     private Column getColumn(int index) {
         return index == -1  ? null : board.getColumn(index);
-    }
-
-    public int getNumSelectedColumn() {
-        return numSelectedColumn.get ();
-    }
-
-    public IntegerProperty numSelectedColumnProperty() {
-        return numSelectedColumn;
-    }
-    private void configColumnSelection() {
-        numSelectedColumn.addListener((obs, oldval, newval) ->
-                configData ());
-    }
-    private Column getColumnSelected(int index) {
-        return index == -1  ? null : board.getColumn(index);
-    }
-
-    public SimpleListProperty<Column> getLsViewColum(ViewBoard viewBoard) throws Exception {
-        return new SimpleListProperty<>(columnList);
     }
 
     public void addColumn() {
         Column c = getColumn(numSelectedColumn.get ());
         if (c == null ){
-            board.addColumn(new Column ("Column "+board.getColumns ().size (),board.getColumns ().size ()+1,board));
+            board.addColumn(new Column ("Column "+board.getColumns ().size (),board));
         }
         configData();
     }
 
-    public void updateBordName(String name) {
-        this.board.setName(name);
-        this.boardName.setValue(this.board.getName());
-    }
 
 }

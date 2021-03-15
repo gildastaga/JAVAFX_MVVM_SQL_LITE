@@ -29,13 +29,14 @@ public class ViewColumn extends VBox {
                 hBoxDown = new HBox ();
     private final ImageView Imleft = new ImageView();
     private final ImageView Imright = new ImageView();
-    public final List<ViewCard> listViewCards = new ArrayList<> ();
     private final ListView<Card> listCards = new ListView<>();
     private final EditableLabel nameColumn ;
-    private final IntegerProperty numLineSelectedCard = new SimpleIntegerProperty () ;
+    private final IntegerProperty numSelectedColumn = new SimpleIntegerProperty () ;
+    private  final  Column column;
 
 
     ViewColumn(Column column) {
+        this.column = column;
         this.columnViewModel = new ColumnViewModel (column);
         this.nameColumn = new EditableLabel (column.getName (),false, Type.COLUMN);
         try {
@@ -57,7 +58,7 @@ public class ViewColumn extends VBox {
 
     public void configDataComumn() throws Exception {
         listCards.itemsProperty().bind(columnViewModel.getCardsProperty ());
-        numLineSelectedCard.bind(columnViewModel.getNumLineSelectedCardProperty ());
+        numSelectedColumn.bind(columnViewModel.getNumSelectedColumnProperty ());
     }
 
     private void configDisabledBindings() {

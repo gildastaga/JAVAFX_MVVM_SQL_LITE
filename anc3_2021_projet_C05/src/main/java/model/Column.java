@@ -5,30 +5,15 @@ import javafx.collections.ObservableList;
 
 import java.util.*;
 
-class SortColumnByPosition implements Comparator<Column>, Iterable<Column> {
-
-    @Override
-    public int compare(Column o1, Column o2) {
-        return o1.getPosition() - o2.getPosition();
-    }
-
-    @Override
-    public Iterator<Column> iterator() {
-        return null;
-    }
-}
-
 public class Column {
 
     private String name;
     private  ObservableList<Card> lsCards;
-    private int position ;
     private  Board board;
 
 
-    public Column(String name, int position,Board board) {
+    public Column(String name,Board board) {
         this.name = name;
-        this.position = position;
         this.board = board;
         lsCards = FXCollections.observableList(new ArrayList<>());
     }
@@ -39,28 +24,20 @@ public class Column {
         return name;
     }
 
-    public void setNameColumn(String name) {
-        this.name = name;
-    }
 
     public Board getBoard() {
         return board;
     }
+
     public int getpositions(){
         return  this.getBoard ().getColumns ().indexOf (this);
     }
 
-    public int getPosition() {
-        return position;
-    }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setPosition(int position) {
-        this.position = position;
-    }
 
     @Override
     public String toString() {
@@ -73,82 +50,37 @@ public class Column {
         return  lsCards.add(card);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Column)) return false;
-        Column column = (Column) o;
-        return getPosition () == column.getPosition () &&
-                Objects.equals (getName (), column.getName ());
-    }
-
-
-    @Override
-    public int hashCode() {
-        return Objects.hash (getName (), getPosition ());
-    }
-
 
     public boolean removeCard(Card card) {
         return lsCards.remove(card);
     }
 
-    public Card getCardByPosition(int position) {
-        int i = 0; boolean q = true;
-        while (i < lsCards.size() && lsCards.get(i).getPosition() != position) {
-            i++;
-        }
-        return position == -1 ? null : this.lsCards.get(i);
-    }
-
-    public Card getCard(int index) {
-        return position == -1 ? null : this.lsCards.get(index);
-
-    }
 
     public ObservableList<Card> getCards() {
-       // Collections.sort(lsCards, new SortByPosition());
         return lsCards;
     }
 
     /**************************************************  configure swapCard  **********************************************************/
 
     public void swapCardDown(int index) {
-        Card card = getCard(index);
-        Card that = this.getCard(index + 1);
-        if(that.getPosition () < lsCards.size()) {
-            card.setPosition(index + 1);
-            that.setPosition(index);
-        }
         Collections.swap (lsCards,index,(index+1));
     }
 
     public void swapCardUp(int index) {
-        Card card = getCard(index);
-        Card that = this.getCard(index - 1);
-        if(that.getPosition() >= this.getCard(0).getPosition()) {
-            card.setPosition(index - 1);
-            that.setPosition(index);
-        }
         Collections.swap (lsCards,(index-1),index);
     }
-    public void swapCardRight(int indexColun , Card card) {
-        Column that = this.board.getColumn(indexColun + 1);
-        Column column = this.board.getColumn(indexColun);
-        card.setPosition(that.getCards().size()+1);
+    public void swapCardRight(Column column , Card card) {
+        Column that = this.board.getColumn( (column.getpositions ()+ 1));
         that.addCard(card);
         column.removeCard(card);
+        card.setColumn (that);
     }
 
-    public void swapCardLeft(int indexcol, Card card ) {
-        Column that = this.board.getColumn (indexcol - 1);
-        System.out.println (that);
-        Column column = this.board.getColumn(indexcol);
-        System.out.println (column);
-        System.out.println (card);
-        card.setPosition(that.getCards().size()+1);
+    public void swapCardLeft(Column column, Card card ) {
+        Column that = this.board.getColumn ((column.getpositions () - 1));
         that.addCard(card);
         column.removeCard(card);
+        card.setColumn (that);
     }
 
 }

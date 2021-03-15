@@ -17,9 +17,8 @@ public class ColumnViewModel {
     private final IntegerProperty numSelectedColumn = new SimpleIntegerProperty (-1);
     private final IntegerProperty numSelectedCard = new SimpleIntegerProperty (-1);
 
-    private BooleanProperty imleftColumDisabled= new SimpleBooleanProperty(true),
-            imRightColumDisabled = new SimpleBooleanProperty(true),
-            newNameColumnDisabled= new SimpleBooleanProperty (true);
+    private BooleanProperty imleftColumDisabled= new SimpleBooleanProperty(false),
+                             imRightColumDisabled = new SimpleBooleanProperty(false);
 
     public ColumnViewModel(Column column){
         this.column = column;
@@ -34,17 +33,10 @@ public class ColumnViewModel {
         cards.setValue(column.getCards ());
     }
 
-
+    public IntegerProperty getNumSelectedColumnProperty() {
+        return numSelectedColumn;
+    }
     public IntegerProperty getNumLineSelectedCardProperty() {
-        return numSelectedCard;
-    }
-
-    public void lineSelectedCard(ReadOnlyIntegerProperty index) {
-        numSelectedCard.bind(index);
-    }
-
-
-    public IntegerProperty numSelectedCardProperty() {
         return numSelectedCard;
     }
 
@@ -54,15 +46,18 @@ public class ColumnViewModel {
 
 
     /**************************************************************** configdisable ************************************************/
-
+    public void selectedColumBinding(ReadOnlyIntegerProperty integerProperty) {
+        numSelectedColumn.bind(integerProperty);
+    }
 
     private void configColumnSelection() {
+
         numSelectedColumn.addListener((obs, oldval, newval) ->
                 configActionnableImages ());
     }
     private void configActionnableImages() {
-        imleftColumDisabled.setValue(column.getPosition () == 0);
-         imRightColumDisabled.setValue( column.getPosition () == column.getBoard ().getColumns ().size ());
+       // imleftColumDisabled.setValue(column.getpositions () > 0);
+        //imRightColumDisabled.setValue( column.getpositions () < column.getBoard ().getColumns ().size ());
     }
 
     public BooleanProperty imleftColumDisabledProperty() {
@@ -77,11 +72,11 @@ public class ColumnViewModel {
     /****************************************************************  deplacement ***************************************************/
 
     public void swapColleft()  {
-         column.getBoard ().swapColumnLeft (this.column.getPosition ());
+         column.getBoard ().swapColumnLeft (this.column.getpositions ());
     }
 
     public void swapColright()  {
-        column.getBoard ().swapColumnRight (this.column.getPosition ());
+        column.getBoard ().swapColumnRight (this.column.getpositions ());
     }
 
     public void updateColumnName(String name) {
@@ -89,7 +84,7 @@ public class ColumnViewModel {
     }
 
     public  boolean  addCard( ) {
-       return column.addCard(new Card ("Card "+ cards.size (),(cards.size ()+1),column));
+       return column.addCard(new Card ("Card "+ cards.size (),column));
     }
 
     public void deleteColumn() {
