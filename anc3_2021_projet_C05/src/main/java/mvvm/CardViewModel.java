@@ -29,12 +29,12 @@ public class CardViewModel {
     }
 
    public void swapCardRight() {
-        card.getColumn ().swapCardRight (card.getColumn ().getPosition (),card.getPosition ());
+        card.getColumn ().swapCardRight (card.getColumn ().getPosition (),card);
        // board.swapCardRight(numLineSelectedCard.intValue(), column.getPosition());
     }
 
     public void swapCardLeft() {
-        card.getColumn ().swapCardLeft (card.getColumn ().getPosition (),card.getPosition ());
+        card.getColumn ().swapCardLeft (card.getColumn ().getPosition (),card);
         //board.swapCardLeft(numLineSelectedCard.intValue(), column.getPosition());
     }
     public void deleteCard() {

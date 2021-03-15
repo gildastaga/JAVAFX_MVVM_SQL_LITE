@@ -1,10 +1,7 @@
 package model;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 
 import java.util.*;
 
@@ -49,9 +46,9 @@ public class Column {
     public Board getBoard() {
         return board;
     }
-   /* public int getposition(){
-        return  this.getBoard ().getColonne ().indexOf (this);
-    }*/
+    public int getpositions(){
+        return  this.getBoard ().getColumns ().indexOf (this);
+    }
 
     public int getPosition() {
         return position;
@@ -110,7 +107,7 @@ public class Column {
     }
 
     public ObservableList<Card> getCards() {
-        Collections.sort(lsCards, new SortByPosition());
+       // Collections.sort(lsCards, new SortByPosition());
         return lsCards;
     }
 
@@ -122,7 +119,6 @@ public class Column {
         if(that.getPosition () < lsCards.size()) {
             card.setPosition(index + 1);
             that.setPosition(index);
-            System.out.println (lsCards);
         }
         Collections.swap (lsCards,index,(index+1));
     }
@@ -133,27 +129,24 @@ public class Column {
         if(that.getPosition() >= this.getCard(0).getPosition()) {
             card.setPosition(index - 1);
             that.setPosition(index);
-            System.out.println (lsCards+"up");
         }
         Collections.swap (lsCards,(index-1),index);
     }
-    public void swapCardRight(int indexCard, int index) {
-        Column that = this.board.getColumn(index + 1);
-        Column column = this.board.getColumn(index);
-        Card card = column.getCard(indexCard);
-        card.setPosition(that.getCards().size());
+    public void swapCardRight(int indexColun , Card card) {
+        Column that = this.board.getColumn(indexColun + 1);
+        Column column = this.board.getColumn(indexColun);
+        card.setPosition(that.getCards().size()+1);
         that.addCard(card);
         column.removeCard(card);
     }
 
-    public void swapCardLeft(int indexcol, int indexCard ) {
+    public void swapCardLeft(int indexcol, Card card ) {
         Column that = this.board.getColumn (indexcol - 1);
         System.out.println (that);
         Column column = this.board.getColumn(indexcol);
         System.out.println (column);
-        Card card = this.lsCards.get (indexCard);
         System.out.println (card);
-        card.setPosition(that.getCards().size());
+        card.setPosition(that.getCards().size()+1);
         that.addCard(card);
         column.removeCard(card);
     }
