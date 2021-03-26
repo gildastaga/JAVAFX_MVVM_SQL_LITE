@@ -4,19 +4,18 @@ import javafx.beans.property.*;
 import model.Board;
 import model.Column;
 
-public class BoardViewModel {
+public class ViewModelBoard {
 
     private final Board board;
     private final StringProperty boardName;
     private final SimpleListProperty columnList = new SimpleListProperty<>();
     private final IntegerProperty numSelectedColumn = new SimpleIntegerProperty (-1);
 
-    public BoardViewModel(Board board){
+    public ViewModelBoard(Board board){
         this.board = board;
         boardName = new ReadOnlyStringWrapper (board.getName());
         configData();
     }
-
 
     public void configData() {
         columnList.setValue(board.getColumns());
@@ -28,6 +27,10 @@ public class BoardViewModel {
 
     public IntegerProperty getNumLineSelectedColumnProperty() {
         return numSelectedColumn;
+    }
+
+    public void updateBordName(String name) {
+        this.board.setName(name);
     }
 
     private Column getColumn(int index) {

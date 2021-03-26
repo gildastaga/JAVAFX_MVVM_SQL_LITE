@@ -1,12 +1,8 @@
 package view;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -15,7 +11,7 @@ import javafx.scene.layout.BorderPane;;
 import javafx.scene.layout.HBox;
 import model.Card;
 import model.Type;
-import mvvm.CardViewModel;
+import mvvm.ViewModelCard;
 
 import java.io.FileInputStream;
 import java.util.Optional;
@@ -27,11 +23,11 @@ public class ViewCard extends BorderPane {
     private final ImageView Imleft = new ImageView();
     private final ImageView Imright = new ImageView();
     private final HBox hbox = new HBox();
-    private  CardViewModel cardViewModel;
+    private ViewModelCard viewModelCard;
     private final EditableLabel nameCard ;
 
     ViewCard(Card card) {
-        this.cardViewModel= new CardViewModel (card);
+        this.viewModelCard = new ViewModelCard(card);
         this.nameCard = new EditableLabel (card.getName (),false, Type.CARD);
         try {
             configComponents();
@@ -83,7 +79,7 @@ public class ViewCard extends BorderPane {
     private void configActionUp() {
         Imup.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1) {
-                this.cardViewModel.swapCardUp();
+                this.viewModelCard.swapCardUp();
             }
         });
     }
@@ -91,7 +87,7 @@ public class ViewCard extends BorderPane {
     private void configActionDown() {
         Imdown.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1) {
-                this.cardViewModel.swapCardDown();
+                this.viewModelCard.swapCardDown();
             }
         });
     }
@@ -99,14 +95,14 @@ public class ViewCard extends BorderPane {
     private void configActionRight() {
         Imright.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1) {
-                this.cardViewModel.swapCardRight();
+                this.viewModelCard.swapCardRight();
             }
         });
     }
     private  void configActionLeft( ){
         Imleft.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1) {
-                this.cardViewModel.swapCardLeft();
+                this.viewModelCard.swapCardLeft();
             }
         });
     }
@@ -124,7 +120,7 @@ public class ViewCard extends BorderPane {
 
         nameCard.getTextField().setOnKeyPressed((e) -> {
             if (e.getCode().equals(KeyCode.ENTER)) {
-                this.cardViewModel.updateCardName(nameCard.getTextField().getText());
+                this.viewModelCard.updateCardName(nameCard.getTextField().getText());
                 nameCard.setTextField(false, nameCard.getTextField().getText(), Type.BOARD);
             }
         });
@@ -139,7 +135,7 @@ public class ViewCard extends BorderPane {
                 dialogC.setContentText("can you delete this :"+nameCard.getTextField () );
                 Optional<ButtonType> answer = dialogC.showAndWait();
                 if (answer.get() == ButtonType.OK) {
-                    this.cardViewModel.deleteCard();
+                    this.viewModelCard.deleteCard();
                 }
             }
         });

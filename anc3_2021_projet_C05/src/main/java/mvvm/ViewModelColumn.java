@@ -9,7 +9,7 @@ import model.Column;
 import view.ViewBoard;
 import view.ViewColumn;
 
-public class ColumnViewModel {
+public class ViewModelColumn {
 
     private final Column column;
     private final StringProperty columnName;
@@ -20,7 +20,7 @@ public class ColumnViewModel {
     private BooleanProperty imleftColumDisabled= new SimpleBooleanProperty(false),
                              imRightColumDisabled = new SimpleBooleanProperty(false);
 
-    public ColumnViewModel(Column column){
+    public ViewModelColumn(Column column){
         this.column = column;
         columnName = new ReadOnlyStringWrapper (column.getName());
         configData();

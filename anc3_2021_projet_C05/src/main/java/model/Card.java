@@ -33,7 +33,6 @@ public class Card {
         this.column =column;
     }
 
-
     @Override
     public String toString() {
         return name+" "+getPosition();

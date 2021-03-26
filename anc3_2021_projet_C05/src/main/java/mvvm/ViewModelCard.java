@@ -4,12 +4,12 @@ import javafx.beans.property.*;
 import model.Card;
 import model.Column;
 
-public class CardViewModel {
+public class ViewModelCard {
     public final Card card;
     private StringProperty NameCarte = new SimpleStringProperty ();
     private  final IntegerProperty selectedCard = new SimpleIntegerProperty ();
 
-    public CardViewModel(Card c) {
+    public ViewModelCard(Card c) {
         this.card=c;
         this.NameCarte = new ReadOnlyStringWrapper (c.getName());
     }

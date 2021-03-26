@@ -1,30 +1,23 @@
 package view;
 
 import javafx.beans.property.*;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import model.Card;
 import model.Column;
 import model.Type;
-import mvvm.ColumnViewModel;
-import mvvm.ViewModel;
+import mvvm.ViewModelColumn;
 
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class ViewColumn extends VBox {
-    private  ColumnViewModel columnViewModel;
+    private ViewModelColumn viewModelColumn;
     private HBox hboxUp =new HBox(),
                 hBoxDown = new HBox ();
     private final ImageView Imleft = new ImageView();
@@ -37,7 +30,7 @@ public class ViewColumn extends VBox {
 
     ViewColumn(Column column) {
         this.column = column;
-        this.columnViewModel = new ColumnViewModel (column);
+        this.viewModelColumn = new ViewModelColumn(column);
         this.nameColumn = new EditableLabel (column.getName (),false, Type.COLUMN);
         try {
             configBindings();
@@ -57,13 +50,13 @@ public class ViewColumn extends VBox {
     }
 
     public void configDataComumn() throws Exception {
-        listCards.itemsProperty().bind(columnViewModel.getCardsProperty ());
-        numSelectedColumn.bind(columnViewModel.getNumSelectedColumnProperty ());
+        listCards.itemsProperty().bind(viewModelColumn.getCardsProperty ());
+        numSelectedColumn.bind(viewModelColumn.getNumSelectedColumnProperty ());
     }
 
     private void configDisabledBindings() {
-        Imleft.disableProperty().bind(columnViewModel.imleftColumDisabledProperty());
-        Imright.disableProperty().bind(columnViewModel.imRightColumDisabledProperty ());
+        Imleft.disableProperty().bind(viewModelColumn.imleftColumDisabledProperty());
+        Imright.disableProperty().bind(viewModelColumn.imRightColumDisabledProperty ());
     }
     /************************************************************ congif disable ********************************************/
 
@@ -112,7 +105,7 @@ public class ViewColumn extends VBox {
     private void configactionColumnLeft() {
         Imleft.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1 ) {
-                this.columnViewModel.swapColleft ();
+                this.viewModelColumn.swapColleft ();
             }
         });
     }
@@ -121,7 +114,7 @@ public class ViewColumn extends VBox {
         Imright.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             System.out.println ("je suis entre ");
             if (e.getClickCount() == 1 ) {
-                this.columnViewModel.swapColright();
+                this.viewModelColumn.swapColright();
             }
         });
     }
@@ -135,7 +128,7 @@ public class ViewColumn extends VBox {
 
         nameColumn.getTextField().setOnKeyPressed((e) -> {
             if (e.getCode().equals(KeyCode.ENTER)) {
-                this.columnViewModel.updateColumnName(nameColumn.getTextField().getText());
+                this.viewModelColumn.updateColumnName(nameColumn.getTextField().getText());
                 nameColumn.setTextField(false, nameColumn.getTextField().getText(), Type.BOARD);
             }
         });
@@ -144,7 +137,7 @@ public class ViewColumn extends VBox {
     private void addcard(){
         listCards.setOnMouseClicked(e -> {
             if( e.getClickCount () == 2) {
-                columnViewModel.addCard ();
+                viewModelColumn.addCard ();
             }
         });
     }
@@ -158,7 +151,7 @@ public class ViewColumn extends VBox {
                 dialogC.setContentText("can you delete this column :"+nameColumn.getTextField () );
                 Optional<ButtonType> answer = dialogC.showAndWait();
                 if (answer.get() == ButtonType.OK) {
-                    this.columnViewModel.deleteColumn();
+                    this.viewModelColumn.deleteColumn();
                 }
             }
         });

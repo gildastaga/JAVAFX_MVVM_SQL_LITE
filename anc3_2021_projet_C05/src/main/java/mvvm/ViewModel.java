@@ -12,7 +12,4 @@ public class ViewModel {
         this.board = board;
     }
 
-    public void updateBordName(String name) {
-        this.board.setName(name);
-    }
 }

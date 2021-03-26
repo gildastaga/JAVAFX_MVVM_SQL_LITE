@@ -2,18 +2,10 @@ package view;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import model.Board;
 import model.Column;
-import mvvm.BoardViewModel;
-import mvvm.ViewModel;
+import mvvm.ViewModelBoard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +13,12 @@ import java.util.List;
 
 public class ViewBoard extends ListView<Column> {
 
-    private   BoardViewModel boardViewModel;
+    private ViewModelBoard viewModelBoard;
     public List<ViewColumn> listViewColumn= new ArrayList ();
     private final IntegerProperty numLineSelectedColumn = new SimpleIntegerProperty(-1);
 
-    ViewBoard(BoardViewModel boardViewModel)  {
-        this.boardViewModel= boardViewModel;
+    ViewBoard(ViewModelBoard viewModelBoard)  {
+        this.viewModelBoard = viewModelBoard;
         this.setOrientation(Orientation.HORIZONTAL);
         configBoard();
         updateLvcColon();
@@ -38,8 +30,8 @@ public class ViewBoard extends ListView<Column> {
     }
 
     public void configDataBoard() {
-        numLineSelectedColumn.bind(boardViewModel.getNumLineSelectedColumnProperty());
-        this.itemsProperty().bind(boardViewModel.getColumnsProperty());
+        numLineSelectedColumn.bind(viewModelBoard.getNumLineSelectedColumnProperty());
+        this.itemsProperty().bind(viewModelBoard.getColumnsProperty());
     }
 
     private void updateLvcColon() {
@@ -59,7 +51,7 @@ public class ViewBoard extends ListView<Column> {
     private void configactionAddCol() {
         this.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2 ) {
-                boardViewModel.addColumn();
+                viewModelBoard.addColumn();
             }
         });
     }
