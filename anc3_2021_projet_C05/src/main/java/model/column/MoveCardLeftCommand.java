@@ -18,7 +18,7 @@ public class MoveCardLeftCommand extends ColumnCommand {
 
     @Override
     public void undo() {
-
+        this.getColumn().swapCardRight(getColumn(), card);
     }
 
     @Override

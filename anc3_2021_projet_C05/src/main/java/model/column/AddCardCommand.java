@@ -7,7 +7,7 @@ import model.Column;
 public class AddCardCommand extends ColumnCommand {
     private Card card;
 
-    public AddCardCommand(Column column, Board board) {
+    public AddCardCommand(Column column, Card card) {
         super(column);
         this.card = card;
     }

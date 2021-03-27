@@ -35,7 +35,7 @@ public class Processor {
         return getLastCommand().canExecute();
     }
 
-    private void execute(Command command){
+    public void execute(Command command){
         command.execute();
         if(command.canExecute()){
             this.history.add(command);
@@ -44,7 +44,7 @@ public class Processor {
         }
     }
 
-    private void undo(){
+    public void undo(){
         if(canExecute()){
             Command c = getLastCommand();
             c.undo();
@@ -55,7 +55,7 @@ public class Processor {
         }
     }
 
-    private void redo(){
+    public void redo(){
         if(!undoHistory.isEmpty()){
             Command c = undoHistory.get(undoHistory.size() - 1);
             undoHistory.remove(c);

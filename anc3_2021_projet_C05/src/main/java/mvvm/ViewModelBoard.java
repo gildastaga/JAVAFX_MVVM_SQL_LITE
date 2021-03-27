@@ -3,6 +3,7 @@ package mvvm;
 import javafx.beans.property.*;
 import model.Board;
 import model.Column;
+import model.Processor;
 
 public class ViewModelBoard {
 
@@ -43,6 +44,14 @@ public class ViewModelBoard {
             board.addColumn(new Column ("Column "+board.getColumns ().size (),board));
         }
         configData();
+    }
+
+    public void undo (){
+        Processor.getInstance().undo();
+    }
+
+    public void redo(){
+        Processor.getInstance().redo();
     }
 
 

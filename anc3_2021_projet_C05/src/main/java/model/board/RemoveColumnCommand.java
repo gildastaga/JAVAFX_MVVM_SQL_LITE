@@ -18,7 +18,7 @@ public class RemoveColumnCommand extends BoardCommand {
 
     @Override
     public void undo() {
-
+        this.getBoard().removeColumn(column);
     }
 
     @Override

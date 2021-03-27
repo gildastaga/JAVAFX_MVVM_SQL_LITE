@@ -84,14 +84,14 @@ public class TrelloView extends VBox {
         annuler.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                //TODO
+                viewModelBoard.undo();
             }
         });
 
         refaire.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                //TODO
+                viewModelBoard.redo();
             }
         });
     }

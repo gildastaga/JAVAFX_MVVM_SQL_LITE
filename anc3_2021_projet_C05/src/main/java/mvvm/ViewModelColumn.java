@@ -6,6 +6,8 @@ import javafx.collections.ObservableList;
 import model.Board;
 import model.Card;
 import model.Column;
+import model.Processor;
+import model.column.AddCardCommand;
 import view.ViewBoard;
 import view.ViewColumn;
 
@@ -83,8 +85,11 @@ public class ViewModelColumn {
         this.column.setName(name);
     }
 
-    public  boolean  addCard( ) {
-       return column.addCard(new Card ("Card "+ cards.size (),column));
+    public  void  addCard( ) {
+        Card c = new Card ("Card "+ cards.size (),column);
+        AddCardCommand addCardCommand = new AddCardCommand(column, c);
+        Processor.getInstance().execute(addCardCommand);
+        //column.addCard(new Card ("Card "+ cards.size (),column));
     }
 
     public void deleteColumn() {
