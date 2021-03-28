@@ -28,7 +28,7 @@ public class Column {
         return board;
     }
 
-    public int getpositions(){
+    public int getposition(){
         return  this.getBoard ().getColumns ().indexOf (this);
     }
 
@@ -66,14 +66,14 @@ public class Column {
     }
 
     public void swapCardRight(Column column , Card card) {
-        Column that = this.board.getColumn( (column.getpositions ()+ 1));
+        Column that = this.board.getColumn( (column.getposition ()+ 1));
         that.addCard(card);
         column.removeCard(card);
         card.setColumn (that);
     }
 
     public void swapCardLeft(Column column, Card card ) {
-        Column that = this.board.getColumn ((column.getpositions () - 1));
+        Column that = this.board.getColumn ((column.getposition () - 1));
         that.addCard(card);
         column.removeCard(card);
         card.setColumn (that);

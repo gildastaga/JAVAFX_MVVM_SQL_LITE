@@ -7,14 +7,10 @@ import javafx.scene.control.*;
 import model.Column;
 import mvvm.ViewModelBoard;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class ViewBoard extends ListView<Column> {
 
     private ViewModelBoard viewModelBoard;
-    public List<ViewColumn> listViewColumn= new ArrayList ();
     private final IntegerProperty numLineSelectedColumn = new SimpleIntegerProperty(-1);
 
     ViewBoard(ViewModelBoard viewModelBoard)  {

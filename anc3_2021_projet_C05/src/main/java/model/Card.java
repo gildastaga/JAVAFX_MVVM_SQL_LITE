@@ -29,6 +29,7 @@ public class Card {
     public int getPosition() {
         return this.getColumn ().getCards ().indexOf (this);
     }
+
     public void setColumn(Column column){
         this.column =column;
     }

@@ -29,10 +29,7 @@ public class Processor {
     }
 
     private  boolean canExecute(){
-        if(getLastCommand() == null){
-            return false;
-        }
-        return getLastCommand().canExecute();
+        return getLastCommand () == null ? false : getLastCommand ().canExecute ();
     }
 
     public void execute(Command command){
@@ -51,7 +48,7 @@ public class Processor {
             removeLastCommand();
             undoHistory.add(c);
         }else{
-            throw new RuntimeException("Aucune commande annuler");
+           //throw new RuntimeException("Aucune commande annuler");
         }
     }
 
@@ -61,8 +58,9 @@ public class Processor {
             undoHistory.remove(undoHistory.size() - 1);
             this.execute(c);
         }else{
-            throw  new RuntimeException("Aucune commande à refaire");
+          //  throw  new RuntimeException("Aucune commande à refaire");
         }
     }
+
 
 }

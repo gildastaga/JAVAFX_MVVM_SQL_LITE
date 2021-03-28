@@ -46,5 +46,6 @@ public class EditableLabel extends VBox {
             this.textfield.setStyle("-fx-border-color: skyblue;-fx-background-color: skyblue; -fx-padding: 10px;");
         else
             System.out.println("");
+
     }
 }

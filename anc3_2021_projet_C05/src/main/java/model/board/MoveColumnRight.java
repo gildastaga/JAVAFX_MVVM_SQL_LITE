@@ -13,12 +13,12 @@ public class MoveColumnRight extends BoardCommand {
 
     @Override
     public void execute() {
-        this.getBoard().swapColumnRight(column.getpositions());
+        this.getBoard().swapColumnRight(column.getposition ());
     }
 
     @Override
     public void undo() {
-        this.getBoard().swapColumnLeft(column.getpositions());
+        this.getBoard().swapColumnLeft(column.getposition ());
     }
 
     @Override
