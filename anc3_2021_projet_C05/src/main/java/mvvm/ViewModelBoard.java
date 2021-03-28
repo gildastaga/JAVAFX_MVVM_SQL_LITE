@@ -15,6 +15,8 @@ public class ViewModelBoard {
     private final StringProperty boardName;
     private final SimpleListProperty columnList = new SimpleListProperty<>();
     private final IntegerProperty numSelectedColumn = new SimpleIntegerProperty (-1);
+    public SimpleBooleanProperty desableUndo = new SimpleBooleanProperty();
+    public SimpleBooleanProperty desableRedo = new SimpleBooleanProperty();
 
     public ViewModelBoard(Board board) {
         this.board = board;
@@ -41,14 +43,18 @@ public class ViewModelBoard {
     }
 
     public void addColumn() {
-        //Column c = getColumn(numSelectedColumn.get ());
         Column column = new Column("colonne" + columnList.getSize(), board);
-        //if (c == null ){
-            AddColumnCommand addColumnCommand = new AddColumnCommand(board, column);
-            Processor.getInstance().execute(addColumnCommand);
-           // board.addColumn(new Column ("Column "+board.getColumns ().size (),board));
-        //}
+        AddColumnCommand addColumnCommand = new AddColumnCommand(board, column);
+        Processor.getInstance().execute(addColumnCommand);
         configData();
+    }
+
+    public SimpleBooleanProperty disableUndoProperty(){
+        return desableUndo;
+    }
+
+    public SimpleBooleanProperty disableRedoProperty(){
+        return desableRedo;
     }
 
     public void undo () {

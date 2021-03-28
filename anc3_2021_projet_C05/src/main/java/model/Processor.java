@@ -55,7 +55,7 @@ public class Processor {
     public void redo(){
         if(!undoHistory.isEmpty()){
             Command c = undoHistory.get(undoHistory.size() - 1);
-            undoHistory.remove(c);
+            undoHistory.remove(undoHistory.size() - 1);
             this.execute(c);
         }else{
           //  throw  new RuntimeException("Aucune commande à refaire");
