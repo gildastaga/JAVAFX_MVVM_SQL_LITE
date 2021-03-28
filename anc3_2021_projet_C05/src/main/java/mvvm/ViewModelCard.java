@@ -23,25 +23,21 @@ public class ViewModelCard {
     public void swapCardDown() {
         MoveCardDownCommand moveCardDownCommand = new MoveCardDownCommand(card.getColumn(), card);
         Processor.getInstance().execute(moveCardDownCommand);
-        //card.getColumn ().swapCardDown(this.card.getPosition ());
     }
 
     public void swapCardUp() {
         MoveCardUpCommand moveCardUpCommand = new MoveCardUpCommand(card.getColumn(), card);
         Processor.getInstance().execute(moveCardUpCommand);
-       // card.getColumn ().swapCardUp (this.card.getPosition ());
     }
 
    public void swapCardRight() {
-       MoveCardRightCommand moveCardRightCommand = new MoveCardRightCommand(card.getColumn(), card);
+       MoveCardRightCommand moveCardRightCommand = new MoveCardRightCommand(card);
        Processor.getInstance().execute(moveCardRightCommand);
-        //card.getColumn ().swapCardRight (card.getColumn (),card);
     }
 
     public void swapCardLeft() {
-        MoveCardLeftCommand moveCardLeftCommand = new MoveCardLeftCommand(card.getColumn(), card);
+        MoveCardLeftCommand moveCardLeftCommand = new MoveCardLeftCommand(card);
         Processor.getInstance().execute(moveCardLeftCommand);
-        //card.getColumn ().swapCardLeft (card.getColumn (),card);
     }
 
     public void deleteCard() {

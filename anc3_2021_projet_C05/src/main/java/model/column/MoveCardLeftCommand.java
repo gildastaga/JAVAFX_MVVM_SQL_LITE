@@ -2,23 +2,24 @@ package model.column;
 
 import model.Card;
 import model.Column;
+import model.card.Cardcommand;
 
-public class MoveCardLeftCommand extends ColumnCommand {
-    private final Card card;
+public class MoveCardLeftCommand extends Cardcommand {
 
-    public MoveCardLeftCommand(Column column, Card card) {
-        super(column);
-        this.card = card;
+    public MoveCardLeftCommand(Card card) {
+        super(card);
     }
 
     @Override
     public void execute() {
-        this.getColumn().swapCardLeft(getColumn(), card);
+        System.out.println("1");
+        getCard().getColumn().swapCardLeft(getCard().getColumn(), getCard());
     }
 
     @Override
     public void undo() {
-        this.getColumn().swapCardRight(getColumn(), card);
+        System.out.println("2");
+        getCard().getColumn().swapCardRight(getCard().getColumn(), getCard());
     }
 
     @Override

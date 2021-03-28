@@ -37,8 +37,8 @@ public class TrelloView extends VBox {
         stage.setTitle("Trello");
         configVboxZone();
         configBindings();
+        ConfigMenu();
     }
-
 
     private void configVboxZone()  {
         this.getChildren().addAll (menu,nameBoard.getTextField(),viewboard);
@@ -94,6 +94,11 @@ public class TrelloView extends VBox {
                 viewModelBoard.redo();
             }
         });
+    }
+
+    public void ConfigMenu(){
+        annuler.disableProperty().bind(viewModelBoard.disableUndoProperty());
+        refaire.disableProperty().bind(viewModelBoard.disableRedoProperty());
     }
 
 }
