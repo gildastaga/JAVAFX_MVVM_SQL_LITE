@@ -6,6 +6,7 @@ import model.Card;
 import model.Column;
 import model.Processor;
 import model.board.AddColumnCommand;
+import model.board.EditBordName;
 import model.column.AddCardCommand;
 
 public class ViewModelBoard {
@@ -34,11 +35,9 @@ public class ViewModelBoard {
     }
 
     public void updateBordName(String name) {
-        this.board.setName(name);
-    }
-
-    private Column getColumn(int index) {
-        return index == -1  ? null : board.getColumn(index);
+        EditBordName editBordName = new EditBordName (board, name);
+        Processor.getInstance ().execute (editBordName);
+       // this.board.setName(name);
     }
 
     public void addColumn() {
@@ -60,4 +59,7 @@ public class ViewModelBoard {
         Processor.getInstance().redo();
     }
 
+    public String getMessage(){
+        return Processor.class.getName ();
+    }
 }

@@ -1,8 +1,4 @@
-package model;
-
-import javafx.application.Application;
-import javafx.stage.Stage;
-import java.util.List;
+package momento;
 
 public class Originator {
     private String state;

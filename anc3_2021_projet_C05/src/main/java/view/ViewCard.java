@@ -32,6 +32,7 @@ public class ViewCard extends BorderPane {
         try {
             configComponents();
             configBindings();
+            configDisabledBindings();
         } catch (Exception e) {
             e.printStackTrace ();
         }
@@ -40,6 +41,7 @@ public class ViewCard extends BorderPane {
     private void configComponents() throws Exception {
         configImages();
         configVboxZone();
+        configDisabledBindings();
         configActions();
     }
 
@@ -66,6 +68,12 @@ public class ViewCard extends BorderPane {
         Imdown.setImage(new Image(DOWN));
         Imleft.setImage(new Image(LEFT));
         Imright.setImage(new Image(RIGHT));
+    }
+    private void configDisabledBindings() {
+        Imup.disableProperty ().bind(viewModelCard.imuptCardDisabledProperty());
+        Imdown.disableProperty ().bind(viewModelCard.imdowCardDisableProperty());
+        Imleft.disableProperty().bind(viewModelCard.imleftCardDisabledProperty());
+        Imright.disableProperty().bind(viewModelCard.imRightCardDisabledProperty ());
     }
 
     private void configActions() throws Exception {
