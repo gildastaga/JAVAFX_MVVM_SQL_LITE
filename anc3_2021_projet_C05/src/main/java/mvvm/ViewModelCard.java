@@ -2,7 +2,6 @@ package mvvm;
 
 import javafx.beans.property.*;
 import model.Card;
-import model.Column;
 import model.Processor;
 import model.card.EditCardName;
 import model.column.*;
