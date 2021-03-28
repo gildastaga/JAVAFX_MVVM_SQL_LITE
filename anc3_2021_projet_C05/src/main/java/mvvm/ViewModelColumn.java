@@ -34,7 +34,6 @@ public class ViewModelColumn {
         configActionnableImages ();
     }
 
-
     public void configData() {
         cards.setValue(column.getCards ());
     }
@@ -58,7 +57,6 @@ public class ViewModelColumn {
     }
 
     private void configColumnSelection() {
-
         numSelectedColumn.addListener((obs, oldval, newval) ->
                 configActionnableImages ());
     }

@@ -36,8 +36,9 @@ public class TrelloView extends VBox {
         stage.setScene(scene);
         stage.setTitle("Trello");
         configVboxZone();
-        configBindings();
         ConfigMenu();
+        configBindings();
+
     }
 
     private void configVboxZone()  {
