@@ -24,7 +24,6 @@ public class Column {
         return name;
     }
 
-
     public Board getBoard() {
         return board;
     }
@@ -33,11 +32,9 @@ public class Column {
         return  this.getBoard ().getColumns ().indexOf (this);
     }
 
-
     public void setName(String name) {
         this.name = name;
     }
-
 
     @Override
     public String toString() {
@@ -50,11 +47,9 @@ public class Column {
         return  lsCards.add(card);
     }
 
-
     public boolean removeCard(Card card) {
         return lsCards.remove(card);
     }
-
 
     public ObservableList<Card> getCards() {
         return lsCards;
@@ -69,6 +64,7 @@ public class Column {
     public void swapCardUp(int index) {
         Collections.swap (lsCards,(index-1),index);
     }
+
     public void swapCardRight(Column column , Card card) {
         Column that = this.board.getColumn( (column.getpositions ()+ 1));
         that.addCard(card);

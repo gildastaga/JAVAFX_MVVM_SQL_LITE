@@ -2,8 +2,11 @@ package mvvm;
 
 import javafx.beans.property.*;
 import model.Board;
+import model.Card;
 import model.Column;
 import model.Processor;
+import model.board.AddColumnCommand;
+import model.column.AddCardCommand;
 
 public class ViewModelBoard {
 
@@ -12,7 +15,7 @@ public class ViewModelBoard {
     private final SimpleListProperty columnList = new SimpleListProperty<>();
     private final IntegerProperty numSelectedColumn = new SimpleIntegerProperty (-1);
 
-    public ViewModelBoard(Board board){
+    public ViewModelBoard(Board board) {
         this.board = board;
         boardName = new ReadOnlyStringWrapper (board.getName());
         configData();
@@ -39,20 +42,22 @@ public class ViewModelBoard {
     }
 
     public void addColumn() {
-        Column c = getColumn(numSelectedColumn.get ());
-        if (c == null ){
-            board.addColumn(new Column ("Column "+board.getColumns ().size (),board));
-        }
+        //Column c = getColumn(numSelectedColumn.get ());
+        Column column = new Column("colonne" + columnList.getSize(), board);
+        //if (c == null ){
+            AddColumnCommand addColumnCommand = new AddColumnCommand(board, column);
+            Processor.getInstance().execute(addColumnCommand);
+           // board.addColumn(new Column ("Column "+board.getColumns ().size (),board));
+        //}
         configData();
     }
 
-    public void undo (){
+    public void undo () {
         Processor.getInstance().undo();
     }
 
-    public void redo(){
+    public void redo() {
         Processor.getInstance().redo();
     }
-
 
 }

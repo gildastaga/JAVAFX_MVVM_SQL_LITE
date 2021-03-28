@@ -7,7 +7,11 @@ import model.Board;
 import model.Card;
 import model.Column;
 import model.Processor;
+import model.board.MoveColumnLeft;
+import model.board.MoveColumnRight;
+import model.board.RemoveColumnCommand;
 import model.column.AddCardCommand;
+import model.column.MoveCardLeftCommand;
 import view.ViewBoard;
 import view.ViewColumn;
 
@@ -48,6 +52,7 @@ public class ViewModelColumn {
 
 
     /**************************************************************** configdisable ************************************************/
+
     public void selectedColumBinding(ReadOnlyIntegerProperty integerProperty) {
         numSelectedColumn.bind(integerProperty);
     }
@@ -70,15 +75,18 @@ public class ViewModelColumn {
         return imRightColumDisabled;
     }
 
-
     /****************************************************************  deplacement ***************************************************/
 
     public void swapColleft()  {
-         column.getBoard ().swapColumnLeft (this.column.getpositions ());
+        MoveColumnLeft moveColumnLeft = new MoveColumnLeft(column.getBoard(), column);
+        Processor.getInstance().execute(moveColumnLeft);
+        // column.getBoard ().swapColumnLeft (this.column.getpositions ());
     }
 
     public void swapColright()  {
-        column.getBoard ().swapColumnRight (this.column.getpositions ());
+        MoveColumnRight moveColumnRight = new MoveColumnRight(column.getBoard(), column);
+        Processor.getInstance().execute(moveColumnRight);
+        //column.getBoard ().swapColumnRight (this.column.getpositions ());
     }
 
     public void updateColumnName(String name) {
@@ -93,7 +101,9 @@ public class ViewModelColumn {
     }
 
     public void deleteColumn() {
-        column.getBoard ().removeColumn (column);
+        RemoveColumnCommand removeColumnCommand = new RemoveColumnCommand(column.getBoard(), column);
+        Processor.getInstance().execute(removeColumnCommand);
+        //column.getBoard ().removeColumn (column);
     }
 
 }

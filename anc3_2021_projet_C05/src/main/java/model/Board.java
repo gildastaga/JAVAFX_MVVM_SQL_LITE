@@ -54,8 +54,7 @@ public class Board {
     public void swapColumnLeft(int index) {
         Collections.swap (columns, index, index - 1);
     }
-
-
+    
     /**************************************************  init data *******************************************************************************/
     private void initData() {
 

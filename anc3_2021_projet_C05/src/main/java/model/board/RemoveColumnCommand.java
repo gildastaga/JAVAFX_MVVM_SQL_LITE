@@ -18,11 +18,11 @@ public class RemoveColumnCommand extends BoardCommand {
 
     @Override
     public void undo() {
-        this.getBoard().removeColumn(column);
+        this.getBoard().addColumn(column);
     }
 
     @Override
     public boolean canExecute() {
-        return false;
+        return true;
     }
 }

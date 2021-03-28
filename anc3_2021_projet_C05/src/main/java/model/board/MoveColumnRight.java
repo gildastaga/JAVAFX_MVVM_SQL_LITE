@@ -18,7 +18,7 @@ public class MoveColumnRight extends BoardCommand {
 
     @Override
     public void undo() {
-        this.getBoard().swapColumnLeft(getBoard().getposition());
+        this.getBoard().swapColumnLeft(column.getpositions());
     }
 
     @Override

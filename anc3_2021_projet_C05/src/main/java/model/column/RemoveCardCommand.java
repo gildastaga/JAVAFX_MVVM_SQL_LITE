@@ -14,12 +14,12 @@ public class RemoveCardCommand extends ColumnCommand {
 
     @Override
     public void execute() {
-        this.getColumn().addCard(card);
+        this.getColumn().removeCard(card);
     }
 
     @Override
     public void undo() {
-        this.getColumn().removeCard(card);
+        this.getColumn().addCard(card);
     }
 
     @Override
