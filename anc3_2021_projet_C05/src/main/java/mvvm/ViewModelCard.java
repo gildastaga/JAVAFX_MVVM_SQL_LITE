@@ -43,14 +43,14 @@ public class ViewModelCard {
     }
 
    public void swapCardRight() {
-       MoveCardRightCommand moveCardRightCommand = new MoveCardRightCommand(card.getColumn(), card);
+       MoveCardRightCommand moveCardRightCommand = new MoveCardRightCommand( card);
        Processor.getInstance().execute(moveCardRightCommand);
        configActionnableImages();
         //card.getColumn ().swapCardRight (card.getColumn (),card);
     }
 
     public void swapCardLeft() {
-        MoveCardLeftCommand moveCardLeftCommand = new MoveCardLeftCommand(card.getColumn(), card);
+        MoveCardLeftCommand moveCardLeftCommand = new MoveCardLeftCommand( card);
         Processor.getInstance().execute(moveCardLeftCommand);
         configActionnableImages();
         //card.getColumn ().swapCardLeft (card.getColumn (),card);
