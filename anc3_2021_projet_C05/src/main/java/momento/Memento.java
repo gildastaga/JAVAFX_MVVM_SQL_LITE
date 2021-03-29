@@ -13,4 +13,8 @@ public class Memento {
     public String getState(){
         return state;
     }
+
+    public void setStage( String stage){
+        this.state = stage;
+    }
 }

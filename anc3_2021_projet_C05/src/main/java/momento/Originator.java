@@ -2,7 +2,7 @@ package momento;
 
 public class Originator {
     private String state;
-
+    public Originator(){}
     public void setState(String state){
         this.state = state;
     }
@@ -11,11 +11,17 @@ public class Originator {
         return state;
     }
 
+    public void setStage(String stage){
+        this.state = stage;
+    }
+
     public Memento saveStateToMemento(){
         return new Memento(state);
     }
 
-    public void getStateFromMemento(Memento memento){
+    public void restor(Memento memento){
         state = memento.getState();
     }
+
+
 }
