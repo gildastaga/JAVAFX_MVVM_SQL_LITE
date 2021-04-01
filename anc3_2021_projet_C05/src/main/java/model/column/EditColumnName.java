@@ -1,5 +1,6 @@
 package model.column;
 
+import javafx.beans.property.StringProperty;
 import model.Column;
 
 import java.util.ArrayList;
@@ -13,6 +14,12 @@ public class EditColumnName extends  ColumnCommand{
         super (column);
         this.colunName = newName;
     }
+
+    @Override
+    public StringProperty getmessage() {
+        return null;
+    }
+
     @Override
     public void execute() {
         stringArrayList.add (this.getColumn ().getName ());

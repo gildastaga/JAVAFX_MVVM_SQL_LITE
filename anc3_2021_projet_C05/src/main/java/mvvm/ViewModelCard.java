@@ -2,7 +2,6 @@ package mvvm;
 
 import javafx.beans.property.*;
 import model.Card;
-import model.Processor;
 import model.card.EditCardName;
 import model.column.*;
 
@@ -89,8 +88,8 @@ public class ViewModelCard {
 
     private void configActionnableImages() {
         imUpCardDisabled.setValue(card.getPosition () == 0);
-        imDowCardDisabled.setValue( card.getPosition () == card.getColumn ().getCards ().size ());
+        imDowCardDisabled.setValue( card.getPosition () == card.getColumn ().getCards ().size ()-1);
         imleftCardDisabled.setValue(card.getColumn ().getposition () == 0);
-        imRightCardDisabled.setValue( card.getColumn ().getposition() == card.getColumn ().getBoard ().getColumns ().size ());
+        imRightCardDisabled.setValue( card.getColumn ().getposition() == card.getColumn ().getBoard ().getColumns ().size ()-1);
     }
 }

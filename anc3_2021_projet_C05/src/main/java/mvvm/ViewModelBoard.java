@@ -2,12 +2,9 @@ package mvvm;
 
 import javafx.beans.property.*;
 import model.Board;
-import model.Card;
 import model.Column;
-import model.Processor;
 import model.board.AddColumnCommand;
 import model.board.EditBordName;
-import model.column.AddCardCommand;
 
 public class ViewModelBoard {
 
@@ -15,8 +12,11 @@ public class ViewModelBoard {
     private final StringProperty boardName;
     private final SimpleListProperty columnList = new SimpleListProperty<>();
     private final IntegerProperty numSelectedColumn = new SimpleIntegerProperty (-1);
-    public SimpleBooleanProperty desableUndo = new SimpleBooleanProperty();
-    public SimpleBooleanProperty desableRedo = new SimpleBooleanProperty();
+    private final IntegerProperty menuItemEditSelected = new SimpleIntegerProperty (-1);
+    private final IntegerProperty menuItemfichieSelected = new SimpleIntegerProperty (-1);
+    public SimpleBooleanProperty desableUndo = new SimpleBooleanProperty(false);
+    public SimpleBooleanProperty desableRedo = new SimpleBooleanProperty(false);
+    //private StringProperty message;
 
     public ViewModelBoard(Board board) {
         this.board = board;
@@ -39,15 +39,45 @@ public class ViewModelBoard {
     public void updateBordName(String name) {
         EditBordName editBordName = new EditBordName (board, name);
         Processor.getInstance ().execute (editBordName);
-       // this.board.setName(name);
+
     }
 
     public void addColumn() {
         Column column = new Column("colonne" + columnList.getSize(), board);
         AddColumnCommand addColumnCommand = new AddColumnCommand(board, column);
         Processor.getInstance().execute(addColumnCommand);
+       // message = new SimpleStringProperty ("ajouter une nouvelle Colonne  "+column.getName ());
         configData();
     }
+
+    public StringProperty getMassage(){
+        if (Processor.getInstance ().getMessagePro () != null) {
+            System.out.println (Processor.getInstance ().getMessagePro ().get ());
+            return Processor.getInstance ().getMessagePro ();
+        }else {
+            return new SimpleStringProperty ();
+        }
+    }
+
+  /*  private void configMenuItenSelection() {
+        menuItemEditSelected.addListener((obs, oldval, newval) ->
+                configdisableMenu ());
+
+        menuItemfichieSelected.addListener((obs, oldval, newval) ->
+                configdisableMenu ());
+    }
+
+    public IntegerProperty menuItemEditSelected() {
+        return menuItemEditSelected;
+    }
+    public IntegerProperty menuItemfichieSelected() {
+        return menuItemfichieSelected;
+    }
+
+    private void configdisableMenu() {
+        desableUndo.setValue(Processor.getInstance ().getHistory ().isEmpty ());
+        desableRedo.setValue( Processor.getInstance ().getUndoHistory ().isEmpty ());
+    }*/
 
     public SimpleBooleanProperty disableUndoProperty(){
         return desableUndo;
@@ -65,7 +95,5 @@ public class ViewModelBoard {
         Processor.getInstance().redo();
     }
 
-    public String getMessage(){
-        return Processor.class.getName ();
-    }
+
 }

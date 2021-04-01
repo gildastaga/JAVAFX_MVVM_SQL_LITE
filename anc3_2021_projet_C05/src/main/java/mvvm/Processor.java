@@ -1,10 +1,15 @@
-package model;
+package mvvm;
+
+import javafx.beans.property.StringProperty;
+import model.Command;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Processor {
     private static Processor processor ;
+    private StringProperty message;
     private final List<Command> history = new ArrayList<>();
     private final List<Command> undoHistory = new ArrayList<>();
 
@@ -13,6 +18,18 @@ public class Processor {
             processor = new Processor();
         }
         return processor;
+    }
+
+    public  StringProperty getMessagePro(){
+        return  message;
+    }
+
+    public List<Command> getHistory() {
+        return history;
+    }
+
+    public List<Command> getUndoHistory() {
+        return undoHistory;
     }
 
     private Command getLastCommand(){
@@ -36,6 +53,8 @@ public class Processor {
         command.execute();
         if(command.canExecute()){
             this.history.add(command);
+          message=  command.getmessage ();
+            System.out.println (message);
         }else{
             history.clear();
         }
@@ -44,6 +63,8 @@ public class Processor {
     public void undo(){
         if(canExecute()){
             Command c = getLastCommand();
+            message = c.getmessage ();
+            System.out.println (message+" undo");
             c.undo();
             removeLastCommand();
             undoHistory.add(c);
@@ -55,6 +76,8 @@ public class Processor {
     public void redo(){
         if(!undoHistory.isEmpty()){
             Command c = undoHistory.get(undoHistory.size() - 1);
+            message = c.getmessage ();
+            System.out.println (message+" redo");
             undoHistory.remove(undoHistory.size() - 1);
             this.execute(c);
         }else{

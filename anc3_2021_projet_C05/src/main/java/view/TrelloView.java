@@ -1,5 +1,9 @@
 package view;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -16,18 +20,16 @@ import mvvm.ViewModel;
 
 public class TrelloView extends VBox {
 
-    private String message;
+    private StringProperty message = new SimpleStringProperty () ;
     private final MenuBar menu = new MenuBar();
     private final Menu fichierButton = new Menu("Fichier");
     private final Menu éditionButton = new Menu("Edition");
     private final MenuItem colonne = new MenuItem("Nouvelle colonne");
     private final MenuItem quitter = new MenuItem("Quitter");
-    private final MenuItem annuler = new MenuItem("Annuler: ");
+    private final MenuItem annuler = new MenuItem ("Annuler :"+message.get ());
     private final MenuItem refaire = new MenuItem("Refaire");
 
-    private final KeyCombination keyCombCtrZ = new KeyCodeCombination (KeyCode.Z, KeyCombination.SHORTCUT_DOWN);
-    private final KeyCombination keyCombCtrY = new KeyCodeCombination (KeyCode.Y, KeyCombination.SHORTCUT_DOWN);
-
+    private final IntegerProperty menuItemfichieSelected = new SimpleIntegerProperty ();
     private final ViewBoard viewboard;
     private  EditableLabel nameBoard;
     private  ViewModel viewModel;
@@ -50,11 +52,13 @@ public class TrelloView extends VBox {
 
     private void configVboxZone()  {
         this.getChildren().addAll (menu,nameBoard.getTextField(),viewboard);
+        annuler.setAccelerator (KeyCombination.keyCombination ("Ctrl+z"));
+        refaire.setAccelerator (KeyCombination.keyCombination ("Ctrl+y"));
         éditionButton.getItems().addAll(annuler, refaire);
         fichierButton.getItems().addAll(colonne, quitter);
         menu.getMenus().addAll(fichierButton, éditionButton);
         this.setSpacing(5);
-        //fichierButton.setDisable (true);
+
     }
 
     private void configBindings() throws Exception {
@@ -98,7 +102,9 @@ public class TrelloView extends VBox {
             @Override
             public void handle(ActionEvent actionEvent) {
                 viewModelBoard.undo();
+
             }
+
         });
 
         refaire.setOnAction(new EventHandler<ActionEvent>() {
@@ -107,9 +113,19 @@ public class TrelloView extends VBox {
                 viewModelBoard.redo();
             }
         });
+        ConfigMenu();
     }
+   /* private void configbind(){
+        viewModelBoard.menuItemEditSelected ().bind (éditionButton.);
+
+
+        menuItemfichieSelected.bind (viewModelBoard.menuItemfichieSelected ());
+    }*/
 
     public void ConfigMenu(){
+        System.out.println (viewModelBoard.getMassage ().get ()+"10110101010101");
+        message =viewModelBoard.getMassage ();
+        System.out.println (message.get () +"  ppppppppppppppp");
         annuler.disableProperty().bind(viewModelBoard.disableUndoProperty());
         refaire.disableProperty().bind(viewModelBoard.disableRedoProperty());
     }
