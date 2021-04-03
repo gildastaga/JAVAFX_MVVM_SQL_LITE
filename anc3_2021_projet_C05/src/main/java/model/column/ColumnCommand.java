@@ -1,5 +1,6 @@
 package model.column;
 
+import javafx.beans.property.StringProperty;
 import model.Column;
 import model.Command;
 
@@ -13,4 +14,5 @@ public abstract class ColumnCommand implements Command {
     public Column getColumn() {
         return column;
     }
+
 }

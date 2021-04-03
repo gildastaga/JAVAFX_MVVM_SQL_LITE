@@ -21,16 +21,10 @@ public class Processor {
     }
 
     public  StringProperty getMessagePro(){
+        System.out.println (message);
         return  message;
     }
 
-    public List<Command> getHistory() {
-        return history;
-    }
-
-    public List<Command> getUndoHistory() {
-        return undoHistory;
-    }
 
     private Command getLastCommand(){
         if(!history.isEmpty()){
@@ -51,10 +45,10 @@ public class Processor {
 
     public void execute(Command command){
         command.execute();
+        message=  command.getmessage ();
+        System.out.println (message);
         if(command.canExecute()){
             this.history.add(command);
-          message=  command.getmessage ();
-            System.out.println (message);
         }else{
             history.clear();
         }
@@ -76,7 +70,7 @@ public class Processor {
     public void redo(){
         if(!undoHistory.isEmpty()){
             Command c = undoHistory.get(undoHistory.size() - 1);
-            message = c.getmessage ();
+            message.bindBidirectional (c.getmessage ());
             System.out.println (message+" redo");
             undoHistory.remove(undoHistory.size() - 1);
             this.execute(c);

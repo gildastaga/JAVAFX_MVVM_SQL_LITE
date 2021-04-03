@@ -1,8 +1,7 @@
 package model.board;
 
+import javafx.beans.property.StringProperty;
 import model.Board;
-import momento.CareTaker;
-import momento.Originator;
 
 public class EditBordName extends BoardCommand {
     private final String newName;
@@ -12,6 +11,11 @@ public class EditBordName extends BoardCommand {
         super(board);
         this.newName = newName;
         this.lastName = lastName;
+    }
+
+    @Override
+    public StringProperty getmessage() {
+        return null;
     }
 
     @Override

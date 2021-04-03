@@ -1,7 +1,6 @@
 package model.column;
 
 import javafx.beans.property.StringProperty;
-import model.Board;
 import model.Card;
 import model.Column;
 

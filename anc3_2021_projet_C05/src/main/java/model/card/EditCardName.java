@@ -1,9 +1,7 @@
 package model.card;
 
 import javafx.beans.property.StringProperty;
-import model.Board;
 import model.Card;
-import model.board.BoardCommand;
 
 public class EditCardName extends Cardcommand {
     private final String cardName;

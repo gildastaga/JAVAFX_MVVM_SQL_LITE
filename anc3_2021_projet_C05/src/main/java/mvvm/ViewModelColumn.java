@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import model.Board;
 import model.Card;
 import model.Column;
-import model.Processor;
 import model.board.EditBordName;
 import model.board.MoveColumnLeft;
 import model.board.MoveColumnRight;

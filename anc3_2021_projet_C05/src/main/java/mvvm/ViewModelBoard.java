@@ -4,7 +4,6 @@ import javafx.beans.property.*;
 import model.Board;
 import model.Card;
 import model.Column;
-import model.Processor;
 import model.board.AddColumnCommand;
 import model.board.EditBordName;
 import model.column.AddCardCommand;

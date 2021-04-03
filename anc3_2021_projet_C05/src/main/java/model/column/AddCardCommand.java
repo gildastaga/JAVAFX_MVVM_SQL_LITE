@@ -1,9 +1,9 @@
 package model.column;
 
 import javafx.beans.property.StringProperty;
-import model.Board;
 import model.Card;
 import model.Column;
+import mvvm.Processor;
 
 public class AddCardCommand extends ColumnCommand {
     private Card card;
@@ -15,7 +15,7 @@ public class AddCardCommand extends ColumnCommand {
 
     @Override
     public StringProperty getmessage() {
-        return null;
+        return Processor.getInstance ().getMessagePro ();
     }
 
     @Override

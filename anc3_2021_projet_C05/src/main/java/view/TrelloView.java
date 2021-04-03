@@ -46,6 +46,8 @@ public class TrelloView extends VBox {
 
     private void configVboxZone()  {
         this.getChildren().addAll (menu, nameBoard, viewboard);
+        annuler.setAccelerator (KeyCombination.keyCombination ("Ctrl+z"));
+        refaire.setAccelerator (KeyCombination.keyCombination ("Ctrl+y"));
         éditionButton.getItems().addAll(annuler, refaire);
         fichierButton.getItems().addAll(colonne, quitter);
         menu.getMenus().addAll(fichierButton, éditionButton);
