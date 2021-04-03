@@ -1,5 +1,6 @@
 package view;
 
+<<<<<<< HEAD
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -15,10 +16,26 @@ import javafx.stage.Stage;
 import model.Card;
 import model.Column;
 import mvvm.ViewModel;
+=======
+import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;;
+import javafx.scene.layout.HBox;
+import model.Card;
+import model.Type;
+import mvvm.ViewModelBoard;
+import mvvm.ViewModelCard;
+>>>>>>> recap
 
 import java.io.FileInputStream;
 import java.util.Optional;
 
+<<<<<<< HEAD
 public class ViewCard extends VBox {
 
     private final VBox up = new VBox();
@@ -26,10 +43,15 @@ public class ViewCard extends VBox {
     private final VBox down = new VBox();
     private  ViewModel viewModel;
     private final Label lbCarte = new Label();
+=======
+public class ViewCard extends BorderPane {
+
+>>>>>>> recap
     private final ImageView Imup = new ImageView();
     private final ImageView Imdown = new ImageView();
     private final ImageView Imleft = new ImageView();
     private final ImageView Imright = new ImageView();
+<<<<<<< HEAD
     private int weight = 200;
     private int heigth = 150;
     private static final double SPACING = 10;
@@ -66,6 +88,45 @@ public class ViewCard extends VBox {
     }
 
     private void configImages() throws Exception{
+=======
+    private final HBox hbox = new HBox();
+    private ViewModelCard viewModelCard;
+    private final EditableLabel nameCard ;
+    private final ViewModelBoard viewModelBoard;
+
+    ViewCard(Card card, ViewModelBoard viewModelBoard) {
+        this.viewModelCard = new ViewModelCard(card, viewModelBoard);
+        this.viewModelBoard = viewModelBoard;
+        this.nameCard = new EditableLabel (card.getName());
+        try {
+            configComponents();
+            configDisabledBindings();
+        } catch (Exception e) {
+            e.printStackTrace ();
+        }
+    }
+
+    private void configComponents() throws Exception {
+        configImages();
+        configVboxZone();
+        configDisabledBindings();
+        configActions();
+    }
+
+    private void configVboxZone() {
+        this.setTop (Imup);
+        this.setBottom (Imdown);
+        this.setRight (Imright);
+        this.setLeft (Imleft);
+        this.setCenter (nameCard);
+        BorderPane.setAlignment (Imup, Pos.TOP_CENTER);
+        BorderPane.setAlignment (Imdown,Pos.BOTTOM_CENTER);
+        Imright.setTranslateX(0);
+        this.setStyle("-fx-background-color: skyblue; -fx-border-radius: 5%;");
+    }
+
+    private void configImages() throws Exception {
+>>>>>>> recap
         FileInputStream UP = new FileInputStream("src/images/up.png");
         FileInputStream LEFT = new FileInputStream("src/images/left.png");
         FileInputStream DOWN = new FileInputStream("src/images/down.png");
@@ -75,6 +136,7 @@ public class ViewCard extends VBox {
         Imdown.setImage(new Image(DOWN));
         Imleft.setImage(new Image(LEFT));
         Imright.setImage(new Image(RIGHT));
+<<<<<<< HEAD
         up.getChildren().add(Imup);
         left_right.getChildren().addAll(Imleft, lbCarte, Imright);
         down.getChildren().add(Imdown);
@@ -95,18 +157,31 @@ public class ViewCard extends VBox {
 
     private void configDataBindingCard() {
         lbCarte.textProperty().bind(new SimpleStringProperty(card.getName()));
+=======
+    }
+    private void configDisabledBindings() {
+        Imup.disableProperty ().bind(viewModelCard.imuptCardDisabledProperty());
+        Imdown.disableProperty ().bind(viewModelCard.imdowCardDisableProperty());
+        Imleft.disableProperty().bind(viewModelCard.imleftCardDisabledProperty());
+        Imright.disableProperty().bind(viewModelCard.imRightCardDisabledProperty ());
+>>>>>>> recap
     }
 
     private void configActions() throws Exception {
         configActionUp();
         configActionDown();
         configActionRight();
+<<<<<<< HEAD
+=======
+        configActionLeft();
+>>>>>>> recap
         deleteAction();
     }
 
     private void configActionUp() {
         Imup.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1) {
+<<<<<<< HEAD
                 try {
                     viewModel.lineSelectedCard(viewColumn.getCardModel().selectedIndexProperty());
                     this.viewModel.swapCardUp(column);
@@ -114,6 +189,9 @@ public class ViewCard extends VBox {
                 }catch (Exception ed) {
                     System.out.println(ed.getMessage());
                 }
+=======
+                this.viewModelCard.swapCardUp();
+>>>>>>> recap
             }
         });
     }
@@ -121,6 +199,7 @@ public class ViewCard extends VBox {
     private void configActionDown() {
         Imdown.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1) {
+<<<<<<< HEAD
                 try {
                     viewModel.lineSelectedCard(viewColumn.getCardModel().selectedIndexProperty());
                     this.viewModel.swapCardDown(column);
@@ -128,6 +207,9 @@ public class ViewCard extends VBox {
                 } catch (Exception ed) {
                     System.out.println(ed.getMessage());
                 }
+=======
+                this.viewModelCard.swapCardDown();
+>>>>>>> recap
             }
         });
     }
@@ -135,6 +217,7 @@ public class ViewCard extends VBox {
     private void configActionRight() {
         Imright.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1) {
+<<<<<<< HEAD
                 try {
                     viewModel.lineSelectedCard(viewColumn.getCardModel().selectedIndexProperty());
                     this.viewModel.swapCardRight(column);
@@ -156,6 +239,16 @@ public class ViewCard extends VBox {
                 } catch (Exception ed) {
                     System.out.println(ed.getMessage());
                 }
+=======
+                this.viewModelCard.swapCardRight();
+            }
+        });
+    }
+    private  void configActionLeft( ){
+        Imleft.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
+            if (e.getClickCount() == 1) {
+                this.viewModelCard.swapCardLeft();
+>>>>>>> recap
             }
         });
     }
@@ -166,6 +259,7 @@ public class ViewCard extends VBox {
                 Alert dialogC = new Alert(Alert.AlertType.CONFIRMATION);
                 dialogC.setTitle("confirmation d'action ");
                 dialogC.setHeaderText(null);
+<<<<<<< HEAD
                 dialogC.setContentText("can you delete this :" + card.getName());
                 Optional<ButtonType> answer = dialogC.showAndWait();
                 if (answer.get() == ButtonType.OK) {
@@ -175,6 +269,12 @@ public class ViewCard extends VBox {
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
+=======
+                dialogC.setContentText("are you sure you want to delete this card? ");
+                Optional<ButtonType> answer = dialogC.showAndWait();
+                if (answer.get() == ButtonType.OK) {
+                    this.viewModelCard.deleteCard();
+>>>>>>> recap
                 }
             }
         });

@@ -1,20 +1,30 @@
 package model;
 
+<<<<<<< HEAD
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
+=======
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+>>>>>>> recap
 
 import java.util.*;
 
 public class Board {
 
+<<<<<<< HEAD
     private String name;
     private final IntegerProperty size = new SimpleIntegerProperty();
     private final ObservableList<Column> columns = FXCollections.observableList( new ArrayList<>());
     private int position = 0;
+=======
+    private String name ;
+    private final ObservableList<Column> columns = FXCollections.observableList( new ArrayList<>());
+>>>>>>> recap
 
     public Board(String name) {
         this.name = name;
@@ -27,6 +37,7 @@ public class Board {
         return name;
     }
 
+<<<<<<< HEAD
     public int getPosition() {
         return position;
     }
@@ -35,12 +46,17 @@ public class Board {
         this.position = position;
     }
 
+=======
+>>>>>>> recap
     public void setName(String name) {
         this.name = name;
     }
 
     public ObservableList<Column> getColumns() {
+<<<<<<< HEAD
         Collections.sort(columns, new SortColumnByPosition());
+=======
+>>>>>>> recap
         return columns;
     }
 
@@ -58,6 +74,7 @@ public class Board {
       return   index == -1 ? null :this.getColumns().get(index);
     }
 
+<<<<<<< HEAD
     public void swapColumnRight(int index) {
         Column c = this.columns.get(index);
         int pos = c.getPosition();
@@ -111,10 +128,23 @@ public class Board {
         card.setPosition(that.getCards().size());
         that.addCard(card);
         column.removeCard(card);
+=======
+    public int getposition() {
+        return  this.columns.indexOf (this);
+    }
+
+    public void swapColumnRight(int index) {
+        Collections.swap (columns, index, index + 1);
+    }
+
+    public void swapColumnLeft(int index) {
+        Collections.swap (columns, index, index - 1);
+>>>>>>> recap
     }
 
     /**************************************************  init data *******************************************************************************/
     private void initData() {
+<<<<<<< HEAD
         Card Carte_1 = new Card("Carte 1", 0),
                 Carte_2 = new Card("Carte 2", 0),
                 Carte_3 = new Card("Carte 3", 1),
@@ -126,6 +156,20 @@ public class Board {
                 à_tester = new Column("à tester", 1),
                 en_cours = new Column("en cours", 2),
                 en_attente_de_paiement = new Column("en attente de paiement", 3);
+=======
+
+
+        Column à_faire = new Column("à faire",this),
+                à_tester = new Column("à tester",this),
+                en_cours = new Column("en cours",this),
+                en_attente_de_paiement = new Column("en attente",this);
+        Card Carte_1 = new Card("Carte 1",à_faire),
+                Carte_2 = new Card("Carte 2",à_tester),
+                Carte_3 = new Card("Carte 3",à_tester),
+                Carte_4 = new Card("Carte 4",en_cours),
+                Carte_5 = new Card("Carte 5",en_cours),
+                Carte_6 = new Card("Carte 6",en_cours);
+>>>>>>> recap
 
         columns.add(à_faire);
         columns.add(à_tester);
