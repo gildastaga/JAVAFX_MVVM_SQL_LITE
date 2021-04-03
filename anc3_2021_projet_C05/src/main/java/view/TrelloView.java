@@ -22,11 +22,8 @@ public class TrelloView extends VBox {
     private final Menu éditionButton = new Menu("Edition");
     private final MenuItem colonne = new MenuItem("Nouvelle colonne");
     private final MenuItem quitter = new MenuItem("Quitter");
-    private final MenuItem annuler = new MenuItem("Annuler: ");
+    private final MenuItem annuler = new MenuItem("Annuler ");
     private final MenuItem refaire = new MenuItem("Refaire");
-
-    private final KeyCombination keyCombCtrZ = new KeyCodeCombination (KeyCode.Z, KeyCombination.SHORTCUT_DOWN);
-    private final KeyCombination keyCombCtrY = new KeyCodeCombination (KeyCode.Y, KeyCombination.SHORTCUT_DOWN);
 
     private final ViewBoard viewboard;
     private  EditableLabel nameBoard;
@@ -36,25 +33,23 @@ public class TrelloView extends VBox {
 
     public TrelloView(Stage stage,ViewModelBoard viewModelBoard ,Board board ) throws Exception {
         this.viewModelBoard = viewModelBoard;
-        this.viewboard = new ViewBoard(new ViewModelBoard(board));
+        this.viewboard = new ViewBoard(viewModelBoard);
         this.stage = stage;
-        this.nameBoard = new EditableLabel (board.getName (),false, Type.BOARD);
+        ConfigMenu();
+        this.nameBoard = new EditableLabel (board.getName());
         Scene scene = new Scene(this, 1050, 800);
         stage.setScene(scene);
         stage.setTitle("Trello");
         configVboxZone();
-        ConfigMenu();
         configBindings();
     }
 
-
     private void configVboxZone()  {
-        this.getChildren().addAll (menu,nameBoard.getTextField(),viewboard);
+        this.getChildren().addAll (menu, nameBoard, viewboard);
         éditionButton.getItems().addAll(annuler, refaire);
         fichierButton.getItems().addAll(colonne, quitter);
         menu.getMenus().addAll(fichierButton, éditionButton);
-        this.setSpacing(5);
-        //fichierButton.setDisable (true);
+        this.setSpacing(20);
     }
 
     private void configBindings() throws Exception {
@@ -67,18 +62,6 @@ public class TrelloView extends VBox {
     }
     
     private void configEditableLabel() {
-        nameBoard.getTextField().setOnMouseClicked((e) -> {
-            if (e.getClickCount() == 2 ) {
-                this.nameBoard.setEditable(true, Type.BOARD);
-            }
-        });
-
-        nameBoard.getTextField().setOnKeyPressed((e) -> {
-            if (e.getCode().equals(KeyCode.ENTER)) {
-                this.viewModelBoard.updateBordName(nameBoard.getTextField().getText());
-                nameBoard.setTextField(false, nameBoard.getTextField().getText(), Type.BOARD);
-            }
-        });
 
         colonne.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -112,7 +95,7 @@ public class TrelloView extends VBox {
     public void ConfigMenu(){
         annuler.disableProperty().bind(viewModelBoard.disableUndoProperty());
         refaire.disableProperty().bind(viewModelBoard.disableRedoProperty());
+        // TODO
     }
-
 
 }

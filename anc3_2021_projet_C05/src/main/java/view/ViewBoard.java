@@ -37,7 +37,7 @@ public class ViewBoard extends ListView<Column> {
                 super.updateItem(col, b);
                 ViewColumn viewColumn = null;
                 if(col != null){
-                    viewColumn = new ViewColumn(col);
+                    viewColumn = new ViewColumn(col, viewModelBoard);
                 }
                 setGraphic(viewColumn);
             }

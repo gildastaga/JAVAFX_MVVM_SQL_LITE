@@ -25,4 +25,9 @@ public class MoveCardUpCommand extends ColumnCommand {
     public boolean canExecute() {
         return true;
     }
+
+    @Override
+    public String getActionName() {
+        return null;
+    }
 }

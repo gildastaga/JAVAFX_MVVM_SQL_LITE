@@ -5,27 +5,29 @@ import model.Column;
 import java.util.ArrayList;
 
 public class EditColumnName extends  ColumnCommand{
+    private final String columnName;
 
-    private final String colunName;
-    private ArrayList<String> stringArrayList= new ArrayList<> ();
-
-    public EditColumnName(Column column, String newName) {
+    public EditColumnName(Column column, String columnName) {
         super (column);
-        this.colunName = newName;
+        this.columnName = columnName;
     }
     @Override
     public void execute() {
-        stringArrayList.add (this.getColumn ().getName ());
-        this.getColumn ().setName (colunName);
+        this.getColumn ().setName(columnName);
     }
 
     @Override
     public void undo() {
-        this.getColumn ().setName (stringArrayList.get (stringArrayList.size ()-1));
+        this.getColumn ().setName(columnName);
     }
 
     @Override
     public boolean canExecute() {
         return true;
+    }
+
+    @Override
+    public String getActionName(){
+        return null;
     }
 }

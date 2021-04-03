@@ -27,4 +27,9 @@ public class AddCardCommand extends ColumnCommand {
         return true;
     }
 
+    @Override
+    public String getActionName() {
+        return null;
+    }
+
 }

@@ -23,16 +23,15 @@ public class ViewModelColumn {
     private final StringProperty columnName;
     private final SimpleListProperty cards = new SimpleListProperty<>();
     private final IntegerProperty numSelectedColumn = new SimpleIntegerProperty (-1);
-
     private String message;
-
-
     private BooleanProperty imleftColumDisabled= new SimpleBooleanProperty(false),
                              imRightColumDisabled = new SimpleBooleanProperty(false);
+    private final ViewModelBoard viewModelBoard;
 
-    public ViewModelColumn(Column column){
+    public ViewModelColumn(Column column, ViewModelBoard viewModelBoard){
         this.column = column;
         columnName = new ReadOnlyStringWrapper (column.getName());
+        this.viewModelBoard = viewModelBoard;
         configData();
         configColumnSelection();
         configActionnableImages ();
@@ -52,10 +51,6 @@ public class ViewModelColumn {
 
 
     /**************************************************************** configdisable ************************************************/
-
-    /*public void selectedColumBinding(ReadOnlyIntegerProperty integerProperty) {
-        numSelectedColumn.bind(integerProperty);
-    }*/
 
     private void configColumnSelection() {
         numSelectedColumn.addListener((obs, oldval, newval) ->
@@ -82,6 +77,7 @@ public class ViewModelColumn {
         Processor.getInstance().execute(moveColumnLeft);
         message = "deplacement de la colonne "+column.getName ()+" vres la gauche ";
         configActionnableImages();
+        viewModelBoard.refreshMenuDisable();
         // column.getBoard ().swapColumnLeft (this.column.getpositions ());
     }
 
@@ -89,12 +85,14 @@ public class ViewModelColumn {
         MoveColumnRight moveColumnRight = new MoveColumnRight(column.getBoard(), column);
         Processor.getInstance().execute(moveColumnRight);
         configActionnableImages();
+        viewModelBoard.refreshMenuDisable();
         //column.getBoard ().swapColumnRight (this.column.getpositions ());
     }
 
     public void updateColumnName(String name) {
         EditColumnName editColumnName = new EditColumnName (column, name);
         Processor.getInstance ().execute (editColumnName);
+        viewModelBoard.refreshMenuDisable();
         //this.column.setName(name);
     }
 
@@ -102,6 +100,7 @@ public class ViewModelColumn {
         Card c = new Card ("Card "+ cards.size (),column);
         AddCardCommand addCardCommand = new AddCardCommand(column, c);
         Processor.getInstance().execute(addCardCommand);
+        viewModelBoard.refreshMenuDisable();
         //column.addCard(new Card ("Card "+ cards.size (),column));
     }
 
@@ -109,6 +108,7 @@ public class ViewModelColumn {
         RemoveColumnCommand removeColumnCommand = new RemoveColumnCommand(column.getBoard(), column);
         Processor.getInstance().execute(removeColumnCommand);
         configActionnableImages();
+        viewModelBoard.refreshMenuDisable();
         //column.getBoard ().removeColumn (column);
     }
 

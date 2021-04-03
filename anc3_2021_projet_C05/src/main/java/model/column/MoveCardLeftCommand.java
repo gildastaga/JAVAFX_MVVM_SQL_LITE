@@ -26,4 +26,9 @@ public class MoveCardLeftCommand extends Cardcommand {
     public boolean canExecute() {
         return true;
     }
+
+    @Override
+    public String getActionName() {
+        return null;
+    }
 }

@@ -5,25 +5,29 @@ import model.Card;
 import model.board.BoardCommand;
 
 public class EditCardName extends Cardcommand {
+    private final String cardName;
 
-    private final String newName;
-
-    public EditCardName(Card card, String newName) {
+    public EditCardName(Card card, String cardName) {
         super(card);
-        this.newName = newName;
+        this.cardName = cardName;
     }
     @Override
     public void execute() {
-        this.getCard ().setNameCard (newName);
+        this.getCard ().setNameCard (cardName);
     }
 
     @Override
     public void undo() {
-        this.getCard ().setNameCard (getCard ().getName ());
+        this.getCard ().setNameCard (cardName);
     }
 
     @Override
     public boolean canExecute() {
         return true;
+    }
+
+    @Override
+    public String getActionName(){
+        return null;
     }
 }

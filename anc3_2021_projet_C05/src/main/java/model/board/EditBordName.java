@@ -5,34 +5,32 @@ import momento.CareTaker;
 import momento.Originator;
 
 public class EditBordName extends BoardCommand {
-
     private final String newName;
-    Originator originator = new Originator();
-    CareTaker careTaker = new CareTaker();
+    private final String lastName;
 
-    public EditBordName(Board board,String newName) {
+    public EditBordName(Board board, String newName, String lastName) {
         super(board);
         this.newName = newName;
+        this.lastName = lastName;
     }
+
     @Override
     public void execute() {
-        this.getBoard ().setName ( newName);
-        originator.setState (newName);
-        careTaker.add (originator.saveStateToMemento ());
-        this.getBoard ().getName ();
+        this.getBoard ().setName (newName);
     }
 
     @Override
     public void undo() {
-
-        this.getBoard ().setName (getBoard ().getName ());
-        originator.restor (careTaker.undo ());
+        this.getBoard ().setName (lastName);
     }
-
-
 
     @Override
     public boolean canExecute() {
         return true;
+    }
+
+    @Override
+    public String getActionName(){
+        return null;
     }
 }

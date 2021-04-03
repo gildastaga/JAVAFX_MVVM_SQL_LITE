@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import model.Card;
 import model.Column;
 import model.Type;
+import mvvm.ViewModelBoard;
 import mvvm.ViewModelColumn;
 
 import java.io.FileInputStream;
@@ -26,12 +27,14 @@ public class ViewColumn extends VBox {
     private final EditableLabel nameColumn ;
     private final IntegerProperty numSelectedColumn = new SimpleIntegerProperty () ;
     private  final  Column column;
+    private final ViewModelBoard viewModelBoard;
 
 
-    ViewColumn(Column column) {
+    ViewColumn(Column column, ViewModelBoard viewModelBoard) {
+        this.viewModelBoard = viewModelBoard;
         this.column = column;
-        this.viewModelColumn = new ViewModelColumn(column);
-        this.nameColumn = new EditableLabel (column.getName (),false, Type.COLUMN);
+        this.viewModelColumn = new ViewModelColumn(column, viewModelBoard);
+        this.nameColumn = new EditableLabel (column.getName());
         try {
             configBindings();
             configComponents();
@@ -46,7 +49,6 @@ public class ViewColumn extends VBox {
     private void configBindings() throws Exception {
         configDataComumn();
         configDisabledBindings();
-        configEditableLabel();
     }
 
     public void configDataComumn() throws Exception {
@@ -67,10 +69,12 @@ public class ViewColumn extends VBox {
     }
 
     private void configVboxZone() throws Exception {
-        hboxUp.getChildren().addAll(Imleft,nameColumn.getTextField (),Imright);
+        hboxUp.getChildren().addAll(Imleft,nameColumn,Imright);
         hBoxDown.getChildren ().add (listCards);
         this.getChildren().addAll(hboxUp,hBoxDown);
         this.setPrefWidth (220);
+        Imright.setTranslateX(130);
+        nameColumn.setTranslateX(65);
     }
 
     private void configImages() throws Exception {
@@ -87,13 +91,14 @@ public class ViewColumn extends VBox {
                 super.updateItem(card, b);
                 ViewCard  viewCard = null;
                 if(card != null){
-                    viewCard = new ViewCard(card);
+                    viewCard = new ViewCard(card, viewModelBoard);
                 }
                 setGraphic(viewCard);
             }
         });
     }
-/////////////action column //////////////////
+
+    /************************************************************ action column ********************************************/
 
     private void configActionColumn() {
         configactionColumunRight();
@@ -119,21 +124,6 @@ public class ViewColumn extends VBox {
         });
     }
 
-    private void configEditableLabel() {
-        nameColumn.getTextField().setOnMouseClicked((e) -> {
-            if (e.getClickCount() == 2 ) {
-                this.nameColumn.setEditable(true, Type.BOARD);
-            }
-        });
-
-        nameColumn.getTextField().setOnKeyPressed((e) -> {
-            if (e.getCode().equals(KeyCode.ENTER)) {
-                this.viewModelColumn.updateColumnName(nameColumn.getTextField().getText());
-                nameColumn.setTextField(false, nameColumn.getTextField().getText(), Type.BOARD);
-            }
-        });
-    }
-
     private void addcard(){
         listCards.setOnMouseClicked(e -> {
             if( e.getClickCount () == 2) {
@@ -146,9 +136,9 @@ public class ViewColumn extends VBox {
         this.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.isPopupTrigger()) {
                 Alert dialogC = new Alert(Alert.AlertType.CONFIRMATION);
-                dialogC.setTitle(" action confirmation ");
+                dialogC.setTitle("action confirmation ");
                 dialogC.setHeaderText(null);
-                dialogC.setContentText("can you delete this column :"+nameColumn.getTextField () );
+                dialogC.setContentText("are you sure you want to delete this column?");
                 Optional<ButtonType> answer = dialogC.showAndWait();
                 if (answer.get() == ButtonType.OK) {
                     this.viewModelColumn.deleteColumn();

@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;;
 import javafx.scene.layout.HBox;
 import model.Card;
 import model.Type;
+import mvvm.ViewModelBoard;
 import mvvm.ViewModelCard;
 
 import java.io.FileInputStream;
@@ -25,13 +26,14 @@ public class ViewCard extends BorderPane {
     private final HBox hbox = new HBox();
     private ViewModelCard viewModelCard;
     private final EditableLabel nameCard ;
+    private final ViewModelBoard viewModelBoard;
 
-    ViewCard(Card card) {
-        this.viewModelCard = new ViewModelCard(card);
-        this.nameCard = new EditableLabel (card.getName (),false, Type.CARD);
+    ViewCard(Card card, ViewModelBoard viewModelBoard) {
+        this.viewModelCard = new ViewModelCard(card, viewModelBoard);
+        this.viewModelBoard = viewModelBoard;
+        this.nameCard = new EditableLabel (card.getName());
         try {
             configComponents();
-            configBindings();
             configDisabledBindings();
         } catch (Exception e) {
             e.printStackTrace ();
@@ -50,8 +52,7 @@ public class ViewCard extends BorderPane {
         this.setBottom (Imdown);
         this.setRight (Imright);
         this.setLeft (Imleft);
-        this.setCenter (nameCard.getTextField ());
-        BorderPane.setAlignment (nameCard.getTextField (), Pos.CENTER_RIGHT);
+        this.setCenter (nameCard);
         BorderPane.setAlignment (Imup, Pos.TOP_CENTER);
         BorderPane.setAlignment (Imdown,Pos.BOTTOM_CENTER);
         Imright.setTranslateX(0);
@@ -115,32 +116,13 @@ public class ViewCard extends BorderPane {
         });
     }
 
-    private void configBindings() throws Exception {
-        configEditableLabel();
-    }
-
-    private void configEditableLabel() {
-        nameCard.getTextField().setOnMouseClicked((e) -> {
-            if (e.getClickCount() == 2 ) {
-                this.nameCard.setEditable(true, Type.BOARD);
-            }
-        });
-
-        nameCard.getTextField().setOnKeyPressed((e) -> {
-            if (e.getCode().equals(KeyCode.ENTER)) {
-                this.viewModelCard.updateCardName(nameCard.getTextField().getText());
-                nameCard.setTextField(false, nameCard.getTextField().getText(), Type.BOARD);
-            }
-        });
-    }
-
     private void deleteAction() {
         this.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.isPopupTrigger()) {
                 Alert dialogC = new Alert(Alert.AlertType.CONFIRMATION);
                 dialogC.setTitle("confirmation d'action ");
                 dialogC.setHeaderText(null);
-                dialogC.setContentText("can you delete this :"+nameCard.getTextField () );
+                dialogC.setContentText("are you sure you want to delete this card? ");
                 Optional<ButtonType> answer = dialogC.showAndWait();
                 if (answer.get() == ButtonType.OK) {
                     this.viewModelCard.deleteCard();

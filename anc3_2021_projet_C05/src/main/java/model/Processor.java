@@ -62,5 +62,13 @@ public class Processor {
         }
     }
 
+    public boolean getSizeCommand(){
+        return history.isEmpty();
+    }
+
+    public boolean getSizeUndoCommand(){
+        return undoHistory.isEmpty();
+    }
+
 
 }

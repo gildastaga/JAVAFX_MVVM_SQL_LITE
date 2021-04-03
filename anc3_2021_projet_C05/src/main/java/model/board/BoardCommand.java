@@ -13,4 +13,5 @@ public abstract class BoardCommand implements Command {
     public Board getBoard() {
         return board;
     }
+
 }

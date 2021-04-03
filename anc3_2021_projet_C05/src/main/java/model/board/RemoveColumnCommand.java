@@ -25,4 +25,9 @@ public class RemoveColumnCommand extends BoardCommand {
     public boolean canExecute() {
         return true;
     }
+
+    @Override
+    public String getActionName() {
+        return null;
+    }
 }
