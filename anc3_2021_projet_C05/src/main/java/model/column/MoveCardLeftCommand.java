@@ -1,5 +1,6 @@
 package model.column;
 
+import javafx.beans.property.StringProperty;
 import model.Card;
 import model.Column;
 import model.card.Cardcommand;
@@ -8,6 +9,11 @@ public class MoveCardLeftCommand extends Cardcommand {
 
     public MoveCardLeftCommand(Card card) {
         super(card);
+    }
+
+    @Override
+    public StringProperty getmessage() {
+        return null;
     }
 
     @Override

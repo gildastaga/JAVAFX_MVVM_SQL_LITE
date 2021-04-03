@@ -1,5 +1,6 @@
 package model.board;
 
+import javafx.beans.property.StringProperty;
 import model.Board;
 import model.Column;
 
@@ -9,6 +10,11 @@ public class AddColumnCommand extends BoardCommand {
     public AddColumnCommand(Board board, Column column) {
         super(board);
         this.column = column;
+    }
+
+    @Override
+    public StringProperty getmessage() {
+        return message;
     }
 
     @Override

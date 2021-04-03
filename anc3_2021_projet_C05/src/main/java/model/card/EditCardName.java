@@ -1,5 +1,6 @@
 package model.card;
 
+import javafx.beans.property.StringProperty;
 import model.Board;
 import model.Card;
 import model.board.BoardCommand;
@@ -11,6 +12,12 @@ public class EditCardName extends Cardcommand {
         super(card);
         this.cardName = cardName;
     }
+
+    @Override
+    public StringProperty getmessage() {
+        return null;
+    }
+
     @Override
     public void execute() {
         this.getCard ().setNameCard (cardName);
