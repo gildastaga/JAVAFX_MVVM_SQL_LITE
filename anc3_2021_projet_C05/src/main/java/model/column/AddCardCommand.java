@@ -1,5 +1,6 @@
 package model.column;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import model.Card;
 import model.Column;
@@ -15,7 +16,7 @@ public class AddCardCommand extends ColumnCommand {
 
     @Override
     public StringProperty getmessage() {
-        return Processor.getInstance ().getMessagePro ();
+        return new SimpleStringProperty ("supprimer la nouvelle colonne ");
     }
 
     @Override
