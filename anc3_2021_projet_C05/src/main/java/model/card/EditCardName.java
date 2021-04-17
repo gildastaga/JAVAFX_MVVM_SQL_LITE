@@ -12,11 +12,6 @@ public class EditCardName extends Cardcommand {
     }
 
     @Override
-    public StringProperty getmessage() {
-        return null;
-    }
-
-    @Override
     public void execute() {
         this.getCard ().setNameCard (cardName);
     }
@@ -32,7 +27,7 @@ public class EditCardName extends Cardcommand {
     }
 
     @Override
-    public String getActionName(){
-        return null;
+    public String getActionName() {
+        return "la modification du nom de la carte";
     }
 }

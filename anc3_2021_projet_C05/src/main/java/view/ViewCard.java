@@ -31,7 +31,7 @@ public class ViewCard extends BorderPane {
     ViewCard(Card card, ViewModelBoard viewModelBoard) {
         this.viewModelCard = new ViewModelCard(card, viewModelBoard);
         this.viewModelBoard = viewModelBoard;
-        this.nameCard = new EditableLabel (card.getName());
+        this.nameCard = new EditableLabel (card.getName(), viewModelBoard, null, null);
         try {
             configComponents();
             configDisabledBindings();
@@ -108,7 +108,7 @@ public class ViewCard extends BorderPane {
             }
         });
     }
-    private  void configActionLeft( ){
+    private  void configActionLeft( ) {
         Imleft.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
             if (e.getClickCount() == 1) {
                 this.viewModelCard.swapCardLeft();

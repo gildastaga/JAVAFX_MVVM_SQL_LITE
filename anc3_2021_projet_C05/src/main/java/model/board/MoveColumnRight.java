@@ -13,11 +13,6 @@ public class MoveColumnRight extends BoardCommand {
     }
 
     @Override
-    public StringProperty getmessage() {
-        return null;
-    }
-
-    @Override
     public void execute() {
         this.getBoard().swapColumnRight(column.getposition ());
     }
@@ -34,6 +29,6 @@ public class MoveColumnRight extends BoardCommand {
 
     @Override
     public String getActionName() {
-        return null;
+        return "le déplacement de colonne vers la droite";
     }
 }

@@ -30,7 +30,7 @@ public class ViewBoard extends ListView<Column> {
         this.itemsProperty().bind(viewModelBoard.getColumnsProperty());
     }
 
-    private void updateLvcColon() {
+    public void updateLvcColon() {
         this.setCellFactory(view -> new ListCell<>(){
             @Override
             protected void updateItem(Column col, boolean b){

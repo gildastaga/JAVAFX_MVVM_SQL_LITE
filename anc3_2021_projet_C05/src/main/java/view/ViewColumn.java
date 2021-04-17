@@ -34,7 +34,7 @@ public class ViewColumn extends VBox {
         this.viewModelBoard = viewModelBoard;
         this.column = column;
         this.viewModelColumn = new ViewModelColumn(column, viewModelBoard);
-        this.nameColumn = new EditableLabel (column.getName());
+        this.nameColumn = new EditableLabel (column.getName(), viewModelBoard, null, null);
         try {
             configBindings();
             configComponents();
@@ -117,7 +117,6 @@ public class ViewColumn extends VBox {
 
     private void configactionColumunRight(){
         Imright.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
-            System.out.println ("je suis entre ");
             if (e.getClickCount() == 1 ) {
                 this.viewModelColumn.swapColright();
             }

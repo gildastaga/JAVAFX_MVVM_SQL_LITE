@@ -11,11 +11,6 @@ public class MoveCardRightCommand extends Cardcommand {
     }
 
     @Override
-    public StringProperty getmessage() {
-        return null;
-    }
-
-    @Override
     public void execute() {
         getCard().getColumn().swapCardRight(getCard().getColumn(), getCard());
     }
@@ -32,6 +27,6 @@ public class MoveCardRightCommand extends Cardcommand {
 
     @Override
     public String getActionName() {
-        return null;
+        return "le déplacement de la carte vers la droite";
     }
 }

@@ -38,6 +38,7 @@ public class ViewModelColumn {
 
     public void configData() {
         cards.setValue(column.getCards ());
+        columnName.setValue(column.getName());
     }
 
     public IntegerProperty getNumSelectedColumnProperty() {
@@ -47,7 +48,6 @@ public class ViewModelColumn {
     public SimpleListProperty<Card> getCardsProperty()  {
         return this.cards;
     }
-
 
     /**************************************************************** configdisable ************************************************/
 
@@ -74,10 +74,9 @@ public class ViewModelColumn {
     public void swapColleft()  {
         MoveColumnLeft moveColumnLeft = new MoveColumnLeft(column.getBoard(), column);
         Processor.getInstance().execute(moveColumnLeft);
-        message = "deplacement de la colonne "+column.getName ()+" vres la gauche ";
+        message = "deplacement de la colonne "+column.getName ()+" vers la gauche ";
         configActionnableImages();
         viewModelBoard.refreshMenuDisable();
-        // column.getBoard ().swapColumnLeft (this.column.getpositions ());
     }
 
     public void swapColright()  {
@@ -85,14 +84,12 @@ public class ViewModelColumn {
         Processor.getInstance().execute(moveColumnRight);
         configActionnableImages();
         viewModelBoard.refreshMenuDisable();
-        //column.getBoard ().swapColumnRight (this.column.getpositions ());
     }
 
     public void updateColumnName(String name) {
         EditColumnName editColumnName = new EditColumnName (column, name);
         Processor.getInstance ().execute (editColumnName);
         viewModelBoard.refreshMenuDisable();
-        //this.column.setName(name);
     }
 
     public  void  addCard( ) {
@@ -100,7 +97,6 @@ public class ViewModelColumn {
         AddCardCommand addCardCommand = new AddCardCommand(column, c);
         Processor.getInstance().execute(addCardCommand);
         viewModelBoard.refreshMenuDisable();
-        //column.addCard(new Card ("Card "+ cards.size (),column));
     }
 
     public void deleteColumn() {
@@ -108,7 +104,6 @@ public class ViewModelColumn {
         Processor.getInstance().execute(removeColumnCommand);
         configActionnableImages();
         viewModelBoard.refreshMenuDisable();
-        //column.getBoard ().removeColumn (column);
     }
 
     private String getMassage(){

@@ -15,11 +15,6 @@ public class AddCardCommand extends ColumnCommand {
     }
 
     @Override
-    public StringProperty getmessage() {
-        return new SimpleStringProperty ("supprimer la nouvelle colonne ");
-    }
-
-    @Override
     public void execute() {
         this.getColumn().addCard(card);
     }
@@ -36,7 +31,7 @@ public class AddCardCommand extends ColumnCommand {
 
     @Override
     public String getActionName() {
-        return null;
+        return "l'ajout d'une carte";
     }
 
 }

@@ -14,11 +14,6 @@ public class EditBordName extends BoardCommand {
     }
 
     @Override
-    public StringProperty getmessage() {
-        return null;
-    }
-
-    @Override
     public void execute() {
         this.getBoard ().setName (newName);
     }
@@ -35,6 +30,6 @@ public class EditBordName extends BoardCommand {
 
     @Override
     public String getActionName(){
-        return null;
+        return "la modification du nom du tableau";
     }
 }

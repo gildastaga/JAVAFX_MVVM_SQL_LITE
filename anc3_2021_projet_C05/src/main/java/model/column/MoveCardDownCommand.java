@@ -13,11 +13,6 @@ public class MoveCardDownCommand extends  ColumnCommand {
     }
 
     @Override
-    public StringProperty getmessage() {
-        return null;
-    }
-
-    @Override
     public void execute() {
         this.getColumn().swapCardDown(card.getPosition());
     }
@@ -34,6 +29,6 @@ public class MoveCardDownCommand extends  ColumnCommand {
 
     @Override
     public String getActionName() {
-        return null;
+        return "le déplacement de la carte vers le bas";
     }
 }

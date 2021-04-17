@@ -12,6 +12,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import model.Board;
 import model.Type;
+import mvvm.ViewModelBoard;
+import mvvm.ViewModelCard;
+import mvvm.ViewModelColumn;
 
 
 public class EditableLabel extends Label {
@@ -20,13 +23,28 @@ public class EditableLabel extends Label {
     private  Boolean isEditable = false;
     private String title;
 
-    public EditableLabel(String title) {
+    private ViewModelBoard viewModelBoard;
+    private ViewModelColumn viewModelColumn;
+    private ViewModelCard viewModelCard;
+
+    public EditableLabel(String title, ViewModelBoard viewModelBoard, ViewModelColumn viewModelColumn, ViewModelCard viewModelCard ) {
         super(title);
+        this.viewModelBoard = viewModelBoard;
+        this.viewModelColumn = viewModelColumn;
+        this.viewModelCard = viewModelCard;
         configAction();
     }
 
     public void toLabel(){
         this.setGraphic(null);
+        if(viewModelBoard != null){
+            viewModelBoard.updateBordName(textfield.getText());
+        }else if(viewModelColumn != null){
+            viewModelColumn.updateColumnName(textfield.getText());
+        }else if(viewModelCard != null){
+            viewModelCard.updateCardName(textfield.getText());
+        }
+
         this.setText(textfield.getText());
     }
 

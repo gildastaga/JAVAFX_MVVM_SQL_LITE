@@ -15,12 +15,6 @@ public class EditColumnName extends  ColumnCommand{
     }
 
     @Override
-    public StringProperty getmessage() {
-        System.out.println ("kkkkkkkkkkkkkkkkkk");
-        return new SimpleStringProperty ("change le nom de la colonne "+column.getName () +" en "+columnName);
-    }
-
-    @Override
     public void execute() {
         this.getColumn ().setName(columnName);
     }
@@ -37,6 +31,6 @@ public class EditColumnName extends  ColumnCommand{
 
     @Override
     public String getActionName(){
-        return null;
+        return "la modification du nom de la colonne";
     }
 }
