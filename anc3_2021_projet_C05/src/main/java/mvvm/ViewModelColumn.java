@@ -1,20 +1,13 @@
 package mvvm;
 
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import model.Board;
 import model.Card;
 import model.Column;
-import model.board.EditBordName;
 import model.board.MoveColumnLeft;
 import model.board.MoveColumnRight;
 import model.board.RemoveColumnCommand;
 import model.column.AddCardCommand;
 import model.column.EditColumnName;
-import model.column.MoveCardLeftCommand;
-import view.ViewBoard;
-import view.ViewColumn;
 
 public class ViewModelColumn {
 
@@ -105,9 +98,4 @@ public class ViewModelColumn {
         configActionnableImages();
         viewModelBoard.refreshMenuDisable();
     }
-
-    private String getMassage(){
-        return  message;
-    }
-
 }

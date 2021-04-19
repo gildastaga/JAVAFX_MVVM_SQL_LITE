@@ -1,15 +1,12 @@
 package mvvm;
 
-import javafx.beans.property.StringProperty;
 import model.Command;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Processor {
     private static Processor processor ;
-    private StringProperty message;
     private final List<Command> history = new ArrayList<>();
     private final List<Command> undoHistory = new ArrayList<>();
 

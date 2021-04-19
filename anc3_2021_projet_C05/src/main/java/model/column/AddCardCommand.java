@@ -31,7 +31,7 @@ public class AddCardCommand extends ColumnCommand {
 
     @Override
     public String getActionName() {
-        return "l'ajout d'une carte";
+        return "l'ajout d'une carte :"+card.getName ().toUpperCase ();
     }
 
 }

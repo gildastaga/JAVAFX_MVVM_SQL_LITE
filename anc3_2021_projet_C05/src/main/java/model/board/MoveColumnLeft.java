@@ -29,6 +29,6 @@ public class MoveColumnLeft extends BoardCommand {
 
     @Override
     public String getActionName() {
-        return "le déplacement de colonne vers la gauche";
+        return "le déplacement de colonne vers "+column.getName ().toUpperCase ()+" la gauche";
     }
 }

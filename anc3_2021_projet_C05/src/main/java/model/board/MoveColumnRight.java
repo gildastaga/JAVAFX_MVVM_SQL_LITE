@@ -29,6 +29,6 @@ public class MoveColumnRight extends BoardCommand {
 
     @Override
     public String getActionName() {
-        return "le déplacement de colonne vers la droite";
+        return "le déplacement de colonne "+column.getName ().toUpperCase ()+" vers la droite";
     }
 }

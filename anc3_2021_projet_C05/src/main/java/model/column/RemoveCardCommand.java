@@ -29,6 +29,6 @@ public class RemoveCardCommand extends ColumnCommand {
 
     @Override
     public String getActionName() {
-        return "la supression d'une carte";
+        return "la supression d'une carte :"+card.getName ().toUpperCase ();
     }
 }

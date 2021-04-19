@@ -2,11 +2,9 @@ package mvvm;
 
 import javafx.beans.property.*;
 import model.Board;
-import model.Card;
 import model.Column;
 import model.board.AddColumnCommand;
 import model.board.EditBordName;
-import model.column.AddCardCommand;
 
 public class ViewModelBoard {
 
@@ -87,7 +85,7 @@ public class ViewModelBoard {
     public void undo () {
         Processor.getInstance().undo();
         refreshMenuDisable();
-        boardName.setValue(board.getName());
+        boardName.setValue(Object.class.getName());
         if(Processor.getInstance().getSizeCommand()){
             actionNameUndo.setValue("");
         }
@@ -96,7 +94,7 @@ public class ViewModelBoard {
     public void redo() {
         Processor.getInstance().redo();
         refreshMenuDisable();
-        boardName.setValue(board.getName());
+        boardName.setValue(Object.class.getName());
         if(Processor.getInstance().getSizeUndoCommand()){
             actionNameRedo.setValue(actionNameUndo.getValue());
         }

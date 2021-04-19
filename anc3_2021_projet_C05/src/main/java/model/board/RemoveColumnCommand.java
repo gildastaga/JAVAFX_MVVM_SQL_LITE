@@ -29,6 +29,6 @@ public class RemoveColumnCommand extends BoardCommand {
 
     @Override
     public String getActionName() {
-        return "la supression d'une colonne";
+        return "la supression de la colonne"+column.getName ().toUpperCase ();
     }
 }

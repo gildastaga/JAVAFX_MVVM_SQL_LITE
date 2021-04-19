@@ -1,6 +1,6 @@
 package model.board;
 
-import javafx.beans.property.StringProperty;
+
 import model.Board;
 
 public class EditBordName extends BoardCommand {
@@ -30,6 +30,6 @@ public class EditBordName extends BoardCommand {
 
     @Override
     public String getActionName(){
-        return "la modification du nom du tableau";
+        return "la modification du nom ";
     }
 }

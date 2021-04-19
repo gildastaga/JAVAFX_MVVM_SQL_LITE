@@ -28,6 +28,6 @@ public class EditCardName extends Cardcommand {
 
     @Override
     public String getActionName() {
-        return "la modification du nom de la carte";
+        return "la modification du nom ";
     }
 }

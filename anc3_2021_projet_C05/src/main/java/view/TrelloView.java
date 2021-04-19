@@ -103,8 +103,8 @@ public class TrelloView extends VBox {
     public void ConfigMenu(){
         annuler.disableProperty().bind(viewModelBoard.disableUndoProperty());
         refaire.disableProperty().bind(viewModelBoard.disableRedoProperty());
-        annuler.textProperty().bind(Bindings.concat(new SimpleStringProperty("annuler "), viewModelBoard.actionNameUndoProperty()));
-        refaire.textProperty().bind(Bindings.concat(new SimpleStringProperty("refaire "), viewModelBoard.actionNameRedoProperty()));
+        annuler.textProperty().bind(Bindings.concat(new SimpleStringProperty("annuler : "), viewModelBoard.actionNameUndoProperty()));
+        refaire.textProperty().bind(Bindings.concat(new SimpleStringProperty("refaire : "), viewModelBoard.actionNameRedoProperty()));
     }
 
 }

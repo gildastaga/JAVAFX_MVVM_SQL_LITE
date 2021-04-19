@@ -29,6 +29,6 @@ public class MoveCardDownCommand extends  ColumnCommand {
 
     @Override
     public String getActionName() {
-        return "le déplacement de la carte vers le bas";
+        return "le déplacement de la carte vers le bas :"+card.getName ().toUpperCase ();
     }
 }

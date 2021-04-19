@@ -25,9 +25,6 @@ public class ViewModelCard {
         configActionnableImages();
     }
 
-    public StringProperty nameCarteProperty() {
-        return nameCarte;
-    }
 
     public void swapCardDown() {
         MoveCardDownCommand moveCardDownCommand = new MoveCardDownCommand(card.getColumn(), card);

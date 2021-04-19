@@ -1,24 +1,23 @@
 package model.column;
 
-import javafx.beans.property.StringProperty;
 import model.Card;
 import model.card.Cardcommand;
 
-public class MoveCardLeftCommand extends Cardcommand {
 
+public class MoveCardLeftCommand extends Cardcommand {
+    private final Card card;
     public MoveCardLeftCommand(Card card) {
         super(card);
+        this.card = card;
     }
 
     @Override
     public void execute() {
-        System.out.println("1");
         getCard().getColumn().swapCardLeft(getCard().getColumn(), getCard());
     }
 
     @Override
     public void undo() {
-        System.out.println("2");
         getCard().getColumn().swapCardRight(getCard().getColumn(), getCard());
     }
 
@@ -29,6 +28,6 @@ public class MoveCardLeftCommand extends Cardcommand {
 
     @Override
     public String getActionName() {
-        return "le déplacement de la carte vers la gauche";
+        return "le déplacement de la carte vers la gauche:"+card.getName ().toUpperCase ();
     }
 }

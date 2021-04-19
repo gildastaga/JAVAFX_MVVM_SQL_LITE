@@ -29,6 +29,6 @@ public class AddColumnCommand extends BoardCommand {
 
     @Override
     public String getActionName() {
-        return "l'ajout d'une colonne";
+        return "l'ajout d'une colonne"+column.getName ().toUpperCase ();
     }
 }

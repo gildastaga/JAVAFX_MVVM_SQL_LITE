@@ -31,6 +31,6 @@ public class EditColumnName extends  ColumnCommand{
 
     @Override
     public String getActionName(){
-        return "la modification du nom de la colonne";
+        return "la modification du nom ";
     }
 }
