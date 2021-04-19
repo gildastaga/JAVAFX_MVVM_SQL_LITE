@@ -10,7 +10,7 @@ public class Board {
     private String name ;
     private final ObservableList<Column> columns = FXCollections.observableList( new ArrayList<>());
 
-    public Board(String name) {
+    public Board(String  name) {
         this.name = name;
         initData();
     }

@@ -29,7 +29,7 @@ public class ViewModelBoard {
         boardName.setValue(board.getName());
     }
 
-    public void refreshMenuDisable() {
+    public void  refreshMenuDisable() {
         desableRedo.setValue(Processor.getInstance().getSizeUndoCommand());
         desableUndo.setValue(Processor.getInstance().getSizeCommand());
         if(Processor.getInstance().getLastCommand() != null) {
