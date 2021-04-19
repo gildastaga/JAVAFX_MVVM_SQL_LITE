@@ -13,11 +13,6 @@ public class MoveCardUpCommand extends ColumnCommand {
     }
 
     @Override
-    public StringProperty getmessage() {
-        return null;
-    }
-
-    @Override
     public void execute() {
         this.getColumn().swapCardUp(card.getPosition());
     }
@@ -34,6 +29,6 @@ public class MoveCardUpCommand extends ColumnCommand {
 
     @Override
     public String getActionName() {
-        return null;
+        return "le déplacement de la carte "+card.getName ().toUpperCase ()+"  vers le haut";
     }
 }

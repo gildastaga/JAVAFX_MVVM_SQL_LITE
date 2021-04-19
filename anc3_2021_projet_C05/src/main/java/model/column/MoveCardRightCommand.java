@@ -5,14 +5,10 @@ import model.Card;
 import model.card.Cardcommand;
 
 public class MoveCardRightCommand extends Cardcommand {
-
+    private final Card card;
     public MoveCardRightCommand(Card card) {
         super(card);
-    }
-
-    @Override
-    public StringProperty getmessage() {
-        return null;
+        this.card = card;
     }
 
     @Override
@@ -32,6 +28,6 @@ public class MoveCardRightCommand extends Cardcommand {
 
     @Override
     public String getActionName() {
-        return null;
+        return "le déplacement de la carte :"+card.getName ().toUpperCase ()+"  vers la droite";
     }
 }

@@ -13,11 +13,6 @@ public class RemoveCardCommand extends ColumnCommand {
     }
 
     @Override
-    public StringProperty getmessage() {
-        return null;
-    }
-
-    @Override
     public void execute() {
         this.getColumn().removeCard(card);
     }
@@ -34,6 +29,6 @@ public class RemoveCardCommand extends ColumnCommand {
 
     @Override
     public String getActionName() {
-        return null;
+        return "la supression d'une carte :"+card.getName ().toUpperCase ();
     }
 }

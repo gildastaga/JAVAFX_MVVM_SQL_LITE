@@ -1,38 +1,7 @@
 package view;
 
-<<<<<<< HEAD
-import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import model.Column;
-import mvvm.ViewModel;
-import view.ViewBoard;
-
-public class TrelloView extends VBox {
-
-    private final ViewBoard viewboard;
-    private int width = 1025;
-    private int heigth = 725;
-
-    public TrelloView(Stage primaryStage, ViewModel viewModel) throws Exception {
-        this.viewboard = new ViewBoard(primaryStage, viewModel);
-        Scene scene = new Scene(this, width, heigth);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Trello");
-        configVboxZone();
-    }
-
-    private void configVboxZone()  {
-        this.getChildren().add(viewboard);
-    }
-=======
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -55,8 +24,8 @@ public class TrelloView extends VBox {
     private final Menu éditionButton = new Menu("Edition");
     private final MenuItem colonne = new MenuItem("Nouvelle colonne");
     private final MenuItem quitter = new MenuItem("Quitter");
-    private final MenuItem annuler = new MenuItem("Annuler ");
-    private final MenuItem refaire = new MenuItem("Refaire");
+    private final MenuItem annuler = new MenuItem("");
+    private final MenuItem refaire = new MenuItem("");
 
     private final ViewBoard viewboard;
     private  EditableLabel nameBoard;
@@ -69,7 +38,7 @@ public class TrelloView extends VBox {
         this.viewboard = new ViewBoard(viewModelBoard);
         this.stage = stage;
         ConfigMenu();
-        this.nameBoard = new EditableLabel (board.getName());
+        this.nameBoard = new EditableLabel (board.getName(), viewModelBoard, null, null);
         Scene scene = new Scene(this, 1050, 800);
         stage.setScene(scene);
         stage.setTitle("Trello");
@@ -79,8 +48,8 @@ public class TrelloView extends VBox {
 
     private void configVboxZone()  {
         this.getChildren().addAll (menu, nameBoard, viewboard);
-        annuler.setAccelerator (KeyCombination.keyCombination ("Ctrl+z"));
-        refaire.setAccelerator (KeyCombination.keyCombination ("Ctrl+y"));
+        annuler.setAccelerator (KeyCombination.keyCombination ("CTRL+Z"));
+        refaire.setAccelerator (KeyCombination.keyCombination ("CTRL+Y"));
         éditionButton.getItems().addAll(annuler, refaire);
         fichierButton.getItems().addAll(colonne, quitter);
         menu.getMenus().addAll(fichierButton, éditionButton);
@@ -95,7 +64,7 @@ public class TrelloView extends VBox {
             }
         });
     }
-    
+
     private void configEditableLabel() {
 
         colonne.setOnAction(new EventHandler<ActionEvent>() {
@@ -116,6 +85,8 @@ public class TrelloView extends VBox {
             @Override
             public void handle(ActionEvent actionEvent) {
                 viewModelBoard.undo();
+                nameBoard.setText(viewModelBoard.getNameBoard().get());
+                viewboard.updateLvcColon();
             }
         });
 
@@ -123,6 +94,8 @@ public class TrelloView extends VBox {
             @Override
             public void handle(ActionEvent actionEvent) {
                 viewModelBoard.redo();
+                nameBoard.setText(viewModelBoard.getNameBoard().get());
+                viewboard.updateLvcColon();
             }
         });
     }
@@ -130,8 +103,8 @@ public class TrelloView extends VBox {
     public void ConfigMenu(){
         annuler.disableProperty().bind(viewModelBoard.disableUndoProperty());
         refaire.disableProperty().bind(viewModelBoard.disableRedoProperty());
-        // TODO
+        annuler.textProperty().bind(Bindings.concat(new SimpleStringProperty("annuler "), viewModelBoard.actionNameUndoProperty()));
+        refaire.textProperty().bind(Bindings.concat(new SimpleStringProperty("refaire "), viewModelBoard.actionNameRedoProperty()));
     }
 
->>>>>>> recap
 }

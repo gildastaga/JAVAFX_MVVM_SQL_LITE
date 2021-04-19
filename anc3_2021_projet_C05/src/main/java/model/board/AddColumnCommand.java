@@ -13,11 +13,6 @@ public class AddColumnCommand extends BoardCommand {
     }
 
     @Override
-    public StringProperty getmessage() {
-        return message;
-    }
-
-    @Override
     public void execute() {
         this.getBoard().addColumn(column);
     }
@@ -34,6 +29,6 @@ public class AddColumnCommand extends BoardCommand {
 
     @Override
     public String getActionName() {
-        return null;
+        return "l'ajout d'une colonne"+column.getName ().toUpperCase ();
     }
 }

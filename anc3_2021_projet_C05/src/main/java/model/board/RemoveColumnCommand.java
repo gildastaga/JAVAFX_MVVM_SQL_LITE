@@ -13,11 +13,6 @@ public class RemoveColumnCommand extends BoardCommand {
     }
 
     @Override
-    public StringProperty getmessage() {
-        return null;
-    }
-
-    @Override
     public void execute() {
         this.getBoard().removeColumn(column);
     }
@@ -34,6 +29,6 @@ public class RemoveColumnCommand extends BoardCommand {
 
     @Override
     public String getActionName() {
-        return null;
+        return "la supression de la colonne"+column.getName ().toUpperCase ();
     }
 }

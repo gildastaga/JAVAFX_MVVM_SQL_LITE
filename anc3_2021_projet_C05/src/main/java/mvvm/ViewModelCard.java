@@ -7,7 +7,7 @@ import model.column.*;
 
 public class ViewModelCard {
     public final Card card;
-    private StringProperty NameCarte = new SimpleStringProperty ();
+    private StringProperty nameCarte = new SimpleStringProperty ();
     private final IntegerProperty numSelectedCard = new SimpleIntegerProperty (-1);
     private final ViewModelBoard viewModelBoard;
 
@@ -18,22 +18,19 @@ public class ViewModelCard {
 
     public ViewModelCard(Card c, ViewModelBoard viewModelBoard) {
         this.card = c;
-        this.NameCarte = new ReadOnlyStringWrapper (c.getName());
+        this.nameCarte = new ReadOnlyStringWrapper (c.getName());
         this.viewModelBoard = viewModelBoard;
+        nameCarte.setValue(card.getName());
         configCardSelection();
         configActionnableImages();
     }
 
-    public StringProperty nameCarteProperty(){
-        return NameCarte;
-    }
 
     public void swapCardDown() {
         MoveCardDownCommand moveCardDownCommand = new MoveCardDownCommand(card.getColumn(), card);
         Processor.getInstance().execute(moveCardDownCommand);
         configActionnableImages();
         viewModelBoard.refreshMenuDisable();
-        //card.getColumn ().swapCardDown(this.card.getPosition ());
     }
 
     public void swapCardUp() {
@@ -41,7 +38,6 @@ public class ViewModelCard {
         Processor.getInstance().execute(moveCardUpCommand);
         configActionnableImages();
         viewModelBoard.refreshMenuDisable();
-       // card.getColumn ().swapCardUp (this.card.getPosition ());
     }
 
    public void swapCardRight() {
@@ -49,7 +45,6 @@ public class ViewModelCard {
        Processor.getInstance().execute(moveCardRightCommand);
        configActionnableImages();
        viewModelBoard.refreshMenuDisable();
-        //card.getColumn ().swapCardRight (card.getColumn (),card);
     }
 
     public void swapCardLeft() {
@@ -57,7 +52,6 @@ public class ViewModelCard {
         Processor.getInstance().execute(moveCardLeftCommand);
         configActionnableImages();
         viewModelBoard.refreshMenuDisable();
-        //card.getColumn ().swapCardLeft (card.getColumn (),card);
     }
 
     public void deleteCard() {
@@ -71,7 +65,6 @@ public class ViewModelCard {
         EditCardName editCardName =new EditCardName (card, name);
         Processor.getInstance ().execute (editCardName);
         viewModelBoard.refreshMenuDisable();
-        //this.card.setNameCard(name);
     }
 
     public BooleanProperty imuptCardDisabledProperty(){
