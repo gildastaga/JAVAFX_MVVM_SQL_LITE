@@ -1,10 +1,15 @@
 package mvvm;
 
 import javafx.beans.property.*;
+import javafx.collections.ObservableList;
 import model.Board;
 import model.Column;
 import model.board.AddColumnCommand;
 import model.board.EditBordName;
+import mySqlitedao.BoardDao;
+import mySqlitedao.ColumnDao;
+
+import java.sql.SQLException;
 
 
 public class ViewModelBoard {
@@ -17,7 +22,8 @@ public class ViewModelBoard {
     public SimpleBooleanProperty desableRedo = new SimpleBooleanProperty();
     public SimpleStringProperty actionNameUndo = new SimpleStringProperty();
     public SimpleStringProperty actionNameRedo = new SimpleStringProperty();
-
+    BoardDao boardDao = new BoardDao ();
+    ColumnDao columnDao = new ColumnDao ();
     public ViewModelBoard(Board board) {
         this.board = board;
         configData();
@@ -25,8 +31,13 @@ public class ViewModelBoard {
 
 
     public void configData() {
-
-        columnList.setValue(board.getColumns());
+        try {
+            columnList.setValue ((ObservableList) columnDao.findAll (boardDao.find (1).getId ()));
+            System.out.println (columnList+"vmb");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace ();
+        }
+       // columnList.setValue(board.getColumns());
         refreshMenuDisable();
         boardName.setValue(board.getName());
     }

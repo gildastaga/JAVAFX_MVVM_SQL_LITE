@@ -20,6 +20,11 @@ public class Card {
         this.columnId = columnId;
     }
 
+    public Card(String name, int id) {
+        this.name = name;
+        this.columnId = id ;
+    }
+
     public int getId() {
         return id;
     }

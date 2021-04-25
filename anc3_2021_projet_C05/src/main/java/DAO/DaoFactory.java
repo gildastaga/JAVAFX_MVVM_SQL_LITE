@@ -73,7 +73,7 @@ public class DaoFactory {
     public void main (){
         try {
             Connection connection = DriverManager.getConnection (urldb);
-            clearDB (connection);
+           // clearDB (connection);
             configDB (connection);
             createTables (connection);
         }catch (SQLException e){

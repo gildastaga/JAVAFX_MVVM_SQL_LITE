@@ -74,21 +74,15 @@ public class Board {
     /**************************************************  init data *******************************************************************************/
     private void initData() {
         BoardDao boardDao = new BoardDao ();
-        try {
-            System.out.println (  boardDao.find (0)+"ffffffffffffffffff");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace ();
-        }
-        System.out.println (this.getId ()+"fff"+this.getName ());
-
+        Board board = boardDao.find (1);
         ColumnDao columnDao = new ColumnDao ();
-            columnDao.create (new Column(-1,"pipipipi",this.getId ()));
-            columnDao.create (new Column(-1,"pupupupu",this.getId ()));
+            columnDao.create (new Column(-1,"pipipipi",board.getId ()));
+            columnDao.create (new Column(-1,"pupupupu",board.getId ()));
 
         try {
-            System.out.println (this.getId ()+"    "+this.getName ());
-            columns.addAll (columnDao.findAll (this.id));
-            System.out.println (columns);
+
+            columns.addAll (columnDao.findAll (board.getId ()));
+            System.out.println (columns+"  board configdata");
         } catch (SQLException throwables) {
             throwables.printStackTrace ();
         }
@@ -103,36 +97,36 @@ public class Board {
                 Carte_4 = new Card("Carte 4",en_cours),
                 Carte_5 = new Card("Carte 5",en_cours),
                 Carte_6 = new Card("Carte 6",en_cours);
-        CardDao cardDao = new CardDao ();
-        cardDao.create (new Card(-1,"Carte 1",1));
-        cardDao.create (new Card(-1,"Carte 2",1));
+
         columns.add(à_faire);
         columns.add(à_tester);
         columns.add(en_cours);
         columns.add(en_attente_de_paiement);
-        columns.addAll (columnDao.find (12));
-            System.out.println ("gdddddddddddddddddddddddddddddddddddddddddddddd");
-
-
-       /* try {
-            System.out.println (cardDao.findAll (1));
+        try {
+            columns.addAll (columnDao.findAll (1));
         } catch (SQLException throwables) {
             throwables.printStackTrace ();
-        }*/
+        }
+        CardDao cardDao = new CardDao ();
 
+        for (Column col :columns ) {
+            cardDao.create (new Card( "Carte 1",col.getId ()));
+            try {
+                for ( Card card : cardDao.findAll (col.getId ()) ) {
+                    if (col.getId () == card.getColumnId ());
+                    col.addCard (card);
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace ();
+            }
+        }
 
-//        try {
-//            à_faire.addCard(cardDao.find (1));
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace ();
-//        }
-
-       /* à_tester.addCard(Carte_2);
+        à_tester.addCard(Carte_2);
         à_tester.addCard(Carte_3);
 
         en_cours.addCard(Carte_4);
         en_cours.addCard(Carte_5);
-        en_cours.addCard(Carte_6);*/
+        en_cours.addCard(Carte_6);
 
     }
 }

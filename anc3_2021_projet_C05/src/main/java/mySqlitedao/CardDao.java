@@ -1,7 +1,11 @@
 package mySqlitedao;
 
 import DAO.Dao;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import model.Card;
+import model.Column;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,8 +14,8 @@ import java.util.List;
 public class CardDao extends Dao<Card> {
 
     @Override
-    public List findAll(int columnId) throws SQLException {
-        ArrayList<Card> myList = new ArrayList();
+    public ObservableList<Card> findAll(int columnId) throws SQLException {
+        ObservableList<Card> myList = FXCollections.observableList(new ArrayList());
         String sql = "SELECT * FROM cards where columnid = " + columnId ;
         Statement statement = connection.createStatement ();
         ResultSet result = statement.executeQuery(sql); // Obtenir le résultat du SELECT
@@ -50,6 +54,7 @@ public class CardDao extends Dao<Card> {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, obj.getName());
             preparedStatement.setInt(2,obj.getColumnId ());
+            System.out.println (obj.getId ()+" :tous: "+obj.getName ()+" :creer create  : "+ obj.getColumnId ());
             preparedStatement.execute();
         }
         catch (SQLException e) {
@@ -67,7 +72,6 @@ public class CardDao extends Dao<Card> {
             preparedStatement.setInt(2, obj.getColumnId ());
             preparedStatement.setInt(3, obj.getId());
             preparedStatement.execute();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

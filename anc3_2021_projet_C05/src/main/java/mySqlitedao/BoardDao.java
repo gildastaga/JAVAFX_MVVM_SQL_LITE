@@ -3,10 +3,7 @@ package mySqlitedao;
 import DAO.Dao;
 import model.Board;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 public class BoardDao extends Dao<Board> {
@@ -16,16 +13,19 @@ public class BoardDao extends Dao<Board> {
     }
 
     @Override
-    public Board find(int id) throws SQLException {
+    public Board find(int id) {
         Board board = null;
         try {
-            String sql = "select * from boards where id = "+ id + ";" ;
+            String sql = "select * from boards " ;//where id = '" + id + "'"
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(sql);
-            System.out.println (result);
-            id = result.getInt("id");
-            String name = result.getString("name");
-            board = new Board (id, name);
+           while (result.next ()) {
+               int ids = result.getInt ("id"); // Obtenir l'id
+               String name = result.getString ("name");
+               if (ids == id) {
+                   board = new Board (id, name);
+               }
+           }
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -35,10 +35,11 @@ public class BoardDao extends Dao<Board> {
     }
 
     @Override
-    public Board create(Board obj) throws SQLException {
+    public Board create(Board obj)  {
         try {
             String sql = "INSERT INTO boards(name) VALUES(?);";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            //preparedStatement.setInt (1, 1);
             preparedStatement.setString(1, obj.getName());
             preparedStatement.execute();
         }
@@ -74,4 +75,5 @@ public class BoardDao extends Dao<Board> {
             e.printStackTrace();
         }
     }
+
 }

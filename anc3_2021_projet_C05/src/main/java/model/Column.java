@@ -2,6 +2,8 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import mySqlitedao.BoardDao;
+import mySqlitedao.CardDao;
 
 import java.util.*;
 
@@ -12,7 +14,8 @@ public class Column {
     private  Board board;
     private  int id;
     private  int boardId;
-
+    BoardDao boardDao = new BoardDao ();
+    CardDao cardDao =  new CardDao ();
 
     public Column(String name,Board board) {
         this.name = name;
@@ -24,6 +27,8 @@ public class Column {
         this.id = id ;
         this.name = name;
         this.boardId = boardId;
+        this.board = boardDao.find (boardId);
+        lsCards = FXCollections.observableList(new ArrayList<>());
     }
 
    /* public Column(String name, int id) {
@@ -73,7 +78,6 @@ public class Column {
     /**************************************************  configure card **********************************************************/
 
     public boolean addCard(Card card) {
-
         return  lsCards.add(card);
     }
 

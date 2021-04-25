@@ -17,11 +17,10 @@ public class Main extends Application {
         String name = "MON TABLEAU";
         DaoFactory daoFactory = new DaoFactory ();
         daoFactory.main ();
-        Board board = new Board (name);
         BoardDao boardDao = new BoardDao ();
         boardDao.create (new Board(name));
         ViewModelBoard viewModelBoard = new ViewModelBoard(boardDao.find (1));
-        TrelloView view = new TrelloView(stage,viewModelBoard,board);
+        TrelloView view = new TrelloView(stage,viewModelBoard,boardDao.find (1));
         stage.show();
     }
 

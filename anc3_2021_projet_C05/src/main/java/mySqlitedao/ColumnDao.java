@@ -1,6 +1,8 @@
 package mySqlitedao;
 
 import DAO.Dao;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.Column;
 
 import java.sql.PreparedStatement;
@@ -8,12 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ColumnDao  extends Dao<Column> {
     @Override
-    public List<Column> findAll(int BoardId) throws SQLException {
-        ArrayList<Column> myList = new ArrayList();
+    public ObservableList<Column> findAll(int BoardId) throws SQLException {
+        ObservableList<Column> myList =  FXCollections.observableList(new ArrayList());
         String sql = "SELECT * FROM colonnes where BoardId = " + BoardId ;
         Statement statement = connection.createStatement ();
         ResultSet result = statement.executeQuery(sql);
