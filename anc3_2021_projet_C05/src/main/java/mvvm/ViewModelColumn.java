@@ -1,5 +1,6 @@
 package mvvm;
 
+import DAO.DaoFactory;
 import javafx.beans.property.*;
 import model.Card;
 import model.Column;
@@ -8,6 +9,8 @@ import model.board.MoveColumnRight;
 import model.board.RemoveColumnCommand;
 import model.column.AddCardCommand;
 import model.column.EditColumnName;
+
+import java.sql.SQLException;
 
 public class ViewModelColumn {
 
@@ -20,6 +23,7 @@ public class ViewModelColumn {
                              imRightColumDisabled = new SimpleBooleanProperty(false);
     private final ViewModelBoard viewModelBoard;
 
+
     public ViewModelColumn(Column column, ViewModelBoard viewModelBoard){
         this.column = column;
         columnName = new ReadOnlyStringWrapper (column.getName());
@@ -30,6 +34,7 @@ public class ViewModelColumn {
     }
 
     public void configData() {
+
         cards.setValue(column.getCards ());
         columnName.setValue(column.getName());
     }

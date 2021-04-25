@@ -6,6 +6,7 @@ import model.Column;
 import model.board.AddColumnCommand;
 import model.board.EditBordName;
 
+
 public class ViewModelBoard {
 
     private final Board board;
@@ -17,13 +18,14 @@ public class ViewModelBoard {
     public SimpleStringProperty actionNameUndo = new SimpleStringProperty();
     public SimpleStringProperty actionNameRedo = new SimpleStringProperty();
 
-
     public ViewModelBoard(Board board) {
         this.board = board;
         configData();
     }
 
+
     public void configData() {
+
         columnList.setValue(board.getColumns());
         refreshMenuDisable();
         boardName.setValue(board.getName());
@@ -57,6 +59,7 @@ public class ViewModelBoard {
 
     public void addColumn() {
         Column column = new Column("colonne" + columnList.getSize(), board);
+
         AddColumnCommand addColumnCommand = new AddColumnCommand(board, column);
         Processor.getInstance().execute(addColumnCommand);
         refreshMenuDisable();

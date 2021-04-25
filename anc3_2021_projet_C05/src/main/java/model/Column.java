@@ -10,12 +10,41 @@ public class Column {
     private String name;
     private  ObservableList<Card> lsCards;
     private  Board board;
+    private  int id;
+    private  int boardId;
 
 
     public Column(String name,Board board) {
         this.name = name;
         this.board = board;
         lsCards = FXCollections.observableList(new ArrayList<>());
+    }
+
+    public Column(int id, String name, int boardId) {
+        this.id = id ;
+        this.name = name;
+        this.boardId = boardId;
+    }
+
+   /* public Column(String name, int id) {
+        this.name = name;
+        this.boardId = id ;
+    }*/
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getBoardId() {
+        return boardId;
+    }
+
+    public void setBoardId(int boardId) {
+        this.boardId = boardId;
     }
 
     /**************************************************  configure column **********************************************************/
@@ -44,6 +73,7 @@ public class Column {
     /**************************************************  configure card **********************************************************/
 
     public boolean addCard(Card card) {
+
         return  lsCards.add(card);
     }
 
